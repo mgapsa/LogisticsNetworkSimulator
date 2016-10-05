@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogisticsNetworkSimulator", "LogisticsNetworkSimulator\LogisticsNetworkSimulator.csproj", "{A8D281F0-2BB7-43BD-B815-64CB847E9D24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModel", "DataModel\DataModel.csproj", "{A51C559E-4922-42F5-8C6F-2799A8121599}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A8D281F0-2BB7-43BD-B815-64CB847E9D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8D281F0-2BB7-43BD-B815-64CB847E9D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8D281F0-2BB7-43BD-B815-64CB847E9D24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A51C559E-4922-42F5-8C6F-2799A8121599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A51C559E-4922-42F5-8C6F-2799A8121599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A51C559E-4922-42F5-8C6F-2799A8121599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A51C559E-4922-42F5-8C6F-2799A8121599}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
