@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogisticsNetworkSimulator",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModel", "DataModel\DataModel.csproj", "{A51C559E-4922-42F5-8C6F-2799A8121599}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{2FC00B3A-2B8E-4B07-96AB-06401A2BD3A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A51C559E-4922-42F5-8C6F-2799A8121599}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A51C559E-4922-42F5-8C6F-2799A8121599}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A51C559E-4922-42F5-8C6F-2799A8121599}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FC00B3A-2B8E-4B07-96AB-06401A2BD3A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FC00B3A-2B8E-4B07-96AB-06401A2BD3A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FC00B3A-2B8E-4B07-96AB-06401A2BD3A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FC00B3A-2B8E-4B07-96AB-06401A2BD3A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

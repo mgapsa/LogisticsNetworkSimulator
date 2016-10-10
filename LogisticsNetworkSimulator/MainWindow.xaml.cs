@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Database;
+using Database.Brokers;
+using DataModel;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +27,14 @@ namespace LogisticsNetworkSimulator
         public MainWindow()
         {
             InitializeComponent();
+            Shop shop = new Shop();
+            Project project = new Project();
+            project.Name = "HURA";
+            DapperConfiguration.Map();
+            using (IDbConnection connection = new ConnectionProvider().getConnection(false))
+            {
+                new ProjectBroker().Save(connection, project);
+            }
         }
     }
 }

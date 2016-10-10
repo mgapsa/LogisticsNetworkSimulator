@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataModel
 {
-    public class Shop
+    public class Shop : Actor
     {
-        public int Id { get; set; }
-        public int ProjectId { get; set; }
         public double BasicAmount { get; set; }
         public double MinAmount { get; set; }
         public double InitialAmount { get; set; }

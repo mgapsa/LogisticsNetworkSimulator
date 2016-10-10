@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 namespace DataModel
 {
     //sprawdzic jakie dane były w starym
-    public class Buyer
+    public class Buyer : Actor
     {
-        public int Id { get; set; }
-        public int ProjectId { get; set; }
-        public double X { get; set; }
-        public double Y { get; set; }
         public int OptionA { get; set; }
         public double ParamA { get; set; }
         public double ParamB { get; set; }
