@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Dapper.FluentMap</id>
+    <version>1.5.1</version>
+    <title>Dapper.FluentMap</title>
+    <authors>Henk Mollema</authors>
+    <owners>Henk Mollema</owners>
+    <licenseUrl>https://github.com/henkmollema/Dapper-FluentMap/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/henkmollema/Dapper-FluentMap</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple API to fluently map POCO properties to database columns when using Dapper.</description>
+    <summary />
+    <copyright>Copyright © Henk Mollema 2016</copyright>
+    <tags>c# dapper mapping fluentmap</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.0">
+        <dependency id="Dapper" version="1.50.0" />
+      </group>
+      <group targetFramework=".NETFramework4.5.1">
+        <dependency id="Dapper" version="1.50.0" />
+      </group>
+      <group targetFramework="Unsupported0.0">
+        <dependency id="NETStandard.Library" version="1.6.0" />
+        <dependency id="Dapper" version="1.50.0" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Data" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly assemblyName="System.Data" targetFramework=".NETFramework4.5.1" />
+    </frameworkAssemblies>
+  </metadata>
+</package>
