@@ -102,6 +102,10 @@
       <Project>{a51c559e-4922-42f5-8c6f-2799a8121599}</Project>
       <Name>DataModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{77739766-8ea7-4166-817e-ceb2d3bdd2ce}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

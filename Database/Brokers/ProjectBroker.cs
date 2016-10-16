@@ -24,34 +24,55 @@ namespace Database.Brokers
             "SELECT * FROM project").ToList();
         }
 
-        public int Insert(IDbConnection connection, Project item)
+        public int Insert(IDbConnection connection, Project item, IDbTransaction transaction = null)
         {
             const string query =
               "INSERT INTO project (project_name, project_description) " +
               "VALUES (@Name, @Description)";
-            int rowsAffected = connection.Execute(query, item);
+            int rowsAffected;
+            if(transaction != null)
+            {
+                rowsAffected = connection.Execute(query, item, transaction);
+            }
+            else
+            {
+                rowsAffected = connection.Execute(query, item);
+            }
+
+            item.Id = connection.Query<int>(
+            "SELECT project_id FROM project WHERE project_name = @name",
+            new { name = item.Name}).FirstOrDefault();
+            
             return rowsAffected;
         }
 
-        public int Update(IDbConnection connection, Project item)
+        public int Update(IDbConnection connection, Project item, IDbTransaction transaction = null)
         {
             const string query = "UPDATE project " +
                      "SET project_name = @Name, " +
                      "project_description = @Description " +
                      "WHERE project_id = @Id";
-            int rowsAffected = connection.Execute(query, item);
-            return rowsAffected;
-        }
-
-        public int Save(IDbConnection connection, Project item)
-        {
-            if(item.Id == 0)
+            int rowsAffected;
+            if(transaction != null)
             {
-                return Insert(connection, item);
+                rowsAffected = connection.Execute(query, item, transaction);
             }
             else
             {
-                return Update(connection, item);
+                rowsAffected = connection.Execute(query, item);
+            }
+            return rowsAffected;
+        }
+
+        public int Save(IDbConnection connection, Project item, IDbTransaction transaction = null)
+        {
+            if(item.Id == 0)
+            {
+                return Insert(connection, item, transaction);
+            }
+            else
+            {
+                return Update(connection, item, transaction);
             }
         }
 

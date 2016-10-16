@@ -13,11 +13,11 @@ namespace Database.Brokers
 
         IEnumerable<T> GetAll(IDbConnection connection);
 
-        int Insert(IDbConnection connection, T item);
+        int Insert(IDbConnection connection, T item, IDbTransaction transaction);
 
-        int Update(IDbConnection connection, T item);
+        int Update(IDbConnection connection, T item, IDbTransaction transaction);
 
-        int Save(IDbConnection connection, T item);
+        int Save(IDbConnection connection, T item, IDbTransaction transaction);
 
         int Delete(IDbConnection connection, int deleteId);
     }
