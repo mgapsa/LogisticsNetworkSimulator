@@ -41,20 +41,20 @@ namespace LogisticsNetworkSimulator
             //MessageBox.Show(sup.X.ToString());
 
             //TestDB();
-            Project proj;
-            using (IDbConnection connection = new ConnectionProvider().GetConnection(true))
-            {
-                proj = new ProjectBroker().Get(connection, 8);
-            }
-            SimulationModel model = new SimulationModelService().Get(proj);
+            //Project proj;
+            //using (IDbConnection connection = new ConnectionProvider().GetConnection(true))
+            //{
+            //    proj = new ProjectBroker().Get(connection, 8);
+            //}
+            //SimulationModel model = new SimulationModelService().Get(proj);
 
-            //proj.Name = "LALALA";
-            model.Connections.Find(x => x.ProjectId == 8).Id = 0;
-            model.Buyers.Find(x => x.ProjectId == 8).Id = 0;
-            model.Shops.Find(x => x.ProjectId == 8).Id = 0;
-            model.Suppliers.Find(x => x.ProjectId == 8).Id = 0;
+            ////proj.Name = "LALALA";
+            //model.Connections.Find(x => x.ProjectId == 8).Id = 0;
+            //model.Buyers.Find(x => x.ProjectId == 8).Id = 0;
+            //model.Shops.Find(x => x.ProjectId == 8).Id = 0;
+            //model.Suppliers.Find(x => x.ProjectId == 8).Id = 0;
 
-            new SimulationModelService().Save(model);
+            //new SimulationModelService().Save(model);
 
             ////MessageBox.Show(model.Shops.Find( x => x.ProjectId == 8).X.ToString());
             //MessageBox.Show(model.Connections.Find(x => x.ProjectId == 8).ActorB.X.ToString());
@@ -136,5 +136,33 @@ namespace LogisticsNetworkSimulator
             //MessageBox.Show(conn.ConnectionType.ToString());
 
         }
+
+
+        #region Menu items click handlers
+        private void MnuNew_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("NEW");
+        }
+
+        private void MnuOpen_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("OPEN");
+        }
+
+        private void MnuSave_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("SAVE");
+        }
+
+        private void MnuSaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("SAVE AS");
+        }
+
+        private void MnuExit_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("EXIT");
+        }
+        #endregion
     }
 }
