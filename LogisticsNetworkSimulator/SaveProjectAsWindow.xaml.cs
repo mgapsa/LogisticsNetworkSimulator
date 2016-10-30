@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataModel;
+using Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,41 @@ namespace LogisticsNetworkSimulator
     /// </summary>
     public partial class SaveAsWindow : Window
     {
-        public SaveAsWindow()
+        public SaveAsWindow(SimulationModel model)
         {
             InitializeComponent();
+            this.Model = model;
+            DataContext = model.Project;
+        }
+
+        public SimulationModel Model { get; set; }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Model.Project.Name.Trim() != "")
+            {
+                try
+                {
+                    new SimulationModelService().Save(Model);
+                    MessageBox.Show("Project saved!");
+                    DialogResult = true;
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Project with given name already exists!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Name cannot be empty");
+            }
+
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

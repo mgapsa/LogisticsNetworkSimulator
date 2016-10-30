@@ -10,8 +10,16 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    class ProjectService
+    public class ProjectService
     {
+        public int AddProject(Project project)
+        {
+            using (IDbConnection connection = new ConnectionProvider().GetConnection(true))
+            {
+                return new ProjectBroker().Save(connection, project);
+            }
+        }
+
         public List<Project> GetAllProjects()
         {
             using (IDbConnection connection = new ConnectionProvider().GetConnection(true))

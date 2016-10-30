@@ -119,6 +119,7 @@ namespace Services
 
         public int SaveAs(SimulationModel model)
         {
+            int oldId = model.Project.Id;
             ProjectBroker projectBroker = new ProjectBroker();
             SupplierBroker supplierBroker = new SupplierBroker();
             ShopBroker shopBroker = new ShopBroker();
@@ -138,24 +139,28 @@ namespace Services
                     foreach (Buyer buyer in model.Buyers)
                     {
                         buyer.Id = 0;
+                        buyer.ProjectId = model.Project.Id;
                         buyerBroker.Save(connection, buyer, transaction);
                     }
 
                     foreach (Shop shop in model.Shops)
                     {
                         shop.Id = 0;
+                        shop.ProjectId = model.Project.Id;
                         shopBroker.Save(connection, shop, transaction);
                     }
 
                     foreach (Supplier supplier in model.Suppliers)
                     {
                         supplier.Id = 0;
+                        supplier.ProjectId = model.Project.Id;
                         supplierBroker.Save(connection, supplier, transaction);
                     }
 
                     foreach (Connection conn in model.Connections)
                     {
                         conn.Id = 0;
+                        conn.ProjectId = model.Project.Id;
                         conn.ActorAId = conn.ActorA.Id;
                         conn.ActorBId = conn.ActorB.Id;
                         connectionBroker.Save(connection, conn, transaction);
@@ -165,6 +170,7 @@ namespace Services
                 }
                 catch (Exception)
                 {
+                    model.Project.Id = oldId;
                     transaction.Rollback();
                     throw;
                 }

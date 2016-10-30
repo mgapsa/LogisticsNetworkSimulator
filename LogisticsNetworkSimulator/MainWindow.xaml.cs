@@ -29,6 +29,7 @@ namespace LogisticsNetworkSimulator
         {
             InitializeComponent();
             DapperConfiguration.Map();
+            AssignInputGestures();
 
             //Supplier sup = new Supplier();
             //sup.ProjectId = 1;
@@ -137,26 +138,69 @@ namespace LogisticsNetworkSimulator
 
         }
 
+        public void SetTitle(string name)
+        {
+
+            this.Title = Properties.Resources.MainWindowName + " (" + name + ")";
+        }
+
+        public void AssignInputGestures()
+        {
+
+            RoutedCommand cmdNew = new RoutedCommand();
+            cmdNew.InputGestures.Add(new KeyGesture(Key.N, ModifierKeys.Control));
+            CommandBindings.Add(new CommandBinding(cmdNew, MnuNew_Click));
+
+            RoutedCommand cmdSave = new RoutedCommand();
+            cmdSave.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
+            CommandBindings.Add(new CommandBinding(cmdSave, MnuSave_Click));
+
+            RoutedCommand cmdOpen = new RoutedCommand();
+            cmdOpen.InputGestures.Add(new KeyGesture(Key.O, ModifierKeys.Control));
+            CommandBindings.Add(new CommandBinding(cmdOpen, MnuOpen_Click));
+        }
 
         #region Menu items click handlers
         private void MnuNew_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("NEW");
+            var w = new NewProjectWindow();
+            if(w.ShowDialog() == true)
+            {
+                Project project = w.Project;
+                if(project != null)
+                {
+                    MessageBox.Show("TODO: odpalic ui z symulacja" + project.Id);
+                    SetTitle(project.Name);
+                }
+            }
         }
 
         private void MnuOpen_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("OPEN");
+            SetTitle("nowka");
         }
 
         private void MnuSave_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("SAVE");
+            if(MnuSave.IsEnabled)
+            {
+                new SimulationModelService().Save(null);
+            }
         }
 
         private void MnuSaveAs_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("SAVE AS");
+            //TODO dac tutaj model z symulacji ponizej
+            var w = new SaveAsWindow(null);
+            if (w.ShowDialog() == true)
+            {
+                SimulationModel model = w.Model;
+                if (model != null)
+                {
+                    SetTitle(model.Project.Name);
+                }
+            }
         }
 
         private void MnuExit_Click(object sender, RoutedEventArgs e)
