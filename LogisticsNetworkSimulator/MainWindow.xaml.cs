@@ -177,8 +177,16 @@ namespace LogisticsNetworkSimulator
 
         private void MnuOpen_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("OPEN");
-            SetTitle("nowka");
+            var w = new OpenProjectWindow();
+            if(w.ShowDialog() == true)
+            {
+                Project project = w.Project;
+                if (project != null)
+                {
+                    MessageBox.Show("TODO: odpalic ui z symulacja" + project.Id);
+                    SetTitle(project.Name);
+                }
+            }
         }
 
         private void MnuSave_Click(object sender, RoutedEventArgs e)

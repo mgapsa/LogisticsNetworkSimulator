@@ -12,9 +12,31 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0">Project name</Label>        
+        <DataGrid Grid.Row="0" CanUserAddRows="False" AutoGenerateColumns="False" Grid.Column="0" Grid.ColumnSpan="3" Name="projectsList" MouseDoubleClick="projectsList_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="0.3*" Header="Name" Binding="{Binding Name, Mode=OneWay}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Width="0.7*" Header="Description" Binding="{Binding Description, Mode=OneWay}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center">Name:</Label>
+        <TextBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"
+                 Margin="10,5,10,5" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" TextChanged="TextBox_TextChanged"></TextBox>
+        
     </Grid>
 </UserControl>
