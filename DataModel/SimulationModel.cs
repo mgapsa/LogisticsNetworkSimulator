@@ -25,6 +25,16 @@ namespace DataModel
             Orders = new List<Order>();
         }
 
+        public SimulationModel(Project project)
+        {
+            this.Project = project;
+            Connections = new List<Connection>();
+            Buyers = new List<Buyer>();
+            Shops = new List<Shop>();
+            Suppliers = new List<Supplier>();
+            Orders = new List<Order>();
+        }
+
         public List<int> GetListOfBuyersIds()
         {
             List<int>  idList = new List<int>();

@@ -19,9 +19,9 @@ namespace LogisticsNetworkSimulator
     /// <summary>
     /// Interaction logic for SaveAsWindow.xaml
     /// </summary>
-    public partial class SaveAsWindow : Window
+    public partial class SaveProjectAsWindow : Window
     {
-        public SaveAsWindow(SimulationModel model)
+        public SaveProjectAsWindow(SimulationModel model)
         {
             InitializeComponent();
             this.Model = model;
@@ -36,7 +36,7 @@ namespace LogisticsNetworkSimulator
             {
                 try
                 {
-                    new SimulationModelService().Save(Model);
+                    new SimulationModelService().SaveAs(Model);
                     MessageBox.Show("Project saved!");
                     DialogResult = true;
                     this.Close();

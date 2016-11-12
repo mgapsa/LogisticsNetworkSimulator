@@ -54,15 +54,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="OpenProjectWindow.xaml.cs">
+    <Compile Include="Actors\ShopUserControl.xaml.cs">
+      <DependentUpon>ShopUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuWindows\OpenProjectWindow.xaml.cs">
       <DependentUpon>OpenProjectWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProjectsListUI.xaml.cs">
+    <Compile Include="MenuWindows\ProjectsListUI.xaml.cs">
       <DependentUpon>ProjectsListUI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SaveProjectAsWindow.xaml.cs">
+    <Compile Include="MenuWindows\SaveProjectAsWindow.xaml.cs">
       <DependentUpon>SaveProjectAsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SimulationEventHandler.cs" />
+    <Compile Include="SimulationUI.xaml.cs">
+      <DependentUpon>SimulationUI.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Actors\ShopUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -75,25 +86,29 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NewProjectWindow.xaml">
+    <Page Include="MenuWindows\NewProjectWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="OpenProjectWindow.xaml">
+    <Page Include="MenuWindows\OpenProjectWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ProjectsListUI.xaml">
+    <Page Include="MenuWindows\ProjectsListUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SaveProjectAsWindow.xaml">
+    <Page Include="MenuWindows\SaveProjectAsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SimulationUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NewProjectWindow.xaml.cs">
+    <Compile Include="MenuWindows\NewProjectWindow.xaml.cs">
       <DependentUpon>NewProjectWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

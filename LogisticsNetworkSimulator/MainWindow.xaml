@@ -5,7 +5,11 @@
         WindowState="Maximized"
         xmlns:local="clr-namespace:LogisticsNetworkSimulator">
     <Grid>
-        <Menu DockPanel.Dock="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu DockPanel.Dock="Top" Grid.Row="0">
             <MenuItem Header="_Simulation">
                 <MenuItem Header="_New"   Name="MnuNew" Click="MnuNew_Click" InputGestureText="Ctrl + N">
                     <MenuItem.Icon>
@@ -34,5 +38,6 @@
                 <MenuItem Header="IDK" />
             </MenuItem>
         </Menu>
+        <ContentControl Name="simulationUI" Grid.Row="1"></ContentControl>
     </Grid>
 </Window>

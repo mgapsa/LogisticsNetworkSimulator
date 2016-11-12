@@ -25,41 +25,13 @@ namespace LogisticsNetworkSimulator
     /// </summary>
     public partial class MainWindow : Window
     {
+        public SimulationModel Model { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
             DapperConfiguration.Map();
             AssignInputGestures();
-
-            //Supplier sup = new Supplier();
-            //sup.ProjectId = 1;
-
-            //SimulationModel mod = new SimulationModel();
-            //mod.Suppliers.Add(sup);
-
-            //mod.Suppliers.Find(x => x.ProjectId == 1).X = 20;
-
-            //MessageBox.Show(sup.X.ToString());
-
-            //TestDB();
-            //Project proj;
-            //using (IDbConnection connection = new ConnectionProvider().GetConnection(true))
-            //{
-            //    proj = new ProjectBroker().Get(connection, 8);
-            //}
-            //SimulationModel model = new SimulationModelService().Get(proj);
-
-            ////proj.Name = "LALALA";
-            //model.Connections.Find(x => x.ProjectId == 8).Id = 0;
-            //model.Buyers.Find(x => x.ProjectId == 8).Id = 0;
-            //model.Shops.Find(x => x.ProjectId == 8).Id = 0;
-            //model.Suppliers.Find(x => x.ProjectId == 8).Id = 0;
-
-            //new SimulationModelService().Save(model);
-
-            ////MessageBox.Show(model.Shops.Find( x => x.ProjectId == 8).X.ToString());
-            //MessageBox.Show(model.Connections.Find(x => x.ProjectId == 8).ActorB.X.ToString());
-
         }
 
         public void TestDB()
@@ -160,32 +132,42 @@ namespace LogisticsNetworkSimulator
             CommandBindings.Add(new CommandBinding(cmdOpen, MnuOpen_Click));
         }
 
+        public MessageBoxResult ShowYesNoDialog(String title, String text)
+        {
+            MessageBoxButton btnMessageBox = MessageBoxButton.YesNoCancel;
+            MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
+
+            return MessageBox.Show(text, title, btnMessageBox, icnMessageBox);
+        }
+
         #region Menu items click handlers
         private void MnuNew_Click(object sender, RoutedEventArgs e)
         {
-            var w = new NewProjectWindow();
-            if(w.ShowDialog() == true)
+            if(simulationUI.Content != null)
             {
-                Project project = w.Project;
-                if(project != null)
+                if(ShowYesNoDialog("Warning", "Unsaved changes will be lost, do you wish to continue?") == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("TODO: odpalic ui z symulacja" + project.Id);
-                    SetTitle(project.Name);
+                    ShowNewProjectDialog();
                 }
+            }
+            else
+            {
+                ShowNewProjectDialog();
             }
         }
 
         private void MnuOpen_Click(object sender, RoutedEventArgs e)
         {
-            var w = new OpenProjectWindow();
-            if(w.ShowDialog() == true)
+            if (simulationUI.Content != null)
             {
-                Project project = w.Project;
-                if (project != null)
+                if(ShowYesNoDialog("Warning", "Unsaved changes will be lost, do you wish to continue?") == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("TODO: odpalic ui z symulacja" + project.Id);
-                    SetTitle(project.Name);
+                    ShowProjectOpenDialog();
                 }
+            }
+            else
+            {
+                ShowProjectOpenDialog();
             }
         }
 
@@ -193,14 +175,13 @@ namespace LogisticsNetworkSimulator
         {
             if(MnuSave.IsEnabled)
             {
-                new SimulationModelService().Save(null);
+                new SimulationModelService().Save(Model);
             }
         }
 
         private void MnuSaveAs_Click(object sender, RoutedEventArgs e)
         {
-            //TODO dac tutaj model z symulacji ponizej
-            var w = new SaveAsWindow(null);
+            var w = new SaveProjectAsWindow(Model);
             if (w.ShowDialog() == true)
             {
                 SimulationModel model = w.Model;
@@ -214,6 +195,44 @@ namespace LogisticsNetworkSimulator
         private void MnuExit_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("EXIT");
+        }
+
+        public void ShowProjectOpenDialog()
+        {
+            var w = new OpenProjectWindow();
+            if (w.ShowDialog() == true)
+            {
+                Project project = w.Project;
+                if (project != null)
+                {
+                    Model = new SimulationModelService().Get(project);
+                    SimulationUI ui = new SimulationUI(Model, false);
+                    ui.InitializeComponent();
+                    simulationUI.Content = ui;
+                    SetTitle(project.Name);
+                    MnuSave.IsEnabled = true;
+                    MnuSaveAs.IsEnabled = true;
+                }
+            }
+        }
+
+        public void ShowNewProjectDialog()
+        {
+            var w = new NewProjectWindow();
+            if (w.ShowDialog() == true)
+            {
+                Project project = w.Project;
+                if (project != null)
+                {
+                    Model = new SimulationModel(project);
+                    SimulationUI ui = new SimulationUI(Model, true);
+                    ui.InitializeComponent();
+                    simulationUI.Content = ui;
+                    SetTitle(project.Name);
+                    MnuSave.IsEnabled = true;
+                    MnuSaveAs.IsEnabled = true;
+                }
+            }
         }
         #endregion
     }
