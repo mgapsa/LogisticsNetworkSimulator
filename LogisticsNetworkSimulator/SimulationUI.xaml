@@ -11,19 +11,17 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="15*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0"
-            Background="Beige">
-                <actors:ShopUserControl Margin="2" />
+            <StackPanel Grid.Column="0" Name="ToolPanel" Background="Beige">
                 <actors:ShopUserControl Margin="2" />
             </StackPanel>
-            <StackPanel Grid.Column="1"
+            <Canvas x:Name="target" Grid.Column="1"
             Background="Bisque"
             AllowDrop="True"
             DragOver="panel_DragOver"
             Drop="panel_Drop">
-            </StackPanel>
+            </Canvas>
         </Grid>
     </ScrollViewer>
 </UserControl>

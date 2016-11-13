@@ -151,7 +151,6 @@
       <Name>Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\newIcon.png" />
   </ItemGroup>
@@ -165,6 +164,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\saveIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\shopIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

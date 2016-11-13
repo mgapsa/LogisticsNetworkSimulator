@@ -12,5 +12,19 @@ namespace DataModel
         public int ProjectId { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
+
+        public Actor()
+        {
+            //default 0 everywhere;
+        }
+
+        public Actor(Actor actor)
+        {
+            //this.Id = actor.Id;
+            this.ProjectId = actor.ProjectId;
+            //We have to change these below always
+            //this.X = actor.X;
+            //this.Y = actor.Y;
+        }
     }
 }

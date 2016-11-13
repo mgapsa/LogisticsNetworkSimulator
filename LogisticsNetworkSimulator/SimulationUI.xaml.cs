@@ -33,13 +33,22 @@ namespace LogisticsNetworkSimulator
             this.SimulationEventHandler = new SimulationEventHandler(this);
             if(!isNewProject)
             {
-                //odtworzyc
+                PrintProject();
             }
         }
 
         public SimulationUI()
         {
             InitializeComponent();
+        }
+
+        public void PrintProject()
+        {
+            foreach(Shop shopModel in Model.Shops)
+            {
+                ShopUserControl shopUserControl= new ShopUserControl(shopModel);
+                shopUserControl.printOnTarget(this.target);
+            }
         }
 
         private void panel_DragOver(object sender, DragEventArgs e)
@@ -65,30 +74,34 @@ namespace LogisticsNetworkSimulator
             // the panel should not also handle it.
             if (e.Handled == false)
             {
-                Panel _panel = (Panel)sender;
+                Canvas _canvas = (Canvas)sender;
                 UIElement _element = (UIElement)e.Data.GetData("Object");
 
-                if (_panel != null && _element != null)
+                if (_canvas != null && _element != null)
                 {
                     // Get the panel that the element currently belongs to,
                     // then remove it from that panel and add it the Children of
                     // the panel that its been dropped on.
                     Panel _parent = (Panel)VisualTreeHelper.GetParent(_element);
-
                     if (_parent != null)
                     {
-                        if (e.KeyStates == DragDropKeyStates.ControlKey &&
+                        //Mouse position
+                        System.Windows.Point position = e.GetPosition(_canvas);
+
+                        if ((e.KeyStates == DragDropKeyStates.ControlKey || _parent.Name == "ToolPanel") &&
                             e.AllowedEffects.HasFlag(DragDropEffects.Copy))
                         {
-                            ShopUserControl _circle = new ShopUserControl((ShopUserControl)_element);
-                            _panel.Children.Add(_circle);
+                            ShopUserControl _shopUserControl = new ShopUserControl((ShopUserControl)_element);
+                            Model.Shops.Add(_shopUserControl.ShopModel);
+                            _shopUserControl.printOnTarget(_canvas, position);
                             // set the value to return to the DoDragDrop call
                             e.Effects = DragDropEffects.Copy;
                         }
                         else if (e.AllowedEffects.HasFlag(DragDropEffects.Move))
                         {
+                            ShopUserControl _shopUserControl = (ShopUserControl)_element;
                             _parent.Children.Remove(_element);
-                            _panel.Children.Add(_element);
+                            _shopUserControl.printOnTarget(_canvas, position);
                             // set the value to return to the DoDragDrop call
                             e.Effects = DragDropEffects.Move;
                         }

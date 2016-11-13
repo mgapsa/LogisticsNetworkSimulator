@@ -6,8 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Ellipse x:Name="shopUI" 
-         Height="100" Width="100"
-         Fill="Blue" />    
+        <Image Width="75" x:Name="shopUI" Source="/LogisticsNetworkSimulator;component/Resources/shopIcon.png"></Image>
     </Grid>
 </UserControl>
