@@ -14,7 +14,9 @@
                 <ColumnDefinition Width="15*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Name="ToolPanel" Background="Beige">
+                <actors:SupplierUserControl Margin="2" />
                 <actors:ShopUserControl Margin="2" />
+                <actors:BuyerUserControl Margin="2" />
             </StackPanel>
             <Canvas x:Name="target" Grid.Column="1"
             Background="Bisque"

@@ -8,6 +8,15 @@ namespace DataModel
 {
     public class Supplier : Actor
     {
+        public Supplier()
+        {
 
+        }
+
+        //copy constructor
+        public Supplier(Supplier supplier) : base(supplier)
+        {
+
+        }
     }
 }

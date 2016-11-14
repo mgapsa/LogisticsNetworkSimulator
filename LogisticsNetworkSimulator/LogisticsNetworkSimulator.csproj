@@ -54,8 +54,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actors\BuyerUserControl.xaml.cs">
+      <DependentUpon>BuyerUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Actors\ShopUserControl.xaml.cs">
       <DependentUpon>ShopUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Actors\SupplierUserControl.xaml.cs">
+      <DependentUpon>SupplierUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MenuWindows\OpenProjectWindow.xaml.cs">
       <DependentUpon>OpenProjectWindow.xaml</DependentUpon>
@@ -70,7 +76,15 @@
     <Compile Include="SimulationUI.xaml.cs">
       <DependentUpon>SimulationUI.xaml</DependentUpon>
     </Compile>
+    <Page Include="Actors\BuyerUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Actors\ShopUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Actors\SupplierUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,6 +181,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\shopIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\buyerIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\supplierIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

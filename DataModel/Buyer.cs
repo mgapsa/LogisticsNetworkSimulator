@@ -17,5 +17,30 @@ namespace DataModel
         public double ParamD { get; set; }
         public double ParamE { get; set; }
         public double ParamF { get; set; }
+
+        public Buyer()
+        {
+            this.OptionA = 0;
+            this.ParamA = 1;
+            this.ParamB = 1;
+            this.ParamC = 1;
+            this.OptionB = 0;
+            this.ParamD = 1;
+            this.ParamE = 1;
+            this.ParamF = 1;
+        }
+
+        //copy consttructor
+        public Buyer(Buyer buyer) : base(buyer)
+        {
+            this.OptionA = buyer.OptionA;
+            this.ParamA = buyer.ParamA;
+            this.ParamB = buyer.ParamB;
+            this.ParamC = buyer.ParamC;
+            this.OptionB = buyer.OptionB;
+            this.ParamD = buyer.ParamD;
+            this.ParamE = buyer.ParamE;
+            this.ParamF = buyer.ParamF;
+        }
     }
 }
