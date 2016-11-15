@@ -19,7 +19,7 @@ namespace LogisticsNetworkSimulator.Actors
     /// <summary>
     /// Interaction logic for ShopUserControl.xaml
     /// </summary>
-    public partial class ShopUserControl : UserControl
+    public partial class ShopUserControl : UserControl, IActorUserControl
     {
         public Shop ShopModel { get; set; }
         public ShopUserControl()
@@ -52,6 +52,7 @@ namespace LogisticsNetworkSimulator.Actors
                 // Package the data.
                 DataObject data = new DataObject();
                 data.SetData("Double", shopUI.Height);
+                data.SetData("UserControlType", DataModel.EnumTypes.UserControlTypes.ShopUserControl);
                 data.SetData("Object", this);
 
                 // Inititate the drag-and-drop operation.
@@ -83,6 +84,7 @@ namespace LogisticsNetworkSimulator.Actors
         {
             Canvas.SetTop(this, this.ShopModel.Y);
             Canvas.SetLeft(this, this.ShopModel.X);
+            this.Width = 75;
             ContextMenu pMenu = new ContextMenu();
             MenuItem delete = new MenuItem();
             MenuItem item2 = new MenuItem();
@@ -98,6 +100,7 @@ namespace LogisticsNetworkSimulator.Actors
             Canvas.SetLeft(this, position.X);
             this.ShopModel.X = position.X;
             this.ShopModel.Y = position.Y;
+            this.Width = 75;
             ContextMenu pMenu = new ContextMenu();
             MenuItem delete = new MenuItem();
             MenuItem item2 = new MenuItem();
@@ -121,6 +124,11 @@ namespace LogisticsNetworkSimulator.Actors
             //target.Children.Add(_link);
             //if (_label == null)
             //    printlabel(target);
+        }
+
+        public EnumTypes.UserControlTypes GetUserControlType()
+        {
+            return EnumTypes.UserControlTypes.ShopUserControl;
         }
     }
 }

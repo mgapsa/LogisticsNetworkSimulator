@@ -75,7 +75,7 @@ namespace LogisticsNetworkSimulator
             //conn.ConnectionType = (Connection.ConnectionTypes) 1;
             //MessageBox.Show(conn.ConnectionType.ToString());
             //conn.Id = 1;
-            conn.ConnectionType = Connection.ConnectionTypes.ShopToShop;
+            conn.ConnectionType = DataModel.EnumTypes.ConnectionTypes.ShopToShop;
             conn.ActorAId = 1;
             conn.ActorBId = 1;
             conn.MaxDelay = 23.5;

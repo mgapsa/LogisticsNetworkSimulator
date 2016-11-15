@@ -19,7 +19,7 @@ namespace LogisticsNetworkSimulator.Actors
     /// <summary>
     /// Interaction logic for SupplierUserControl.xaml
     /// </summary>
-    public partial class SupplierUserControl : UserControl
+    public partial class SupplierUserControl : UserControl, IActorUserControl
     {
         public Supplier SupplierModel { get; set; }
         public SupplierUserControl()
@@ -52,6 +52,7 @@ namespace LogisticsNetworkSimulator.Actors
                 // Package the data.
                 DataObject data = new DataObject();
                 data.SetData("Double", supplierUI.Height);
+                data.SetData("UserControlType", DataModel.EnumTypes.UserControlTypes.SupplierUserControl);
                 data.SetData("Object", this);
 
                 // Inititate the drag-and-drop operation.
@@ -83,6 +84,7 @@ namespace LogisticsNetworkSimulator.Actors
         {
             Canvas.SetTop(this, this.SupplierModel.Y);
             Canvas.SetLeft(this, this.SupplierModel.X);
+            this.Width = 75;
             ContextMenu pMenu = new ContextMenu();
             MenuItem delete = new MenuItem();
             MenuItem item2 = new MenuItem();
@@ -98,6 +100,7 @@ namespace LogisticsNetworkSimulator.Actors
             Canvas.SetLeft(this, position.X);
             this.SupplierModel.X = position.X;
             this.SupplierModel.Y = position.Y;
+            this.Width = 75;
             ContextMenu pMenu = new ContextMenu();
             MenuItem delete = new MenuItem();
             MenuItem item2 = new MenuItem();
@@ -121,6 +124,11 @@ namespace LogisticsNetworkSimulator.Actors
             //target.Children.Add(_link);
             //if (_label == null)
             //    printlabel(target);
+        }
+
+        public EnumTypes.UserControlTypes GetUserControlType()
+        {
+            return EnumTypes.UserControlTypes.SupplierUserControl;
         }
     }
 }

@@ -49,6 +49,16 @@ namespace LogisticsNetworkSimulator
                 ShopUserControl shopUserControl= new ShopUserControl(shopModel);
                 shopUserControl.printOnTarget(this.target);
             }
+            foreach (Buyer buyerModel in Model.Buyers)
+            {
+                BuyerUserControl buyerUserControl = new BuyerUserControl(buyerModel);
+                buyerUserControl.printOnTarget(this.target);
+            }
+            foreach (Supplier supplierModel in Model.Suppliers)
+            {
+                SupplierUserControl supplierUserControl = new SupplierUserControl(supplierModel);
+                supplierUserControl.printOnTarget(this.target);
+            }
         }
 
         private void panel_DragOver(object sender, DragEventArgs e)
@@ -87,23 +97,68 @@ namespace LogisticsNetworkSimulator
                     {
                         //Mouse position
                         System.Windows.Point position = e.GetPosition(_canvas);
+                        //Type
+                        DataModel.EnumTypes.UserControlTypes _type = (DataModel.EnumTypes.UserControlTypes)e.Data.GetData("UserControlType");
 
                         if ((e.KeyStates == DragDropKeyStates.ControlKey || _parent.Name == "ToolPanel") &&
                             e.AllowedEffects.HasFlag(DragDropEffects.Copy))
                         {
-                            ShopUserControl _shopUserControl = new ShopUserControl((ShopUserControl)_element);
-                            Model.Shops.Add(_shopUserControl.ShopModel);
-                            _shopUserControl.printOnTarget(_canvas, position);
-                            // set the value to return to the DoDragDrop call
-                            e.Effects = DragDropEffects.Copy;
+                            switch(_type)
+                            {
+                                case EnumTypes.UserControlTypes.ShopUserControl:
+                                    ShopUserControl _shopUserControl = new ShopUserControl((ShopUserControl)_element);
+                                    Model.Shops.Add(_shopUserControl.ShopModel);
+                                    _shopUserControl.printOnTarget(_canvas, position);
+                                    // set the value to return to the DoDragDrop call
+                                    e.Effects = DragDropEffects.Copy;
+                                    break;
+                                case EnumTypes.UserControlTypes.BuyerUserControl:
+                                    BuyerUserControl _buyerUserControl = new BuyerUserControl((BuyerUserControl)_element);
+                                    Model.Buyers.Add(_buyerUserControl.BuyerModel);
+                                    _buyerUserControl.printOnTarget(_canvas, position);
+                                    // set the value to return to the DoDragDrop call
+                                    e.Effects = DragDropEffects.Copy;
+                                    break;
+                                case EnumTypes.UserControlTypes.SupplierUserControl:
+                                    SupplierUserControl _supplierUserControl = new SupplierUserControl((SupplierUserControl)_element);
+                                    Model.Suppliers.Add(_supplierUserControl.SupplierModel);
+                                    _supplierUserControl.printOnTarget(_canvas, position);
+                                    // set the value to return to the DoDragDrop call
+                                    e.Effects = DragDropEffects.Copy;
+                                    break;
+                                default:
+                                    MessageBox.Show("Not habndled yet");
+                                    break;
+                            }
                         }
                         else if (e.AllowedEffects.HasFlag(DragDropEffects.Move))
                         {
-                            ShopUserControl _shopUserControl = (ShopUserControl)_element;
-                            _parent.Children.Remove(_element);
-                            _shopUserControl.printOnTarget(_canvas, position);
-                            // set the value to return to the DoDragDrop call
-                            e.Effects = DragDropEffects.Move;
+                            IActorUserControl _actorUserControl = (IActorUserControl)_element;
+                            switch(_actorUserControl.GetUserControlType())
+                            {
+                                case EnumTypes.UserControlTypes.ShopUserControl:
+                                    ShopUserControl _shopUserControl = (ShopUserControl)_element;
+                                    _parent.Children.Remove(_element);
+                                    _shopUserControl.printOnTarget(_canvas, position);
+                                    // set the value to return to the DoDragDrop call
+                                    e.Effects = DragDropEffects.Move;
+                                    break;
+                                case EnumTypes.UserControlTypes.BuyerUserControl:
+                                    BuyerUserControl _buyerUserControl = (BuyerUserControl)_element;
+                                    _parent.Children.Remove(_element);
+                                    _buyerUserControl.printOnTarget(_canvas, position);
+                                    // set the value to return to the DoDragDrop call
+                                    e.Effects = DragDropEffects.Move;
+                                    break;
+                                case EnumTypes.UserControlTypes.SupplierUserControl:
+                                    SupplierUserControl _supplierUserControl = (SupplierUserControl)_element;
+                                    _parent.Children.Remove(_element);
+                                    _supplierUserControl.printOnTarget(_canvas, position);
+                                    // set the value to return to the DoDragDrop call
+                                    e.Effects = DragDropEffects.Move;
+                                    break;
+                            }
+                            
                         }
                     }
                 }

@@ -34,15 +34,15 @@ namespace Services
             {
                 switch(conn.ConnectionType)
                 {
-                    case Connection.ConnectionTypes.ShopToBuyer:
+                    case DataModel.EnumTypes.ConnectionTypes.ShopToBuyer:
                         conn.ActorA = model.Shops.Find(x => x.Id == conn.ActorAId);
                         conn.ActorB = model.Buyers.Find(x => x.Id == conn.ActorBId);
                         break;
-                    case Connection.ConnectionTypes.ShopToShop:
+                    case DataModel.EnumTypes.ConnectionTypes.ShopToShop:
                         conn.ActorA = model.Shops.Find(x => x.Id == conn.ActorAId);
                         conn.ActorB = model.Shops.Find(x => x.Id == conn.ActorBId);
                         break;
-                    case Connection.ConnectionTypes.SupplierToShop:
+                    case DataModel.EnumTypes.ConnectionTypes.SupplierToShop:
                         conn.ActorA = model.Suppliers.Find(x => x.Id == conn.ActorAId);
                         conn.ActorB = model.Shops.Find(x => x.Id == conn.ActorBId);
                         break;
