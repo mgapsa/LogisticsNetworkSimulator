@@ -25,7 +25,7 @@ namespace DataModel
         }
 
         //copy constructor
-        public Shop(Shop shop) :base(shop)
+        public Shop(Shop shop, SimulationModel model) :base(shop, model)
         {
             this.BasicAmount = shop.BasicAmount;
             this.MinAmount = shop.MinAmount;

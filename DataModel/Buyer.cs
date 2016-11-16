@@ -31,7 +31,7 @@ namespace DataModel
         }
 
         //copy consttructor
-        public Buyer(Buyer buyer) : base(buyer)
+        public Buyer(Buyer buyer, SimulationModel model) : base(buyer, model)
         {
             this.OptionA = buyer.OptionA;
             this.ParamA = buyer.ParamA;

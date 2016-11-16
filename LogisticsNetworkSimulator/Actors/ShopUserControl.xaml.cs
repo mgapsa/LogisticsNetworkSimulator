@@ -22,6 +22,10 @@ namespace LogisticsNetworkSimulator.Actors
     public partial class ShopUserControl : UserControl, IActorUserControl
     {
         public Shop ShopModel { get; set; }
+
+        private DateTime clickTime;
+        private object clickSender;
+
         public ShopUserControl()
         {
             InitializeComponent();
@@ -29,12 +33,12 @@ namespace LogisticsNetworkSimulator.Actors
         }
 
         //copy constructor
-        public ShopUserControl(ShopUserControl shop)
+        public ShopUserControl(ShopUserControl shop, SimulationModel model)
         {
             InitializeComponent();
             this.shopUI.Height = shop.shopUI.Height;
             this.shopUI.Width = shop.shopUI.Height;
-            this.ShopModel = new Shop(shop.ShopModel);
+            this.ShopModel = new Shop(shop.ShopModel, model);
         }
 
         //create constructor
@@ -129,6 +133,27 @@ namespace LogisticsNetworkSimulator.Actors
         public EnumTypes.UserControlTypes GetUserControlType()
         {
             return EnumTypes.UserControlTypes.ShopUserControl;
+        }
+
+        private void shopUI_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Released && sender == this.clickSender)
+            {
+                TimeSpan timeSinceDown = DateTime.Now - this.clickTime;
+                if (timeSinceDown.TotalMilliseconds < 500)
+                {
+                    MessageBox.Show("LINES");
+                }
+            }
+        }
+
+        private void shopUI_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.clickSender = sender;
+                this.clickTime = DateTime.Now;
+            }
         }
     }
 }

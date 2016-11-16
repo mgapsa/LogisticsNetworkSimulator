@@ -29,12 +29,12 @@ namespace LogisticsNetworkSimulator.Actors
         }
 
         //copy constructor
-        public BuyerUserControl(BuyerUserControl buyer)
+        public BuyerUserControl(BuyerUserControl buyer, SimulationModel model)
         {
             InitializeComponent();
             this.buyerUI.Height = buyer.buyerUI.Height;
             this.buyerUI.Width = buyer.buyerUI.Height;
-            this.BuyerModel = new Buyer(buyer.BuyerModel);
+            this.BuyerModel = new Buyer(buyer.BuyerModel, model);
         }
 
         //create constructor
