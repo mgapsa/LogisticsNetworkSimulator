@@ -73,6 +73,9 @@
     <Compile Include="MenuWindows\SaveProjectAsWindow.xaml.cs">
       <DependentUpon>SaveProjectAsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsWindows\ShopSettingsWindow.xaml.cs">
+      <DependentUpon>ShopSettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SimulationEventHandler.cs" />
     <Compile Include="SimulationUI.xaml.cs">
       <DependentUpon>SimulationUI.xaml</DependentUpon>
@@ -114,6 +117,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MenuWindows\SaveProjectAsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsWindows\ShopSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,6 +196,7 @@
   <ItemGroup>
     <Resource Include="Resources\supplierIcon.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

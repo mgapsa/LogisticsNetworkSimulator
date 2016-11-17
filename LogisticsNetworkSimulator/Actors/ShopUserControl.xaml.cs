@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DataModel;
+using LogisticsNetworkSimulator.SettingsWindows;
 
 namespace LogisticsNetworkSimulator.Actors
 {
@@ -89,11 +90,8 @@ namespace LogisticsNetworkSimulator.Actors
             Canvas.SetTop(this, this.ShopModel.Y);
             Canvas.SetLeft(this, this.ShopModel.X);
             this.Width = 75;
-            ContextMenu pMenu = new ContextMenu();
-            MenuItem delete = new MenuItem();
-            MenuItem item2 = new MenuItem();
-            MenuItem graph = new MenuItem();
-            this.ContextMenu = pMenu;
+
+            this.CreateMenu();
 
             target.Children.Add(this);
         }
@@ -105,20 +103,10 @@ namespace LogisticsNetworkSimulator.Actors
             this.ShopModel.X = position.X;
             this.ShopModel.Y = position.Y;
             this.Width = 75;
-            ContextMenu pMenu = new ContextMenu();
-            MenuItem delete = new MenuItem();
-            MenuItem item2 = new MenuItem();
-            MenuItem graph = new MenuItem();
-            this.ContextMenu = pMenu;
+
+            this.CreateMenu();
 
             target.Children.Add(this);
-            //delete.Header = "Delete";
-            //delete.Click += new RoutedEventHandler(delete_Click);
-            //pMenu.Items.Add(delete);
-
-            //item2.Header = "Change values";
-            //item2.Click += new RoutedEventHandler(change_values);
-            //pMenu.Items.Add(item2);
 
             //graph.Header = "Show graph";
             //graph.Click += new RoutedEventHandler(print_graph);
@@ -130,11 +118,58 @@ namespace LogisticsNetworkSimulator.Actors
             //    printlabel(target);
         }
 
+        #region Menu
+        public void CreateMenu()
+        {
+            ContextMenu pMenu = new ContextMenu();
+            MenuItem delete = new MenuItem();
+            MenuItem settings = new MenuItem();
+
+            delete.Header = "Delete";
+            delete.Click += new RoutedEventHandler(delete_Click);
+            pMenu.Items.Add(delete);
+
+            settings.Header = "Settings";
+            settings.Click += new RoutedEventHandler(settings_Click);
+            pMenu.Items.Add(settings);
+
+            this.ContextMenu = pMenu;
+        }
+
+        public void delete_Click(object sender, RoutedEventArgs e)
+        {
+            this.ShopModel.SimulationModel.Shops.Remove(this.ShopModel);
+            Image img = this.shopUI;
+            Panel _parent = (Panel)VisualTreeHelper.GetParent(img);
+            _parent.Children.Remove(img);
+        }
+
+        public void settings_Click(object sender, RoutedEventArgs e)
+        {
+            var w = new ShopSettingsWindow(this.ShopModel);
+            if (w.ShowDialog() == true)
+            {
+                //Project project = w.Project;
+                //if (project != null)
+                //{
+                //    Model = new SimulationModelService().Get(project);
+                //    SimulationUI ui = new SimulationUI(Model, false);
+                //    ui.InitializeComponent();
+                //    simulationUI.Content = ui;
+                //    SetTitle(project.Name);
+                //    MnuSave.IsEnabled = true;
+                //    MnuSaveAs.IsEnabled = true;
+                //}
+            }
+        }
+        #endregion
+
         public EnumTypes.UserControlTypes GetUserControlType()
         {
             return EnumTypes.UserControlTypes.ShopUserControl;
         }
 
+        #region Mouse click
         private void shopUI_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Released && sender == this.clickSender)
@@ -155,5 +190,6 @@ namespace LogisticsNetworkSimulator.Actors
                 this.clickTime = DateTime.Now;
             }
         }
+        #endregion
     }
 }
