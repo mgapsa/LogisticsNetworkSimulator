@@ -1,4 +1,5 @@
 ﻿using DataModel;
+using LogisticsNetworkSimulator.SettingsWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,11 +86,8 @@ namespace LogisticsNetworkSimulator.Actors
             Canvas.SetTop(this, this.BuyerModel.Y);
             Canvas.SetLeft(this, this.BuyerModel.X);
             this.Width = 75;
-            ContextMenu pMenu = new ContextMenu();
-            MenuItem delete = new MenuItem();
-            MenuItem item2 = new MenuItem();
-            MenuItem graph = new MenuItem();
-            this.ContextMenu = pMenu;
+
+            this.CreateMenu();
 
             target.Children.Add(this);
         }
@@ -101,11 +99,8 @@ namespace LogisticsNetworkSimulator.Actors
             this.BuyerModel.X = position.X;
             this.BuyerModel.Y = position.Y;
             this.Width = 75;
-            ContextMenu pMenu = new ContextMenu();
-            MenuItem delete = new MenuItem();
-            MenuItem item2 = new MenuItem();
-            MenuItem graph = new MenuItem();
-            this.ContextMenu = pMenu;
+
+            this.CreateMenu();
 
             target.Children.Add(this);
             //delete.Header = "Delete";
@@ -125,6 +120,52 @@ namespace LogisticsNetworkSimulator.Actors
             //if (_label == null)
             //    printlabel(target);
         }
+
+        #region Menu
+        public void CreateMenu()
+        {
+            ContextMenu pMenu = new ContextMenu();
+            MenuItem delete = new MenuItem();
+            MenuItem settings = new MenuItem();
+
+            delete.Header = "Delete";
+            delete.Click += new RoutedEventHandler(delete_Click);
+            pMenu.Items.Add(delete);
+
+            settings.Header = "Settings";
+            settings.Click += new RoutedEventHandler(settings_Click);
+            pMenu.Items.Add(settings);
+
+            this.ContextMenu = pMenu;
+        }
+
+        public void delete_Click(object sender, RoutedEventArgs e)
+        {
+            this.BuyerModel.SimulationModel.Buyers.Remove(this.BuyerModel);
+            Image img = this.buyerUI;
+            Panel _parent = (Panel)VisualTreeHelper.GetParent(img);
+            _parent.Children.Remove(img);
+        }
+
+        public void settings_Click(object sender, RoutedEventArgs e)
+        {
+            var w = new BuyerSettingsWindow(this.BuyerModel);
+            if (w.ShowDialog() == true)
+            {
+                //Project project = w.Project;
+                //if (project != null)
+                //{
+                //    Model = new SimulationModelService().Get(project);
+                //    SimulationUI ui = new SimulationUI(Model, false);
+                //    ui.InitializeComponent();
+                //    simulationUI.Content = ui;
+                //    SetTitle(project.Name);
+                //    MnuSave.IsEnabled = true;
+                //    MnuSaveAs.IsEnabled = true;
+                //}
+            }
+        }
+        #endregion
 
         public EnumTypes.UserControlTypes GetUserControlType()
         {

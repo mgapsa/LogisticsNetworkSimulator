@@ -42,7 +42,9 @@
     <Compile Include="Actor.cs" />
     <Compile Include="Buyer.cs" />
     <Compile Include="Connection.cs" />
+    <Compile Include="ConnectionCreator.cs" />
     <Compile Include="EnumTypes.cs" />
+    <Compile Include="IActorUserControl.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ProjectSearchController.cs" />

@@ -85,11 +85,8 @@ namespace LogisticsNetworkSimulator.Actors
             Canvas.SetTop(this, this.SupplierModel.Y);
             Canvas.SetLeft(this, this.SupplierModel.X);
             this.Width = 75;
-            ContextMenu pMenu = new ContextMenu();
-            MenuItem delete = new MenuItem();
-            MenuItem item2 = new MenuItem();
-            MenuItem graph = new MenuItem();
-            this.ContextMenu = pMenu;
+
+            this.CreateMenu();
 
             target.Children.Add(this);
         }
@@ -101,11 +98,8 @@ namespace LogisticsNetworkSimulator.Actors
             this.SupplierModel.X = position.X;
             this.SupplierModel.Y = position.Y;
             this.Width = 75;
-            ContextMenu pMenu = new ContextMenu();
-            MenuItem delete = new MenuItem();
-            MenuItem item2 = new MenuItem();
-            MenuItem graph = new MenuItem();
-            this.ContextMenu = pMenu;
+
+            this.CreateMenu();
 
             target.Children.Add(this);
             //delete.Header = "Delete";
@@ -125,6 +119,29 @@ namespace LogisticsNetworkSimulator.Actors
             //if (_label == null)
             //    printlabel(target);
         }
+
+        #region Menu
+        public void CreateMenu()
+        {
+            ContextMenu pMenu = new ContextMenu();
+            MenuItem delete = new MenuItem();
+            MenuItem settings = new MenuItem();
+
+            delete.Header = "Delete";
+            delete.Click += new RoutedEventHandler(delete_Click);
+            pMenu.Items.Add(delete);
+
+            this.ContextMenu = pMenu;
+        }
+
+        public void delete_Click(object sender, RoutedEventArgs e)
+        {
+            this.SupplierModel.SimulationModel.Suppliers.Remove(this.SupplierModel);
+            Image img = this.supplierUI;
+            Panel _parent = (Panel)VisualTreeHelper.GetParent(img);
+            _parent.Children.Remove(img);
+        }
+        #endregion
 
         public EnumTypes.UserControlTypes GetUserControlType()
         {
