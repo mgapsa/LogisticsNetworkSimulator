@@ -57,6 +57,7 @@
     <Compile Include="Actors\BuyerUserControl.xaml.cs">
       <DependentUpon>BuyerUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Actors\ConnectionUI.cs" />
     <Compile Include="Actors\ShopUserControl.xaml.cs">
       <DependentUpon>ShopUserControl.xaml</DependentUpon>
     </Compile>
