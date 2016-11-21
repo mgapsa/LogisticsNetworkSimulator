@@ -22,9 +22,12 @@ namespace DataModel
             SupplierUserControl
         };
 
-        public enum BuyerOptions
+        public enum BuyerAOptions
         {
-
+            Static = 1,
+            Random,
+            Poisson,
+            Gauss
         };
     }
 }

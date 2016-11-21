@@ -1,8 +1,60 @@
 ﻿<Window x:Class="LogisticsNetworkSimulator.SettingsWindows.BuyerSettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="BuyerSettingsWindow" Height="300" Width="300">
-    <Grid>
-        
+        Title="BuyerSettingsWindow" Height="400" Width="370">
+    <Grid Background="Gray">
+        <Grid.Resources>
+            <ControlTemplate x:Key="validationTemplate">
+                <DockPanel>
+                    <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                    <AdornedElementPlaceholder/>
+                </DockPanel>
+            </ControlTemplate>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <RadioButton Grid.Column="1" Grid.Row="1" Name="Static">Static</RadioButton>
+        <Label Grid.Column="1" Grid.Row="2">Amount</Label>
+        <TextBox Grid.Column="2" Grid.Row="2" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=Static}"
+                 Validation.ErrorTemplate="{StaticResource validationTemplate}" ></TextBox>
+        <RadioButton Grid.Column="1" Grid.Row="4" Name="Random">Random</RadioButton>
+        <Label Grid.Column="1" Grid.Row="5">Min amount</Label>
+        <TextBox Grid.Column="2" Grid.Row="5" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=Random}"
+                 Validation.ErrorTemplate="{StaticResource validationTemplate}" ></TextBox>
+        <Label Grid.Column="3" Grid.Row="5">Max amount</Label>
+        <TextBox Grid.Column="4" Grid.Row="5" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=Random}"
+                 Validation.ErrorTemplate="{StaticResource validationTemplate}" ></TextBox>
+        <RadioButton Grid.Column="1" Grid.Row="6" Name="Poisson">Poisson</RadioButton>
+        <Label Grid.Column="1" Grid.Row="7">Lambda</Label>
+        <TextBox Grid.Column="2" Grid.Row="7" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=Poisson}"
+                 Validation.ErrorTemplate="{StaticResource validationTemplate}" ></TextBox>
+        <RadioButton Grid.Column="1" Grid.Row="8" Name="Gauss">Gauss</RadioButton>
+        <Label Grid.Column="1" Grid.Row="9">Mean</Label>
+        <TextBox Grid.Column="2" Grid.Row="9" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=Gauss}"
+                 Validation.ErrorTemplate="{StaticResource validationTemplate}" ></TextBox>
+        <Label Grid.Column="3" Grid.Row="9">Deviation</Label>
+        <TextBox Grid.Column="4" Grid.Row="9" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=Gauss}"
+                 Validation.ErrorTemplate="{StaticResource validationTemplate}" ></TextBox>
+        <Button Name="SaveButton" Grid.Column="4" Grid.Row="10" Click="SaveButton_Click">Save</Button>
     </Grid>
 </Window>

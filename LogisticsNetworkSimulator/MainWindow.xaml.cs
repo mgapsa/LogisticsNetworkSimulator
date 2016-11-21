@@ -59,7 +59,7 @@ namespace LogisticsNetworkSimulator
             buyer.X = 1;
             buyer.Y = 2;
             buyer.ProjectId = 8;
-            buyer.OptionA = 1;
+            buyer.OptionA = EnumTypes.BuyerAOptions.Static;
             buyer.OptionB = 2;
             buyer.ParamA = 11;
             buyer.ParamB = 12;

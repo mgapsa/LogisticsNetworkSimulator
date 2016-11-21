@@ -9,7 +9,7 @@ namespace DataModel
     //sprawdzic jakie dane były w starym
     public class Buyer : Actor
     {
-        public int OptionA { get; set; }
+        public EnumTypes.BuyerAOptions OptionA { get; set; }
         public double ParamA { get; set; }
         public double ParamB { get; set; }
         public double ParamC { get; set; }
@@ -20,7 +20,7 @@ namespace DataModel
 
         public Buyer()
         {
-            this.OptionA = 0;
+            this.OptionA = EnumTypes.BuyerAOptions.Static;
             this.ParamA = 1;
             this.ParamB = 1;
             this.ParamC = 1;
