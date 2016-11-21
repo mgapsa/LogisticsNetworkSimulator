@@ -146,20 +146,18 @@ namespace LogisticsNetworkSimulator.Actors
 
         public void settings_Click(object sender, RoutedEventArgs e)
         {
+            //backup
+            double min = this.ShopModel.MinAmount;
+            double basic = this.ShopModel.BasicAmount;
+            double cost = this.ShopModel.StorageCost;
+            double initial = this.ShopModel.InitialAmount;
             var w = new ShopSettingsWindow(this.ShopModel);
-            if (w.ShowDialog() == true)
+            if (w.ShowDialog() != true)
             {
-                //Project project = w.Project;
-                //if (project != null)
-                //{
-                //    Model = new SimulationModelService().Get(project);
-                //    SimulationUI ui = new SimulationUI(Model, false);
-                //    ui.InitializeComponent();
-                //    simulationUI.Content = ui;
-                //    SetTitle(project.Name);
-                //    MnuSave.IsEnabled = true;
-                //    MnuSaveAs.IsEnabled = true;
-                //}
+                this.ShopModel.MinAmount = min;
+                this.ShopModel.BasicAmount = basic;
+                this.ShopModel.StorageCost = cost;
+                this.ShopModel.InitialAmount = initial;
             }
         }
         #endregion

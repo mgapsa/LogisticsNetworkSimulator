@@ -25,5 +25,11 @@ namespace LogisticsNetworkSimulator.SettingsWindows
             InitializeComponent();
             this.DataContext = model;
         }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+            this.Close();
+        }
     }
 }
