@@ -64,6 +64,7 @@
     <Compile Include="Actors\SupplierUserControl.xaml.cs">
       <DependentUpon>SupplierUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConnectionCreators\ConnectionCreator.cs" />
     <Compile Include="MenuWindows\OpenProjectWindow.xaml.cs">
       <DependentUpon>OpenProjectWindow.xaml</DependentUpon>
     </Compile>

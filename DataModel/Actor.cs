@@ -8,7 +8,6 @@ namespace DataModel
 {
     public class Actor
     {
-        public SimulationModel SimulationModel { get; set; }
         public int Id { get; set; }
         public int ProjectId { get; set; }
         public double X { get; set; }
@@ -19,11 +18,10 @@ namespace DataModel
             //default 0 everywhere;
         }
 
-        public Actor(Actor actor, SimulationModel model)
+        public Actor(Actor actor)
         {
             //this.Id = actor.Id;
             this.ProjectId = actor.ProjectId;
-            this.SimulationModel = model;
             //We have to change these below always
             //this.X = actor.X;
             //this.Y = actor.Y;

@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Services;
 using LogisticsNetworkSimulator.Actors;
+using LogisticsNetworkSimulator.ConnectionCreators;
 
 namespace LogisticsNetworkSimulator
 {
@@ -25,13 +26,14 @@ namespace LogisticsNetworkSimulator
     {
         public SimulationModel Model { get; set; }
         public SimulationEventHandler SimulationEventHandler { get; set; }
+        public ConnectionCreator ConnectionCreator { get; set; }
 
         public SimulationUI(SimulationModel model, bool isNewProject)
         {
             InitializeComponent();
             this.Model = model;
             this.SimulationEventHandler = new SimulationEventHandler(this);
-            model.ConnectionCreator = new ConnectionCreator(this.Model, this.target);
+            this.ConnectionCreator = new ConnectionCreator(this.Model, this.target);
             if(!isNewProject)
             {
                 PrintProject();
@@ -46,22 +48,25 @@ namespace LogisticsNetworkSimulator
 
         public void PrintProject()
         {
+            foreach (Connection connection in Model.Connections)
+            {
+                //ConnectionCreator.AddActor(conne)
+                ConnectionUI conn = new ConnectionUI(this.Model, connection.ActorA, connection.ActorB, connection.ConnectionType, this.target, connection);
+                conn.PrintOnTarget();
+            }
             foreach(Shop shopModel in Model.Shops)
             {
-                shopModel.SimulationModel = Model;
-                ShopUserControl shopUserControl= new ShopUserControl(shopModel);
+                ShopUserControl shopUserControl= new ShopUserControl(shopModel, Model, ConnectionCreator);
                 shopUserControl.printOnTarget(this.target);
             }
             foreach (Buyer buyerModel in Model.Buyers)
             {
-                buyerModel.SimulationModel = Model;
-                BuyerUserControl buyerUserControl = new BuyerUserControl(buyerModel);
+                BuyerUserControl buyerUserControl = new BuyerUserControl(buyerModel, Model);
                 buyerUserControl.printOnTarget(this.target);
             }
             foreach (Supplier supplierModel in Model.Suppliers)
             {
-                supplierModel.SimulationModel = Model;
-                SupplierUserControl supplierUserControl = new SupplierUserControl(supplierModel);
+                SupplierUserControl supplierUserControl = new SupplierUserControl(supplierModel, Model);
                 supplierUserControl.printOnTarget(this.target);
             }
         }
@@ -111,7 +116,7 @@ namespace LogisticsNetworkSimulator
                             switch(_type)
                             {
                                 case EnumTypes.UserControlTypes.ShopUserControl:
-                                    ShopUserControl _shopUserControl = new ShopUserControl((ShopUserControl)_element, Model);
+                                    ShopUserControl _shopUserControl = new ShopUserControl((ShopUserControl)_element, Model, ConnectionCreator);
                                     Model.Shops.Add(_shopUserControl.ShopModel);
                                     _shopUserControl.printOnTarget(_canvas, position);
                                     // set the value to return to the DoDragDrop call
@@ -172,7 +177,7 @@ namespace LogisticsNetworkSimulator
 
         private void target_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Model.ConnectionCreator.CancelConnection();
+            this.ConnectionCreator.CancelConnection();
         }
     }
 }

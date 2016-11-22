@@ -22,6 +22,7 @@ namespace LogisticsNetworkSimulator.Actors
     public partial class SupplierUserControl : UserControl, IActorUserControl
     {
         public Supplier SupplierModel { get; set; }
+        public SimulationModel SimulationModel { get; set; }
 
         private DateTime clickTime;
         private object clickSender;
@@ -38,14 +39,16 @@ namespace LogisticsNetworkSimulator.Actors
             InitializeComponent();
             this.supplierUI.Height = supplier.supplierUI.Height;
             this.supplierUI.Width = supplier.supplierUI.Height;
-            this.SupplierModel = new Supplier(supplier.SupplierModel, model);
+            this.SupplierModel = new Supplier(supplier.SupplierModel);
+            this.SimulationModel = model;
         }
 
         //create constructor
-        public SupplierUserControl(Supplier supplier)
+        public SupplierUserControl(Supplier supplier, SimulationModel model)
         {
             InitializeComponent();
             this.SupplierModel = supplier;
+            this.SimulationModel = model;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -140,7 +143,7 @@ namespace LogisticsNetworkSimulator.Actors
 
         public void delete_Click(object sender, RoutedEventArgs e)
         {
-            this.SupplierModel.SimulationModel.Suppliers.Remove(this.SupplierModel);
+            this.SimulationModel.Suppliers.Remove(this.SupplierModel);
             Image img = this.supplierUI;
             Panel _parent = (Panel)VisualTreeHelper.GetParent(img);
             _parent.Children.Remove(img);

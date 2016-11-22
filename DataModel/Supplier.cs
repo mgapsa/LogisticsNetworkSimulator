@@ -14,7 +14,7 @@ namespace DataModel
         }
 
         //copy constructor
-        public Supplier(Supplier supplier, SimulationModel model) : base(supplier, model)
+        public Supplier(Supplier supplier) : base(supplier)
         {
 
         }

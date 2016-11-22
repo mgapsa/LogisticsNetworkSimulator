@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DataModel;
 using LogisticsNetworkSimulator.SettingsWindows;
+using LogisticsNetworkSimulator.ConnectionCreators;
 
 namespace LogisticsNetworkSimulator.Actors
 {
@@ -26,6 +27,8 @@ namespace LogisticsNetworkSimulator.Actors
 
         private DateTime clickTime;
         private object clickSender;
+        public SimulationModel SimulationModel { get; set; }
+        public ConnectionCreator ConnectionCreator { get; set; }
 
         public ShopUserControl()
         {
@@ -34,19 +37,23 @@ namespace LogisticsNetworkSimulator.Actors
         }
 
         //copy constructor
-        public ShopUserControl(ShopUserControl shop, SimulationModel model)
+        public ShopUserControl(ShopUserControl shop, SimulationModel model, ConnectionCreator creator)
         {
             InitializeComponent();
             this.shopUI.Height = shop.shopUI.Height;
             this.shopUI.Width = shop.shopUI.Height;
-            this.ShopModel = new Shop(shop.ShopModel, model);
+            this.ShopModel = new Shop(shop.ShopModel);
+            this.SimulationModel = model;
+            this.ConnectionCreator = creator;
         }
 
         //create constructor
-        public ShopUserControl(Shop shop)
+        public ShopUserControl(Shop shop, SimulationModel model, ConnectionCreator creator)
         {
             InitializeComponent();
+            this.SimulationModel = model;
             this.ShopModel = shop;
+            this.ConnectionCreator = creator;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -118,6 +125,20 @@ namespace LogisticsNetworkSimulator.Actors
             //    printlabel(target);
         }
 
+        public void Reprint(Canvas target)
+        {
+            Image img = this.shopUI;
+            target.Children.Remove(this);
+
+            Canvas.SetTop(this, this.ShopModel.Y);
+            Canvas.SetLeft(this, this.ShopModel.X);
+            this.Width = 75;
+
+            this.CreateMenu();
+
+            target.Children.Add(this);
+        }
+
         #region Menu
         public void CreateMenu()
         {
@@ -138,7 +159,7 @@ namespace LogisticsNetworkSimulator.Actors
 
         public void delete_Click(object sender, RoutedEventArgs e)
         {
-            this.ShopModel.SimulationModel.Shops.Remove(this.ShopModel);
+            this.SimulationModel.Shops.Remove(this.ShopModel);
             Image img = this.shopUI;
             Panel _parent = (Panel)VisualTreeHelper.GetParent(img);
             _parent.Children.Remove(img);
@@ -175,8 +196,8 @@ namespace LogisticsNetworkSimulator.Actors
                 TimeSpan timeSinceDown = DateTime.Now - this.clickTime;
                 if (timeSinceDown.TotalMilliseconds < 500)
                 {
-                    this.ShopModel.SimulationModel.ConnectionCreator.AddActor(this);
-                    this.ShopModel.SimulationModel.ConnectionCreator.CreateConnectionIfPossible();
+                    this.ConnectionCreator.AddActor(this);
+                    this.ConnectionCreator.CreateConnectionIfPossible();
                 }
             }
         }
