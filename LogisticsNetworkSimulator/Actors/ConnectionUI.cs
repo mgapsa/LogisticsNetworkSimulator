@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LogisticsNetworkSimulator.Actors
 {
-    class ConnectionUI
+    public class ConnectionUI
     {
         //tutaj wszystko ziwazane z rysowanie, kontruktor przyjmujacy linie
         //Linia

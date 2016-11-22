@@ -98,11 +98,11 @@ namespace LogisticsNetworkSimulator.Actors
 
         public void printOnTarget(Canvas target, Point position)
         {
-            Canvas.SetTop(this, position.Y);
-            Canvas.SetLeft(this, position.X);
-            this.ShopModel.X = position.X;
-            this.ShopModel.Y = position.Y;
             this.Width = 75;
+            Canvas.SetTop(this, position.Y - this.Width/2);
+            Canvas.SetLeft(this, position.X - this.Width / 2);
+            this.ShopModel.X = position.X - this.Width / 2;
+            this.ShopModel.Y = position.Y - this.Width / 2;
 
             this.CreateMenu();
 
@@ -175,7 +175,8 @@ namespace LogisticsNetworkSimulator.Actors
                 TimeSpan timeSinceDown = DateTime.Now - this.clickTime;
                 if (timeSinceDown.TotalMilliseconds < 500)
                 {
-                    MessageBox.Show("LINES");
+                    this.ShopModel.SimulationModel.ConnectionCreator.AddActor(this);
+                    this.ShopModel.SimulationModel.ConnectionCreator.CreateConnectionIfPossible();
                 }
             }
         }

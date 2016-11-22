@@ -15,6 +15,7 @@ namespace DataModel
         public List<Shop> Shops { get; set; }
         public List<Supplier> Suppliers { get; set; }
         public List<Order> Orders { get; set; }
+        public ConnectionCreator ConnectionCreator { get; set; }
 
         public SimulationModel()
         {

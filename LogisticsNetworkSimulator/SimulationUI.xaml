@@ -18,7 +18,7 @@
                 <actors:ShopUserControl Margin="2" />
                 <actors:BuyerUserControl Margin="2" />
             </StackPanel>
-            <Canvas x:Name="target" Grid.Column="1"
+            <Canvas MouseRightButtonDown="target_MouseRightButtonDown" x:Name="target" Grid.Column="1"
             Background="Bisque"
             AllowDrop="True"
             DragOver="panel_DragOver"

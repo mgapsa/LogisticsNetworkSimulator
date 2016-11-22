@@ -31,12 +31,14 @@ namespace LogisticsNetworkSimulator
             InitializeComponent();
             this.Model = model;
             this.SimulationEventHandler = new SimulationEventHandler(this);
+            model.ConnectionCreator = new ConnectionCreator(this.Model, this.target);
             if(!isNewProject)
             {
                 PrintProject();
             }
         }
 
+        //not used
         public SimulationUI()
         {
             InitializeComponent();
@@ -166,6 +168,11 @@ namespace LogisticsNetworkSimulator
                     }
                 }
             }
+        }
+
+        private void target_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Model.ConnectionCreator.CancelConnection();
         }
     }
 }

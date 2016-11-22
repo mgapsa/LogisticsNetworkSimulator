@@ -6,6 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Image Width="75" x:Name="supplierUI" Source="/LogisticsNetworkSimulator;component/Resources/supplierIcon.png"></Image>
+        <Image MouseDown="supplierUI_MouseDown" MouseUp="supplierUI_MouseUp" Width="75" x:Name="supplierUI" Source="/LogisticsNetworkSimulator;component/Resources/supplierIcon.png"></Image>
     </Grid>
 </UserControl>

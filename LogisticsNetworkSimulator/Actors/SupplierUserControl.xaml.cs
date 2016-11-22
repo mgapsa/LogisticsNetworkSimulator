@@ -22,6 +22,10 @@ namespace LogisticsNetworkSimulator.Actors
     public partial class SupplierUserControl : UserControl, IActorUserControl
     {
         public Supplier SupplierModel { get; set; }
+
+        private DateTime clickTime;
+        private object clickSender;
+
         public SupplierUserControl()
         {
             InitializeComponent();
@@ -93,11 +97,11 @@ namespace LogisticsNetworkSimulator.Actors
 
         public void printOnTarget(Canvas target, Point position)
         {
-            Canvas.SetTop(this, position.Y);
-            Canvas.SetLeft(this, position.X);
-            this.SupplierModel.X = position.X;
-            this.SupplierModel.Y = position.Y;
             this.Width = 75;
+            Canvas.SetTop(this, position.Y - this.Width / 2);
+            Canvas.SetLeft(this, position.X - this.Width / 2);
+            this.SupplierModel.X = position.X - this.Width / 2;
+            this.SupplierModel.Y = position.Y - this.Width / 2;
 
             this.CreateMenu();
 
@@ -147,5 +151,28 @@ namespace LogisticsNetworkSimulator.Actors
         {
             return EnumTypes.UserControlTypes.SupplierUserControl;
         }
+
+        private void supplierUI_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.clickSender = sender;
+                this.clickTime = DateTime.Now;
+            }
+        }
+
+        private void supplierUI_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Released && sender == this.clickSender)
+            {
+                TimeSpan timeSinceDown = DateTime.Now - this.clickTime;
+                if (timeSinceDown.TotalMilliseconds < 500)
+                {
+                    MessageBox.Show("LINES");
+                }
+            }
+        }
+
+
     }
 }

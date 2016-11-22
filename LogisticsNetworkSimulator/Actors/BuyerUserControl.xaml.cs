@@ -23,6 +23,10 @@ namespace LogisticsNetworkSimulator.Actors
     public partial class BuyerUserControl : UserControl, IActorUserControl
     {
         public Buyer BuyerModel { get; set; }
+
+        private DateTime clickTime;
+        private object clickSender;
+
         public BuyerUserControl()
         {
             InitializeComponent();
@@ -94,11 +98,11 @@ namespace LogisticsNetworkSimulator.Actors
 
         public void printOnTarget(Canvas target, Point position)
         {
-            Canvas.SetTop(this, position.Y);
-            Canvas.SetLeft(this, position.X);
-            this.BuyerModel.X = position.X;
-            this.BuyerModel.Y = position.Y;
             this.Width = 75;
+            Canvas.SetTop(this, position.Y - this.Width / 2);
+            Canvas.SetLeft(this, position.X - this.Width / 2);
+            this.BuyerModel.X = position.X - this.Width / 2;
+            this.BuyerModel.Y = position.Y - this.Width / 2;
 
             this.CreateMenu();
 
@@ -170,6 +174,27 @@ namespace LogisticsNetworkSimulator.Actors
         public EnumTypes.UserControlTypes GetUserControlType()
         {
             return EnumTypes.UserControlTypes.BuyerUserControl;
+        }
+
+        private void buyerUI_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.clickSender = sender;
+                this.clickTime = DateTime.Now;
+            }
+        }
+
+        private void buyerUI_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Released && sender == this.clickSender)
+            {
+                TimeSpan timeSinceDown = DateTime.Now - this.clickTime;
+                if (timeSinceDown.TotalMilliseconds < 500)
+                {
+                    MessageBox.Show("LINES");
+                }
+            }
         }
     }
 }

@@ -6,21 +6,48 @@ using System.Threading.Tasks;
 
 namespace DataModel
 {
-    class ConnectionCreator
+    public class ConnectionCreator
     {
-        //ma byc w simulation modelu
-        //jak klikam na actorow ma sie to tu odolywac i sprawdzac i ustawiac
         //exception handling zeby tam byl try catch i tam mi lapalo i tam bede wiedzial i wysiwetla jakich polaczen nie mozna robic
-        //right clikc nulluje mi actorow
-        //po dodanu actora wywoluje sprawdzenie czy mozna linie stworzyc - jak tak dodaje do listy connectionow connection 
         //tworze connectionUI, rysuje, dodaje wartosc do HashMapy
+        public Object Target { get; set; }
+        public SimulationModel Model { get; set; }
         IActorUserControl ActorA;
         IActorUserControl ActorB;
 
-        public Connection AddActor(IActorUserControl actor)
+        public ConnectionCreator(SimulationModel model, Object target)
         {
-            //logic
-            return null;
+            this.Target = target;
+            this.Model = model;
+        }
+
+        public void AddActor(IActorUserControl actor)
+        {
+            if(ActorA == null)
+            {
+                ActorA = actor;
+            }
+            else if(ActorA != actor)
+            {
+                ActorB = actor;
+            }
+        }
+
+        public void CreateConnectionIfPossible()
+        {
+            if(ActorA != null && ActorB != null)
+            {
+                //tworze LINIE - wywolac konstruktor graficzny, on niech tworzy w sobie linie jako model
+                //DODAJE do modelu
+                //RYSUJE - czyli 
+                //linia ma miec simulationmodel!!!!
+            }
+        }
+
+        public void CancelConnection()
+        {
+            ActorA = null;
+            ActorB = null;
         }
     }
 }

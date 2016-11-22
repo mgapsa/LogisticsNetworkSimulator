@@ -9,6 +9,7 @@ namespace DataModel
     public class Connection
     {
         public int Id { get; set; }
+        public SimulationModel Model { get; set; }
         public int ProjectId { get; set; }
         public int ActorAId { get; set; }
         public int ActorBId { get; set; }
