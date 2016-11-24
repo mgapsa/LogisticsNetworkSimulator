@@ -19,16 +19,7 @@ namespace LogisticsNetworkSimulator.Actors
         public Connection Connection { get; set; }
         public SimulationModel SimmulationModel { get; set; }
 
-        public ConnectionUI(SimulationModel model, Actor actorA, Actor actorB, EnumTypes.ConnectionTypes connectionType, Canvas target)
-        {
-            Line = new Line();
-            this.SimmulationModel = model;
-            this.Target = target;
-            this.Connection = new Connection(actorA, actorB, connectionType);
-            this.SimmulationModel.Connections.Add(this.Connection);
-        }
-
-        public ConnectionUI(SimulationModel model, Actor actorA, Actor actorB, EnumTypes.ConnectionTypes connectionType, Canvas target, Connection connection)
+        public ConnectionUI(SimulationModel model, Canvas target, Connection connection)
         {
             Line = new Line();
             this.SimmulationModel = model;

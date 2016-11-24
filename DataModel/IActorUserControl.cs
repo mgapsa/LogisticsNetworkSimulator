@@ -9,5 +9,7 @@ namespace DataModel
     public interface IActorUserControl
     {
         EnumTypes.UserControlTypes GetUserControlType();
+
+        Actor GetActor();
     }
 }

@@ -29,5 +29,11 @@ namespace DataModel
             Poisson,
             Gauss
         };
+
+        public enum BuyerBOptions
+        {
+            Static = 1,
+            Poisson
+        };
     }
 }

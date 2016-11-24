@@ -1,4 +1,5 @@
 ﻿using DataModel;
+using LogisticsNetworkSimulator.ConnectionCreators;
 using LogisticsNetworkSimulator.SettingsWindows;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace LogisticsNetworkSimulator.Actors
         private DateTime clickTime;
         private object clickSender;
         public SimulationModel SimulationModel { get; set; }
+        public ConnectionCreator ConnectionCreator { get; set; }
 
         public BuyerUserControl()
         {
@@ -35,21 +37,23 @@ namespace LogisticsNetworkSimulator.Actors
         }
 
         //copy constructor
-        public BuyerUserControl(BuyerUserControl buyer, SimulationModel model)
+        public BuyerUserControl(BuyerUserControl buyer, SimulationModel model, ConnectionCreator creator)
         {
             InitializeComponent();
             this.buyerUI.Height = buyer.buyerUI.Height;
             this.buyerUI.Width = buyer.buyerUI.Height;
             this.SimulationModel = model;
             this.BuyerModel = new Buyer(buyer.BuyerModel);
+            this.ConnectionCreator = creator;
         }
 
         //create constructor
-        public BuyerUserControl(Buyer buyer, SimulationModel model)
+        public BuyerUserControl(Buyer buyer, SimulationModel model, ConnectionCreator creator)
         {
             InitializeComponent();
             this.BuyerModel = buyer;
             this.SimulationModel = model;
+            this.ConnectionCreator = creator;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -128,6 +132,20 @@ namespace LogisticsNetworkSimulator.Actors
             //    printlabel(target);
         }
 
+        public void Reprint(Canvas target)
+        {
+            Image img = this.buyerUI;
+            target.Children.Remove(this);
+
+            Canvas.SetTop(this, this.BuyerModel.Y);
+            Canvas.SetLeft(this, this.BuyerModel.X);
+            this.Width = 75;
+
+            this.CreateMenu();
+
+            target.Children.Add(this);
+        }
+
         #region Menu
         public void CreateMenu()
         {
@@ -179,6 +197,11 @@ namespace LogisticsNetworkSimulator.Actors
             return EnumTypes.UserControlTypes.BuyerUserControl;
         }
 
+        public Actor GetActor()
+        {
+            return this.BuyerModel;
+        }
+
         private void buyerUI_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -195,7 +218,16 @@ namespace LogisticsNetworkSimulator.Actors
                 TimeSpan timeSinceDown = DateTime.Now - this.clickTime;
                 if (timeSinceDown.TotalMilliseconds < 500)
                 {
-                    MessageBox.Show("LINES");
+                    try
+                    {
+                        this.ConnectionCreator.AddActor(this);
+                        this.ConnectionCreator.CreateConnectionIfPossible();
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                 }
             }
         }

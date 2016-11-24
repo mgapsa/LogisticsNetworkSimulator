@@ -163,6 +163,15 @@ namespace LogisticsNetworkSimulator.Actors
             Image img = this.shopUI;
             Panel _parent = (Panel)VisualTreeHelper.GetParent(img);
             _parent.Children.Remove(img);
+
+            //remove connections
+            List<Connection> connections = this.SimulationModel.Connections.Where(c => c.ActorA == this.ShopModel || c.ActorB == this.ShopModel).ToList();
+            foreach(Connection conn in connections)
+            {
+                //usunac conn z listy!
+                //usunac widok
+                //usunac z dictionary
+            }
         }
 
         public void settings_Click(object sender, RoutedEventArgs e)
@@ -188,6 +197,11 @@ namespace LogisticsNetworkSimulator.Actors
             return EnumTypes.UserControlTypes.ShopUserControl;
         }
 
+        public Actor GetActor()
+        {
+            return this.ShopModel;
+        }
+
         #region Mouse click
         private void shopUI_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -196,8 +210,15 @@ namespace LogisticsNetworkSimulator.Actors
                 TimeSpan timeSinceDown = DateTime.Now - this.clickTime;
                 if (timeSinceDown.TotalMilliseconds < 500)
                 {
-                    this.ConnectionCreator.AddActor(this);
-                    this.ConnectionCreator.CreateConnectionIfPossible();
+                    try
+                    {
+                        this.ConnectionCreator.AddActor(this);
+                        this.ConnectionCreator.CreateConnectionIfPossible();
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
         }

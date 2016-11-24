@@ -51,7 +51,8 @@ namespace LogisticsNetworkSimulator
             foreach (Connection connection in Model.Connections)
             {
                 //ConnectionCreator.AddActor(conne)
-                ConnectionUI conn = new ConnectionUI(this.Model, connection.ActorA, connection.ActorB, connection.ConnectionType, this.target, connection);
+                ConnectionUI conn = new ConnectionUI(this.Model, this.target, connection);
+                this.ConnectionCreator.ConnectionDictionary.Add(connection, conn);
                 conn.PrintOnTarget();
             }
             foreach(Shop shopModel in Model.Shops)
@@ -61,12 +62,12 @@ namespace LogisticsNetworkSimulator
             }
             foreach (Buyer buyerModel in Model.Buyers)
             {
-                BuyerUserControl buyerUserControl = new BuyerUserControl(buyerModel, Model);
+                BuyerUserControl buyerUserControl = new BuyerUserControl(buyerModel, Model, ConnectionCreator);
                 buyerUserControl.printOnTarget(this.target);
             }
             foreach (Supplier supplierModel in Model.Suppliers)
             {
-                SupplierUserControl supplierUserControl = new SupplierUserControl(supplierModel, Model);
+                SupplierUserControl supplierUserControl = new SupplierUserControl(supplierModel, Model, ConnectionCreator);
                 supplierUserControl.printOnTarget(this.target);
             }
         }
@@ -123,14 +124,14 @@ namespace LogisticsNetworkSimulator
                                     e.Effects = DragDropEffects.Copy;
                                     break;
                                 case EnumTypes.UserControlTypes.BuyerUserControl:
-                                    BuyerUserControl _buyerUserControl = new BuyerUserControl((BuyerUserControl)_element, Model);
+                                    BuyerUserControl _buyerUserControl = new BuyerUserControl((BuyerUserControl)_element, Model, ConnectionCreator);
                                     Model.Buyers.Add(_buyerUserControl.BuyerModel);
                                     _buyerUserControl.printOnTarget(_canvas, position);
                                     // set the value to return to the DoDragDrop call
                                     e.Effects = DragDropEffects.Copy;
                                     break;
                                 case EnumTypes.UserControlTypes.SupplierUserControl:
-                                    SupplierUserControl _supplierUserControl = new SupplierUserControl((SupplierUserControl)_element, Model);
+                                    SupplierUserControl _supplierUserControl = new SupplierUserControl((SupplierUserControl)_element, Model, ConnectionCreator);
                                     Model.Suppliers.Add(_supplierUserControl.SupplierModel);
                                     _supplierUserControl.printOnTarget(_canvas, position);
                                     // set the value to return to the DoDragDrop call

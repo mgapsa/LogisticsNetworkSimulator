@@ -13,10 +13,10 @@ namespace DataModel
         public double ParamA { get; set; }
         public double ParamB { get; set; }
         public double ParamC { get; set; }
-        public int OptionB { get; set; }
         public double ParamD { get; set; }
         public double ParamE { get; set; }
         public double ParamF { get; set; }
+        public EnumTypes.BuyerBOptions OptionB { get; set; }
 
         public Buyer()
         {
@@ -24,10 +24,10 @@ namespace DataModel
             this.ParamA = 1;
             this.ParamB = 1;
             this.ParamC = 1;
-            this.OptionB = 0;
             this.ParamD = 1;
             this.ParamE = 1;
             this.ParamF = 1;
+            this.OptionB = EnumTypes.BuyerBOptions.Static;
         }
 
         //copy consttructor

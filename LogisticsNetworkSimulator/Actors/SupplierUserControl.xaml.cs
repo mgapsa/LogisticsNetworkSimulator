@@ -1,4 +1,5 @@
 ﻿using DataModel;
+using LogisticsNetworkSimulator.ConnectionCreators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace LogisticsNetworkSimulator.Actors
     {
         public Supplier SupplierModel { get; set; }
         public SimulationModel SimulationModel { get; set; }
+        public ConnectionCreator ConnectionCreator { get; set; }
 
         private DateTime clickTime;
         private object clickSender;
@@ -34,21 +36,23 @@ namespace LogisticsNetworkSimulator.Actors
         }
 
         //copy constructor
-        public SupplierUserControl(SupplierUserControl supplier, SimulationModel model)
+        public SupplierUserControl(SupplierUserControl supplier, SimulationModel model, ConnectionCreator creator)
         {
             InitializeComponent();
             this.supplierUI.Height = supplier.supplierUI.Height;
             this.supplierUI.Width = supplier.supplierUI.Height;
             this.SupplierModel = new Supplier(supplier.SupplierModel);
             this.SimulationModel = model;
+            this.ConnectionCreator = creator;
         }
 
         //create constructor
-        public SupplierUserControl(Supplier supplier, SimulationModel model)
+        public SupplierUserControl(Supplier supplier, SimulationModel model, ConnectionCreator creator)
         {
             InitializeComponent();
             this.SupplierModel = supplier;
             this.SimulationModel = model;
+            this.ConnectionCreator = creator;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -127,6 +131,20 @@ namespace LogisticsNetworkSimulator.Actors
             //    printlabel(target);
         }
 
+        public void Reprint(Canvas target)
+        {
+            Image img = this.supplierUI;
+            target.Children.Remove(this);
+
+            Canvas.SetTop(this, this.SupplierModel.Y);
+            Canvas.SetLeft(this, this.SupplierModel.X);
+            this.Width = 75;
+
+            this.CreateMenu();
+
+            target.Children.Add(this);
+        }
+
         #region Menu
         public void CreateMenu()
         {
@@ -155,6 +173,11 @@ namespace LogisticsNetworkSimulator.Actors
             return EnumTypes.UserControlTypes.SupplierUserControl;
         }
 
+        public Actor GetActor()
+        {
+            return this.SupplierModel;
+        }
+
         private void supplierUI_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -171,7 +194,15 @@ namespace LogisticsNetworkSimulator.Actors
                 TimeSpan timeSinceDown = DateTime.Now - this.clickTime;
                 if (timeSinceDown.TotalMilliseconds < 500)
                 {
-                    MessageBox.Show("LINES");
+                    try
+                    {
+                        this.ConnectionCreator.AddActor(this);
+                        this.ConnectionCreator.CreateConnectionIfPossible();
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
         }
