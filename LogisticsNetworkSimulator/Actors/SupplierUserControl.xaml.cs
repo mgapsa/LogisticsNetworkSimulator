@@ -165,6 +165,14 @@ namespace LogisticsNetworkSimulator.Actors
             Image img = this.supplierUI;
             Panel _parent = (Panel)VisualTreeHelper.GetParent(img);
             _parent.Children.Remove(img);
+
+            List<Connection> connections = this.SimulationModel.Connections.Where(c => c.ActorA == this.SupplierModel || c.ActorB == this.SupplierModel).ToList();
+            foreach (Connection conn in connections)
+            {
+                this.SimulationModel.Connections.Remove(conn);
+                this.ConnectionCreator.ConnectionDictionary[conn].RemoveLineUI();
+                this.ConnectionCreator.ConnectionDictionary.Remove(conn);
+            }
         }
         #endregion
 

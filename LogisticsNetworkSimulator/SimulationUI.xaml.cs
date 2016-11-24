@@ -51,7 +51,7 @@ namespace LogisticsNetworkSimulator
             foreach (Connection connection in Model.Connections)
             {
                 //ConnectionCreator.AddActor(conne)
-                ConnectionUI conn = new ConnectionUI(this.Model, this.target, connection);
+                ConnectionUI conn = new ConnectionUI(this.Model, this.target, connection, this.ConnectionCreator);
                 this.ConnectionCreator.ConnectionDictionary.Add(connection, conn);
                 conn.PrintOnTarget();
             }

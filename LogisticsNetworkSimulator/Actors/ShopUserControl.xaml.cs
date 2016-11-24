@@ -168,9 +168,9 @@ namespace LogisticsNetworkSimulator.Actors
             List<Connection> connections = this.SimulationModel.Connections.Where(c => c.ActorA == this.ShopModel || c.ActorB == this.ShopModel).ToList();
             foreach(Connection conn in connections)
             {
-                //usunac conn z listy!
-                //usunac widok
-                //usunac z dictionary
+                this.SimulationModel.Connections.Remove(conn);
+                this.ConnectionCreator.ConnectionDictionary[conn].RemoveLineUI();
+                this.ConnectionCreator.ConnectionDictionary.Remove(conn);
             }
         }
 
