@@ -78,17 +78,15 @@ namespace LogisticsNetworkSimulator.Actors
 
         public void Settings_Click(object sender, RoutedEventArgs e)
         {
-            //double min = this.ShopModel.MinAmount;
-            //double basic = this.ShopModel.BasicAmount;
-            //double cost = this.ShopModel.StorageCost;
-            //double initial = this.ShopModel.InitialAmount;
+            double min = this.Connection.MinDelay;
+            double max = this.Connection.MaxDelay;
+            double usage = this.Connection.Usage;
             var w = new ConnectionSettingsWindow(this.Connection);
             if (w.ShowDialog() != true)
             {
-                //this.ShopModel.MinAmount = min;
-                //this.ShopModel.BasicAmount = basic;
-                //this.ShopModel.StorageCost = cost;
-                //this.ShopModel.InitialAmount = initial;
+                this.Connection.MinDelay = min;
+                this.Connection.MaxDelay = max;
+                this.Connection.Usage = usage;
             }
         }
         #endregion

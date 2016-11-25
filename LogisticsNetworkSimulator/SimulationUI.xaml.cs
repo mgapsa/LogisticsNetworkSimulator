@@ -151,6 +151,11 @@ namespace LogisticsNetworkSimulator
                                     ShopUserControl _shopUserControl = (ShopUserControl)_element;
                                     _parent.Children.Remove(_element);
                                     _shopUserControl.printOnTarget(_canvas, position);
+                                    //TODO: move lines
+                                    //przeszukac jak w usuwaniu zeby znalezc jakie linie przemiscic, znalezc je po hashmapie
+                                    //potem gorzej bo dla kazdej linii musimy nzlaezc aktorow zeby ich przerysowac... nie mam do nich odwolan, po liscie wszystkich narysowanych musze leciec
+                                    //odowlania nie moge zrobic bo przy odtwarzaniu z bazki nie mam jeszcze aktorow ui i nie ma ich w connections ui
+                                    //zmiana tego bedzie dluzsza niz warto
                                     // set the value to return to the DoDragDrop call
                                     e.Effects = DragDropEffects.Move;
                                     break;
@@ -158,6 +163,7 @@ namespace LogisticsNetworkSimulator
                                     BuyerUserControl _buyerUserControl = (BuyerUserControl)_element;
                                     _parent.Children.Remove(_element);
                                     _buyerUserControl.printOnTarget(_canvas, position);
+                                    //TODO: move lines
                                     // set the value to return to the DoDragDrop call
                                     e.Effects = DragDropEffects.Move;
                                     break;

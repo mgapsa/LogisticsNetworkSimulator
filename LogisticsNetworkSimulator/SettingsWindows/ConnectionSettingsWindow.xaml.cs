@@ -23,6 +23,13 @@ namespace LogisticsNetworkSimulator.SettingsWindows
         public ConnectionSettingsWindow(Connection connection)
         {
             InitializeComponent();
+            this.DataContext = connection;
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+            this.Close();
         }
     }
 }
