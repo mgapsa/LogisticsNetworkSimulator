@@ -11,5 +11,7 @@ namespace DataModel
         EnumTypes.UserControlTypes GetUserControlType();
 
         Actor GetActor();
+
+        void Reprint(Object targetPanel);
     }
 }

@@ -145,14 +145,20 @@ namespace LogisticsNetworkSimulator
                         else if (e.AllowedEffects.HasFlag(DragDropEffects.Move))
                         {
                             IActorUserControl _actorUserControl = (IActorUserControl)_element;
+                            List<Connection> connections;
                             switch(_actorUserControl.GetUserControlType())
                             {
                                 case EnumTypes.UserControlTypes.ShopUserControl:
                                     ShopUserControl _shopUserControl = (ShopUserControl)_element;
                                     _parent.Children.Remove(_element);
                                     _shopUserControl.printOnTarget(_canvas, position);
-                                    //TODO: move lines
-                                    //przeszukac jak w usuwaniu zeby znalezc jakie linie przemiscic, znalezc je po hashmapie
+
+                                    connections = this.Model.Connections.Where(c => c.ActorA == _shopUserControl.ShopModel || c.ActorB == _shopUserControl.ShopModel).ToList();
+                                    foreach (Connection conn in connections)
+                                    {
+                                        this.ConnectionCreator.ConnectionDictionary[conn].Reprint();
+                                    }
+                                    //TODO: 
                                     //potem gorzej bo dla kazdej linii musimy nzlaezc aktorow zeby ich przerysowac... nie mam do nich odwolan, po liscie wszystkich narysowanych musze leciec
                                     //odowlania nie moge zrobic bo przy odtwarzaniu z bazki nie mam jeszcze aktorow ui i nie ma ich w connections ui
                                     //zmiana tego bedzie dluzsza niz warto
@@ -163,7 +169,12 @@ namespace LogisticsNetworkSimulator
                                     BuyerUserControl _buyerUserControl = (BuyerUserControl)_element;
                                     _parent.Children.Remove(_element);
                                     _buyerUserControl.printOnTarget(_canvas, position);
-                                    //TODO: move lines
+
+                                    connections = this.Model.Connections.Where(c => c.ActorA == _buyerUserControl.BuyerModel || c.ActorB == _buyerUserControl.BuyerModel).ToList();
+                                    foreach (Connection conn in connections)
+                                    {
+                                        this.ConnectionCreator.ConnectionDictionary[conn].Reprint();
+                                    }
                                     // set the value to return to the DoDragDrop call
                                     e.Effects = DragDropEffects.Move;
                                     break;
@@ -171,14 +182,40 @@ namespace LogisticsNetworkSimulator
                                     SupplierUserControl _supplierUserControl = (SupplierUserControl)_element;
                                     _parent.Children.Remove(_element);
                                     _supplierUserControl.printOnTarget(_canvas, position);
+
+                                    connections = this.Model.Connections.Where(c => c.ActorA == _supplierUserControl.SupplierModel || c.ActorB == _supplierUserControl.SupplierModel).ToList();
+                                    foreach (Connection conn in connections)
+                                    {
+                                        this.ConnectionCreator.ConnectionDictionary[conn].Reprint();
+                                        
+                                    }
                                     // set the value to return to the DoDragDrop call
                                     e.Effects = DragDropEffects.Move;
                                     break;
                             }
-                            
+
+                            this.ReprintActors();
                         }
                     }
                 }
+            }
+        }
+
+        public void ReprintActors()
+        {
+            List<IActorUserControl> actorsList = new List<IActorUserControl>();
+            foreach (UIElement element in target.Children)
+            {
+                IActorUserControl actor = element as IActorUserControl;
+                if(actor!=null)
+                {
+                    actorsList.Add(actor);                    
+                }
+            }
+
+            foreach (IActorUserControl actor in actorsList)
+            {
+                actor.Reprint(this.target);
             }
         }
 

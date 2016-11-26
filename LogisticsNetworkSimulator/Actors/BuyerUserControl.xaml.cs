@@ -146,6 +146,21 @@ namespace LogisticsNetworkSimulator.Actors
             target.Children.Add(this);
         }
 
+        public void Reprint(Object targetPanel)
+        {
+            Image img = this.buyerUI;
+            Canvas target = targetPanel as Canvas;
+            target.Children.Remove(this);
+
+            Canvas.SetTop(this, this.BuyerModel.Y);
+            Canvas.SetLeft(this, this.BuyerModel.X);
+            this.Width = 75;
+
+            this.CreateMenu();
+
+            target.Children.Add(this);
+        }
+
         #region Menu
         public void CreateMenu()
         {

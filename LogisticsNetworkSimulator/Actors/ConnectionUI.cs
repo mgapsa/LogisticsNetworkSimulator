@@ -95,5 +95,11 @@ namespace LogisticsNetworkSimulator.Actors
         {
             Target.Children.Remove(this.Line);
         }
+
+        public void Reprint()
+        {
+            this.RemoveLineUI();
+            this.PrintOnTarget();
+        }
     }
 }
