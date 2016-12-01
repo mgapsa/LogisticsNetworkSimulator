@@ -197,20 +197,31 @@ namespace LogisticsNetworkSimulator.Actors
 
         public void settings_Click(object sender, RoutedEventArgs e)
         {
+            EnumTypes.BuyerAOptions optiona = this.BuyerModel.OptionA;
+            EnumTypes.BuyerBOptions optionb = this.BuyerModel.OptionB;
+            double amount = this.BuyerModel.Amount;
+            double min = this.BuyerModel.MinAmount;
+            double max = this.BuyerModel.MaxAmount;
+            double lambda = this.BuyerModel.Lambda;
+            double meana = this.BuyerModel.MeanOptionA;
+            double deva = this.BuyerModel.DeviationOptionA;
+            double minutes = this.BuyerModel.Minutes;
+            double meanb = this.BuyerModel.MeanOptionB;
+            double devb = this.BuyerModel.DeviationOptionB;
+
+
             var w = new BuyerSettingsWindow(this.BuyerModel);
-            if (w.ShowDialog() == true)
+            if (w.ShowDialog() != true)
             {
-                //Project project = w.Project;
-                //if (project != null)
-                //{
-                //    Model = new SimulationModelService().Get(project);
-                //    SimulationUI ui = new SimulationUI(Model, false);
-                //    ui.InitializeComponent();
-                //    simulationUI.Content = ui;
-                //    SetTitle(project.Name);
-                //    MnuSave.IsEnabled = true;
-                //    MnuSaveAs.IsEnabled = true;
-                //}
+                this.BuyerModel.Amount = amount;
+                this.BuyerModel.MinAmount = min;
+                this.BuyerModel.MaxAmount = max;
+                this.BuyerModel.Lambda = lambda;
+                this.BuyerModel.MeanOptionA = meana;
+                this.BuyerModel.DeviationOptionA = deva;
+                this.BuyerModel.Minutes = minutes;
+                this.BuyerModel.MeanOptionB = meanb;
+                this.BuyerModel.DeviationOptionB = devb;
             }
         }
         #endregion

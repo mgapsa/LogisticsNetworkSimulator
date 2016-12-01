@@ -33,7 +33,8 @@ namespace DataModel
         public enum BuyerBOptions
         {
             Static = 1,
-            Poisson
+            Poisson,
+            Gauss
         };
     }
 }

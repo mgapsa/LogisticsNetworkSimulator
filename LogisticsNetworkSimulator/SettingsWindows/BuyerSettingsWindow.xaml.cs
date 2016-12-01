@@ -39,6 +39,17 @@ namespace LogisticsNetworkSimulator.SettingsWindows
                     this.Gauss.IsChecked = true;
                     break;
             }
+            switch(model.OptionB)
+            {
+                case EnumTypes.BuyerBOptions.Poisson:
+                    break;
+                case EnumTypes.BuyerBOptions.Gauss:
+                    this.GaussOptionB.IsChecked = true;
+                    break;
+                case EnumTypes.BuyerBOptions.Static:
+                    this.StaticOptionB.IsChecked = true;
+                    break;
+            }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
