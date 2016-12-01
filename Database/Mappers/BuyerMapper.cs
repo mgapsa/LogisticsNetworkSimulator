@@ -18,12 +18,16 @@ namespace Database.Mappers
             Map(x => x.Y).ToColumn("buyer_y");
             Map(x => x.OptionA).ToColumn("buyer_option_a");
             Map(x => x.OptionB).ToColumn("buyer_option_b");
-            Map(x => x.Amount).ToColumn("buyer_param_a");
-            Map(x => x.MinAmount).ToColumn("buyer_param_b");
-            Map(x => x.MaxAmount).ToColumn("buyer_param_c");
-            Map(x => x.Lambda).ToColumn("buyer_param_d");
-            Map(x => x.MeanOptionA).ToColumn("buyer_param_e");
-            Map(x => x.DeviationOptionA).ToColumn("buyer_param_f");
+            Map(x => x.Amount).ToColumn("buyer_amount");
+            Map(x => x.MinAmount).ToColumn("buyer_min_amount");
+            Map(x => x.MaxAmount).ToColumn("buyer_max_amount");
+            Map(x => x.Lambda).ToColumn("buyer_lambda");
+            Map(x => x.MeanOptionA).ToColumn("buyer_mean_option_a");
+            Map(x => x.DeviationOptionA).ToColumn("buyer_deviation_option_a");
+            Map(x => x.Minutes).ToColumn("buyer_minutes");
+            Map(x => x.MeanOptionB).ToColumn("buyer_mean_option_b");
+            Map(x => x.DeviationOptionB).ToColumn("buyer_deviation_option_b");
+            
         }
     }
 }

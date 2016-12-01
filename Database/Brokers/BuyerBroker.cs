@@ -29,8 +29,8 @@ namespace Database.Brokers
         public int Insert(IDbConnection connection, Buyer item, IDbTransaction transaction = null)
         {
             const string query =
-              "INSERT INTO buyer (buyer_project_id, buyer_x, buyer_y, buyer_option_a, buyer_option_b, buyer_param_a, buyer_param_b, buyer_param_c, buyer_param_d, buyer_param_e, buyer_param_f) " +
-              "VALUES (@ProjectId, @X, @Y, @OptionA, @OptionB, @ParamA, @ParamB, @ParamC, @ParamD, @ParamE, @ParamF)";
+              "INSERT INTO buyer (buyer_project_id, buyer_x, buyer_y, buyer_option_a, buyer_option_b, buyer_amount, buyer_min_amount, buyer_max_amount, buyer_lambda, buyer_mean_option_a, buyer_deviation_option_a, buyer_minutes, buyer_mean_option_b, buyer_deviation_option_b) " +
+              "VALUES (@ProjectId, @X, @Y, @OptionA, @OptionB, @Amount, @MinAmount, @MaxAmount, @Lambda, @MeanOptionA, @DeviationOptionA, @Minutes, @MeanOptionB, @DeviationOptionB)";
 
             int rowsAffected;
             if (transaction != null)
@@ -56,12 +56,15 @@ namespace Database.Brokers
                      "buyer_y = @Y, " +
                      "buyer_option_a = @OptionA, " +
                      "buyer_option_b = @OptionB, " +
-                     "buyer_param_a = @ParamA, " +
-                     "buyer_param_b = @ParamB, " +
-                     "buyer_param_c = @ParamC, " +
-                     "buyer_param_d = @ParamD, " +
-                     "buyer_param_e = @ParamE, " +
-                     "buyer_param_f = @ParamF " +
+                     "buyer_amount = @Amount, " +
+                     "buyer_min_amount = @MinAmount, " +
+                     "buyer_max_amount = @MaxAmount, " +
+                     "buyer_lambda = @Lambda, " +
+                     "buyer_mean_option_a = @MeanOptionA, " +
+                     "buyer_deviation_option_a = @DeviationOptionA, " +
+                     "buyer_minutes = @Minutes, " +
+                     "buyer_mean_option_b = @MeanOptionB, " +
+                     "buyer_deviation_option_b = @DeviationOptionB " +
                      "WHERE buyer_id = @Id";
 
             int rowsAffected;
