@@ -192,17 +192,36 @@ namespace LogisticsNetworkSimulator.Actors
         public void settings_Click(object sender, RoutedEventArgs e)
         {
             //backup
-            double min = this.ShopModel.Policy_sq_q;
-            double basic = this.ShopModel.Policy_sq_s;
-            double cost = this.ShopModel.Policy_rS_r;
-            double initial = this.ShopModel.InitialAmount;
+            EnumTypes.ShopOptions option = this.ShopModel.Option;
+
+            double init = this.ShopModel.InitialAmount;
+
+            double sqq = this.ShopModel.Policy_sq_q;
+            double sqs = this.ShopModel.Policy_sq_s;
+
+            double rsr = this.ShopModel.Policy_rS_r;
+            double rss = this.ShopModel.Policy_rS_S;
+
+            double rssr = this.ShopModel.Policy_rsS_r;
+            double rsss = this.ShopModel.Policy_rsS_s;
+            double rssS = this.ShopModel.Policy_rsS_Sbig;
+
             var w = new ShopSettingsWindow(this.ShopModel);
             if (w.ShowDialog() != true)
             {
-                this.ShopModel.Policy_sq_q = min;
-                this.ShopModel.Policy_sq_s = basic;
-                this.ShopModel.Policy_rS_r = cost;
-                this.ShopModel.InitialAmount = initial;
+                this.ShopModel.Option = option;
+
+                this.ShopModel.InitialAmount = init;
+
+                this.ShopModel.Policy_sq_q = sqq;
+                this.ShopModel.Policy_sq_s = sqs;
+
+                this.ShopModel.Policy_rS_r = rsr;
+                this.ShopModel.Policy_rS_S = rss;
+
+                this.ShopModel.Policy_rsS_r = rssr;
+                this.ShopModel.Policy_rsS_s = rsss;
+                this.ShopModel.Policy_rsS_Sbig = rssS; 	
             }
         }
         #endregion

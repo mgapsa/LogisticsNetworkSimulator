@@ -25,6 +25,8 @@ namespace DataModel
         public Shop()
         {
             //TODO form preferences?
+            this.Option = EnumTypes.ShopOptions.sq;
+
             this.InitialAmount = 100;
 
             this.Policy_sq_s = 900;
@@ -33,14 +35,16 @@ namespace DataModel
             this.Policy_rS_r = 60;
             this.Policy_rS_S = 1000;
 
-            this.Policy_rsS_r = 1;
-            this.Policy_rsS_s = 1;
-            this.Policy_rsS_Sbig = 1;
+            this.Policy_rsS_r = 60;
+            this.Policy_rsS_s = 900;
+            this.Policy_rsS_Sbig = 1000;
         }
 
         //copy constructor
         public Shop(Shop shop) :base(shop)
         {
+            this.Option = shop.Option;
+
             this.InitialAmount = shop.InitialAmount;
 
             this.Policy_sq_s = shop.Policy_sq_s;

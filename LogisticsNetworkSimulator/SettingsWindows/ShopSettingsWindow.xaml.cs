@@ -24,6 +24,18 @@ namespace LogisticsNetworkSimulator.SettingsWindows
         {
             InitializeComponent();
             this.DataContext = model;
+            switch (model.Option)
+            {
+                case EnumTypes.ShopOptions.rS:
+                    this.rS.IsChecked = true;
+                    break;
+                case EnumTypes.ShopOptions.sq:
+                    this.sq.IsChecked = true;
+                    break;
+                case EnumTypes.ShopOptions.rsS:
+                    this.rsS.IsChecked = true;
+                    break;
+            }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
