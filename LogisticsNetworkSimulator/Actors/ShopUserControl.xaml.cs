@@ -192,16 +192,16 @@ namespace LogisticsNetworkSimulator.Actors
         public void settings_Click(object sender, RoutedEventArgs e)
         {
             //backup
-            double min = this.ShopModel.MinAmount;
-            double basic = this.ShopModel.BasicAmount;
-            double cost = this.ShopModel.StorageCost;
+            double min = this.ShopModel.Policy_sq_q;
+            double basic = this.ShopModel.Policy_sq_s;
+            double cost = this.ShopModel.Policy_rS_r;
             double initial = this.ShopModel.InitialAmount;
             var w = new ShopSettingsWindow(this.ShopModel);
             if (w.ShowDialog() != true)
             {
-                this.ShopModel.MinAmount = min;
-                this.ShopModel.BasicAmount = basic;
-                this.ShopModel.StorageCost = cost;
+                this.ShopModel.Policy_sq_q = min;
+                this.ShopModel.Policy_sq_s = basic;
+                this.ShopModel.Policy_rS_r = cost;
                 this.ShopModel.InitialAmount = initial;
             }
         }

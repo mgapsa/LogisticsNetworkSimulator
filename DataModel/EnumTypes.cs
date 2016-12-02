@@ -36,5 +36,12 @@ namespace DataModel
             Poisson,
             Gauss
         };
+
+        public enum ShopOptions
+        {
+            sq = 1,
+            rS,
+            rsS
+        };
     }
 }

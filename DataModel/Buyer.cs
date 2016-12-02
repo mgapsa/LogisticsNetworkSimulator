@@ -45,10 +45,15 @@ namespace DataModel
             this.Amount = buyer.Amount;
             this.MinAmount = buyer.MinAmount;
             this.MaxAmount = buyer.MaxAmount;
-            this.OptionB = buyer.OptionB;
             this.Lambda = buyer.Lambda;
             this.MeanOptionA = buyer.MeanOptionA;
             this.DeviationOptionA = buyer.DeviationOptionA;
+
+
+            this.OptionB = buyer.OptionB;
+            this.Minutes = buyer.Minutes;
+            this.MeanOptionB = buyer.MeanOptionB;
+            this.DeviationOptionB = buyer.DeviationOptionB;
         }
     }
 }

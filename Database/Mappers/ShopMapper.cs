@@ -16,10 +16,17 @@ namespace Database.Mappers
             Map(x => x.ProjectId).ToColumn("shop_project_id");
             Map(x => x.X).ToColumn("shop_x");
             Map(x => x.Y).ToColumn("shop_y");
-            Map(x => x.BasicAmount).ToColumn("shop_basic_amount");
             Map(x => x.InitialAmount).ToColumn("shop_initial_value");
-            Map(x => x.MinAmount).ToColumn("shop_min_amount");
-            Map(x => x.StorageCost).ToColumn("shop_storage_cost");
+
+            Map(x => x.Policy_sq_s).ToColumn("shop_policy_sq_s");
+            Map(x => x.Policy_sq_q).ToColumn("shop_policy_sq_q");
+
+            Map(x => x.Policy_rS_r).ToColumn("shop_policy_rs_r");
+            Map(x => x.Policy_rS_S).ToColumn("shop_policy_rs_s");
+
+            Map(x => x.Policy_rsS_r).ToColumn("shop_policy_rss_r");
+            Map(x => x.Policy_rsS_s).ToColumn("shop_policy_rss_s");
+            Map(x => x.Policy_rsS_Sbig).ToColumn("shop_policy_rss_bigs");
         }
     }
 }
