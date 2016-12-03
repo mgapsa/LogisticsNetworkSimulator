@@ -230,36 +230,46 @@ namespace LogisticsNetworkSimulator
             this.ConnectionCreator.CancelConnection();
         }
 
+        //jak wywoluje to eventy to tworze argysy i jak moje eventy sie sa snullam ito lece
         private void StartSimulation_Click(object sender, RoutedEventArgs e)
         {
+            DateTime startTime = new DateTime(2016, 12, 1, 12, 0, 0);
+            DateTime endTime = new DateTime(2016, 12, 12, 12, 0, 0);
+            DateTime currentTime = startTime;
+
+            int size = (endTime - startTime).Minutes + (endTime - startTime).Hours * 60 + (endTime - startTime).Days * 24 * 60;
+            MessageBox.Show(size.ToString());
+            PreSet(size);
             //do PRESET - go through everything ans set size of arrays for graphdata  - set starting DATE! (or global and pass it? as it can be specified by user?)
 
-            //for (int i = 1; i <= d; i++) change it to minutes, check date etc
-            //{
-            //    //najpierw ilosci nowego dnia przyrownuje do ilosci z dnia poprzedniego - tak samo
-            //    foreach (ShopLink link in ShopList)
-            //    {
-            //        if (i > 0)
-            //        {
-            //            link.results[i] = link.results[i - 1];
-            //        }
-            //    }
+            //varialbe i which will be used to determine where to add (each minute/each hour?)
+            int i = 0;
+            //determine whether to copy lat values or not
+            int previousI = 0;
+            while(currentTime <= endTime)
+            {
+                i++;//now every minute so like this
+                if(i != previousI)
+                {
+                    foreach(Shop shop in Model.Shops)
+                    {
+                        shop.GraphData[i] = shop.GraphData[i - 1];
+                    }
+                }
+                previousI = i;
 
-            //    //potem dodaje do nich w shopach zrobione ordery i usuwam ordery
-            //teraz order bedzie miał date przyjscia - wiec sprawdzam dla kazdego shopa jego ordery i wywoluje event jesli ma przyjsc!
-            //    foreach (ShopLink shop in ShopList)
-            //    {
-            //        foreach (Order order in shop.OrderList)
-            //        {
-            //            order.delay -= 1;
-            //        }
-            //        int f = 1;
+                foreach(Shop shop in Model.Shops)
+                {
+                    if(shop.OrderArrived(currentTime))
+                    {
+                        SupplyArrivedToShopEventArgs args = new SupplyArrivedToShopEventArgs();
+                        this.SupplyArrivedToShop(this, args);
+                    }
+                }
 
-            //        //MessageBox.Show("day " + i.ToString() + "before deleting");
-            //        //foreach (Order order in shop.OrderList)
-            //        //{
-            //        //    MessageBox.Show(order.delay.ToString());
-            //        //}
+
+                currentTime.AddMinutes(1);
+            }
 
 
             //        while (f == 1)
@@ -385,6 +395,22 @@ namespace LogisticsNetworkSimulator
             //}
             //this.delete_orders(ShopList);
             //return true;
+        }
+
+        private void PreSet(int size)
+        {
+            foreach (Shop shop in Model.Shops)
+            {
+                shop.SetDataSize(size);
+            }
+            foreach (Buyer buyer in Model.Buyers)
+            {
+                buyer.SetDataSize(size);
+            }
+            foreach (Supplier supplier in Model.Suppliers)
+            {
+                supplier.SetDataSize(size);
+            }
         }
     }
 }

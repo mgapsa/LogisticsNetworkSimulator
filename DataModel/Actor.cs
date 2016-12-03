@@ -28,9 +28,9 @@ namespace DataModel
             //this.Y = actor.Y;
         }
 
-        public virtual bool InvokeEvent(DateTime startIme, DateTime currentTime)
+        public virtual void SetDataSize(int size)
         {
-            return false;
+            GraphData = new double[size];
         }
     }
 }

@@ -64,9 +64,20 @@ namespace DataModel
             OrdersList = new List<Order>();
         }
 
-        public override bool InvokeEvent(DateTime startTime, DateTime currentTime)
+        public bool MakeOrder(DateTime startTime, DateTime currentTime)
         {
             return true;
+        }
+
+        public bool OrderArrived(DateTime currentTime)
+        {
+            return false;
+        }
+
+        public override void SetDataSize(int size)
+        {
+            base.SetDataSize(size);
+            this.GraphData[0] = InitialAmount;
         }
     }
 }

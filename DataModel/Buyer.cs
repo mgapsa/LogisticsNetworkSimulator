@@ -56,7 +56,7 @@ namespace DataModel
             this.DeviationOptionB = buyer.DeviationOptionB;
         }
 
-        public override bool InvokeEvent(DateTime startTime, DateTime currentTime)
+        public bool MakeOrder(DateTime startTime, DateTime currentTime)
         {
             return true;
         }

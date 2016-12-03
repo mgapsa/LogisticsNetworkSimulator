@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LogisticsNetworkSimulator.SimulationEventsHelper
 {
-    class NewOrderShopToShopEventArgs : EventArgs
+    public class NewOrderShopToShopEventArgs : EventArgs
     {
     }
 }
