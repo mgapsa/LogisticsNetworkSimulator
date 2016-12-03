@@ -29,6 +29,11 @@ namespace LogisticsNetworkSimulator
         public SimulationEventHandler SimulationEventHandler { get; set; }
         public ConnectionCreator ConnectionCreator { get; set; }
 
+        public event Delegates.NewOrderShopToBuyerEventHandler NewOrderShopToBuyer;
+        public event Delegates.NewOrderShopToShopEventHandler NewOrderShopToShop;
+        public event Delegates.NewOrderSupplierToShopEventHandler NewOrderSupplierToShop;
+        public event Delegates.SupplyArrivedToShopEventHandler SupplyArrivedToShop;
+
         public SimulationUI(SimulationModel model, bool isNewProject)
         {
             InitializeComponent();

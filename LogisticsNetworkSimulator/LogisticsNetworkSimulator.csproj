@@ -83,7 +83,12 @@
     <Compile Include="SettingsWindows\ShopSettingsWindow.xaml.cs">
       <DependentUpon>ShopSettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SimulationEventsHelper\Delegates.cs" />
+    <Compile Include="SimulationEventsHelper\NewOrderShopToBuyerEventArgs.cs" />
+    <Compile Include="SimulationEventsHelper\NewOrderShopToShopEventArgs.cs" />
+    <Compile Include="SimulationEventsHelper\NewOrderSupplierToShopEventArgs.cs" />
     <Compile Include="SimulationEventsHelper\SimulationEventHandler.cs" />
+    <Compile Include="SimulationEventsHelper\SupplyArrivedToShopEventArgs.cs" />
     <Compile Include="SimulationUI.xaml.cs">
       <DependentUpon>SimulationUI.xaml</DependentUpon>
     </Compile>
