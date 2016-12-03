@@ -17,6 +17,7 @@
                 <actors:SupplierUserControl Margin="2" />
                 <actors:ShopUserControl Margin="2" />
                 <actors:BuyerUserControl Margin="2" />
+                <Button Name="StartSimulation" Click="StartSimulation_Click">START</Button>
             </StackPanel>
             <Canvas MouseRightButtonDown="target_MouseRightButtonDown" x:Name="target" Grid.Column="1"
             Background="Bisque"

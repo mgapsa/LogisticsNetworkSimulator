@@ -83,7 +83,7 @@
     <Compile Include="SettingsWindows\ShopSettingsWindow.xaml.cs">
       <DependentUpon>ShopSettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SimulationEventHandler.cs" />
+    <Compile Include="SimulationEventsHelper\SimulationEventHandler.cs" />
     <Compile Include="SimulationUI.xaml.cs">
       <DependentUpon>SimulationUI.xaml</DependentUpon>
     </Compile>

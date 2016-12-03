@@ -55,5 +55,10 @@ namespace DataModel
             this.MeanOptionB = buyer.MeanOptionB;
             this.DeviationOptionB = buyer.DeviationOptionB;
         }
+
+        public override bool InvokeEvent(DateTime startTime, DateTime currentTime)
+        {
+            return true;
+        }
     }
 }

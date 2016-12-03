@@ -10,6 +10,8 @@ namespace DataModel
     {
         public EnumTypes.ShopOptions Option { get; set; }
 
+        public List<Order> OrdersList { get; set; }
+
         public double InitialAmount { get; set; }
 
         public double Policy_sq_s { get; set; }
@@ -38,6 +40,8 @@ namespace DataModel
             this.Policy_rsS_r = 60;
             this.Policy_rsS_s = 900;
             this.Policy_rsS_Sbig = 1000;
+
+            OrdersList = new List<Order>();
         }
 
         //copy constructor
@@ -56,6 +60,13 @@ namespace DataModel
             this.Policy_rsS_r = shop.Policy_rsS_r;
             this.Policy_rsS_s = shop.Policy_rsS_s;
             this.Policy_rsS_Sbig = shop.Policy_rsS_Sbig;
+
+            OrdersList = new List<Order>();
+        }
+
+        public override bool InvokeEvent(DateTime startTime, DateTime currentTime)
+        {
+            return true;
         }
     }
 }

@@ -54,6 +54,33 @@ namespace LogisticsNetworkSimulator.SettingsWindows
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            Buyer model = this.DataContext as Buyer;
+            if(this.Static.IsChecked == true)
+            {
+                model.OptionA = EnumTypes.BuyerAOptions.Static;
+            }
+            else if (this.Random.IsChecked == true)
+            {
+                model.OptionA = EnumTypes.BuyerAOptions.Random;
+            }
+            else if (this.Poisson.IsChecked == true)
+            {
+                model.OptionA = EnumTypes.BuyerAOptions.Poisson;
+            }
+            else if (this.Gauss.IsChecked == true)
+            {
+                model.OptionA = EnumTypes.BuyerAOptions.Gauss;
+            }
+
+            if (this.GaussOptionB.IsChecked == true)
+            {
+                model.OptionB = EnumTypes.BuyerBOptions.Gauss;
+            }
+            else if (this.StaticOptionB.IsChecked == true)
+            {
+                model.OptionB = EnumTypes.BuyerBOptions.Static;
+            }
+
             DialogResult = true;
             this.Close();
         }

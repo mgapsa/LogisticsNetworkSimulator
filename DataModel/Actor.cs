@@ -12,6 +12,7 @@ namespace DataModel
         public int ProjectId { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
+        public double[] GraphData { get; set; }
 
         public Actor()
         {
@@ -25,6 +26,11 @@ namespace DataModel
             //We have to change these below always
             //this.X = actor.X;
             //this.Y = actor.Y;
+        }
+
+        public virtual bool InvokeEvent(DateTime startIme, DateTime currentTime)
+        {
+            return false;
         }
     }
 }

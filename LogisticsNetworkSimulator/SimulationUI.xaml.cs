@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Services;
 using LogisticsNetworkSimulator.Actors;
 using LogisticsNetworkSimulator.ConnectionCreators;
+using LogisticsNetworkSimulator.SimulationEventsHelper;
 
 namespace LogisticsNetworkSimulator
 {
@@ -222,6 +223,163 @@ namespace LogisticsNetworkSimulator
         private void target_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.ConnectionCreator.CancelConnection();
+        }
+
+        private void StartSimulation_Click(object sender, RoutedEventArgs e)
+        {
+            //do PRESET - go through everything ans set size of arrays for graphdata  - set starting DATE! (or global and pass it? as it can be specified by user?)
+
+            //for (int i = 1; i <= d; i++) change it to minutes, check date etc
+            //{
+            //    //najpierw ilosci nowego dnia przyrownuje do ilosci z dnia poprzedniego - tak samo
+            //    foreach (ShopLink link in ShopList)
+            //    {
+            //        if (i > 0)
+            //        {
+            //            link.results[i] = link.results[i - 1];
+            //        }
+            //    }
+
+            //    //potem dodaje do nich w shopach zrobione ordery i usuwam ordery
+            //teraz order bedzie miał date przyjscia - wiec sprawdzam dla kazdego shopa jego ordery i wywoluje event jesli ma przyjsc!
+            //    foreach (ShopLink shop in ShopList)
+            //    {
+            //        foreach (Order order in shop.OrderList)
+            //        {
+            //            order.delay -= 1;
+            //        }
+            //        int f = 1;
+
+            //        //MessageBox.Show("day " + i.ToString() + "before deleting");
+            //        //foreach (Order order in shop.OrderList)
+            //        //{
+            //        //    MessageBox.Show(order.delay.ToString());
+            //        //}
+
+
+            //        while (f == 1)
+            //        {
+            //            f = 0;
+            //            foreach (Order order in shop.OrderList)
+            //            {
+            //                if (order.delay == 0)
+            //                {
+            //                    shop.results[i] += order.amount;
+            //                    shop.OrderList.Remove(order);
+            //                    f = 1;
+            //                    break;
+            //                }
+            //            }
+            //        }
+            //        //MessageBox.Show("day " + i.ToString() + "after deleting");
+            //        //foreach (Order order in shop.OrderList)
+            //        //{
+            //        //    MessageBox.Show(order.delay.ToString());
+            //        //}
+            //        shop.S += shop.inCost * shop.results[i];
+
+            //    }
+
+            //??    //generwoanie needa u buyerow
+            //    foreach (BuyerLink shop in BuyerList)
+            //    {
+            //        generateNeed(shop, i);
+            //        shop.results[i] = shop.need;
+            //        if (i == 1)
+            //        {
+            //            shop.results[0] = shop.results[1];
+            //        }
+            //    }
+            //??
+
+            //    //teraz wysyłam z shopów do buyerów TODO for each such connection check if buyer want to buy sth -> if yes -> event (gets shop, buyer)
+            //    foreach (LineC line in LineC.LineList)
+            //    {
+            //        if (line.link1 as ShopLink != null && line.link2 as BuyerLink != null)
+            //        {
+            //            ShopLink slink = line.link1 as ShopLink;
+            //            BuyerLink blink = line.link2 as BuyerLink;
+
+            //            if (slink.send(blink.results[i], i))
+            //            {
+            //                //tutaj nic bo results na need jest
+            //            }
+            //            else
+            //            {
+            //                MessageBox.Show("ShopLink " + slink._label.Content.ToString() + " doesnt have enough resources at " + i.ToString() + " day");
+            //                this.delete_orders(ShopList);
+            //                return false;
+            //            }
+            //        }
+            //    }
+
+            //    foreach (LineC line in LineC.LineList) //TODOcheck if shop want to make an order 0> if yes event -> gets shop and shop
+            //    {
+            //        if (line.link1 as ShopLink != null && line.link2 as ShopLink != null)
+            //        {
+            //            ShopLink slink1 = line.link1 as ShopLink;
+            //            ShopLink slink2 = line.link2 as ShopLink;
+            //            double amount = 0;
+            //            foreach (Order order in slink2.OrderList)
+            //            {
+            //                amount += order.amount;
+            //            }
+            //            amount = slink2.need - amount - slink2.results[i];
+            //            amount = (double)((double)(line.prc * amount) / 100);
+            //            if (amount > 0 && slink1.send(amount, i))
+            //            {
+            //                Order order = new Order(amount, line.delay);
+            //                slink2.OrderList.Add(order);
+            //                slink2.S += slink2.orderCost;
+            //            }
+            //            else if (amount > 0)
+            //            {
+            //                MessageBox.Show("ShopLink " + slink1._label.Content.ToString() + "doesnt have enough resources at " + i.ToString() + " day");
+            //                this.delete_orders(ShopList);
+            //                return false;
+            //            }
+            //            //porownuje stan obecny sklepu z jego needem i tworze zamownie dla niego korzystając tez z procentów na linii, od drugiego sklepu natychmiast odejmuje te wartosc
+            //        }
+            //    }
+
+            //    foreach (LineC line in LineC.LineList) TODO jak wyzej
+            //    {
+            //        if (line.link1 as SourceLink != null && line.link2 as ShopLink != null)
+            //        {
+            //            SourceLink slink1 = line.link1 as SourceLink;
+            //            ShopLink slink2 = line.link2 as ShopLink;
+            //            double amount = 0;
+            //            foreach (Order order in slink2.OrderList)
+            //            {
+            //                amount += order.amount;
+            //            }
+            //            amount = slink2.need - amount - slink2.results[i];
+            //            amount = (double)((double)(line.prc * amount) / 100);
+            //            if (amount > 0)
+            //            {
+            //                //MessageBox.Show(line.delay.ToString());
+            //                Order order = new Order(amount, line.delay);
+            //                slink1.results[i] += amount;
+            //                if (i == 1)
+            //                {
+            //                    slink1.results[0] += amount;
+            //                }
+            //                slink2.OrderList.Add(order);
+            //                slink2.S += slink2.orderCost;
+            //                //MessageBox.Show(slink2.S.ToString());
+            //            }
+            //            else if (amount > 0)
+            //            {
+            //                MessageBox.Show("SourceLink " + slink1._label.Content.ToString() + " doesnt have enough resources at " + i.ToString() + " day");
+            //                this.delete_orders(ShopList);
+            //                return false;
+            //            }
+            //            //to samo co wyzej
+            //        }
+            //    }
+            //}
+            //this.delete_orders(ShopList);
+            //return true;
         }
     }
 }

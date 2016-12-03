@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogisticsNetworkSimulator
+namespace LogisticsNetworkSimulator.SimulationEventsHelper
 {
     public class SimulationEventHandler
     {
