@@ -23,6 +23,9 @@ namespace DataModel
         public double MeanOptionB { get; set; }
         public double DeviationOptionB { get; set; }
 
+        public DateTime NextOrderTime { get; set; }
+        public Double NextOrderAmount { get; set; }
+
         public Buyer()
         {
             this.OptionA = EnumTypes.BuyerAOptions.Static;
@@ -56,9 +59,14 @@ namespace DataModel
             this.DeviationOptionB = buyer.DeviationOptionB;
         }
 
-        public bool MakeOrder(DateTime startTime, DateTime currentTime)
+        public bool MakeOrder(DateTime currentTime)
         {
             return true;
+        }
+
+        public void SetNextOrderIfNeeded(DateTime currentTime)
+        {
+
         }
     }
 }

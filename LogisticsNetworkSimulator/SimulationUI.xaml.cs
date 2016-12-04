@@ -238,13 +238,15 @@ namespace LogisticsNetworkSimulator
             DateTime currentTime = startTime;
 
             int size = (endTime - startTime).Minutes + (endTime - startTime).Hours * 60 + (endTime - startTime).Days * 24 * 60;
-            MessageBox.Show(size.ToString());
-            PreSet(size);
+            //MessageBox.Show(size.ToString());
+
+            PreSet(size, startTime);
             //do PRESET - go through everything ans set size of arrays for graphdata  - set starting DATE! (or global and pass it? as it can be specified by user?)
+            //and set when buyers will buy for the first time->next time it will be set when they will be buy -> unless it will be some special option
 
             //varialbe i which will be used to determine where to add (each minute/each hour?)
             int i = 0;
-            //determine whether to copy lat values or not
+            //determine whether to copy last values or not
             int previousI = 0;
             while(currentTime <= endTime)
             {
@@ -263,37 +265,48 @@ namespace LogisticsNetworkSimulator
                     if(shop.OrderArrived(currentTime))
                     {
                         SupplyArrivedToShopEventArgs args = new SupplyArrivedToShopEventArgs();
-                        this.SupplyArrivedToShop(this, args);
+                        if(SupplyArrivedToShop != null)
+                        {
+                            //delete orders there so they are not in memory anmore
+                            this.SupplyArrivedToShop(this, args);
+                        }
+                    }
+                }
+
+                //    //teraz wysyłam z shopów do buyerów TODO for each such connection check if buyer want to buy sth -> if yes -> event (gets shop, buyer)
+                foreach (Connection connection in Model.Connections)
+                {
+                    if (connection.ConnectionType == EnumTypes.ConnectionTypes.ShopToBuyer)
+                    {
+                        Shop shop = connection.ActorA as Shop;
+                        Buyer buyer = connection.ActorB as Buyer;
+
+                        if (buyer.MakeOrder(currentTime))
+                        {
+                            if (this.NewOrderShopToBuyer != null)
+                            {
+                                NewOrderShopToBuyerEventArgs args = new NewOrderShopToBuyerEventArgs();
+                                try
+                                {
+                                    this.NewOrderShopToBuyer(this, args);
+                                }
+                                catch (Exception ex)
+                                {
+
+                                }
+                            }
+                        }
                     }
                 }
 
 
                 currentTime.AddMinutes(1);
+
+                foreach(Buyer buyer in Model.Buyers)
+                {
+                    buyer.SetNextOrderIfNeeded(currentTime);
+                }
             }
-
-
-            //        while (f == 1)
-            //        {
-            //            f = 0;
-            //            foreach (Order order in shop.OrderList)
-            //            {
-            //                if (order.delay == 0)
-            //                {
-            //                    shop.results[i] += order.amount;
-            //                    shop.OrderList.Remove(order);
-            //                    f = 1;
-            //                    break;
-            //                }
-            //            }
-            //        }
-            //        //MessageBox.Show("day " + i.ToString() + "after deleting");
-            //        //foreach (Order order in shop.OrderList)
-            //        //{
-            //        //    MessageBox.Show(order.delay.ToString());
-            //        //}
-            //        shop.S += shop.inCost * shop.results[i];
-
-            //    }
 
             //??    //generwoanie needa u buyerow
             //    foreach (BuyerLink shop in BuyerList)
@@ -307,27 +320,7 @@ namespace LogisticsNetworkSimulator
             //    }
             //??
 
-            //    //teraz wysyłam z shopów do buyerów TODO for each such connection check if buyer want to buy sth -> if yes -> event (gets shop, buyer)
-            //    foreach (LineC line in LineC.LineList)
-            //    {
-            //        if (line.link1 as ShopLink != null && line.link2 as BuyerLink != null)
-            //        {
-            //            ShopLink slink = line.link1 as ShopLink;
-            //            BuyerLink blink = line.link2 as BuyerLink;
-
-            //            if (slink.send(blink.results[i], i))
-            //            {
-            //                //tutaj nic bo results na need jest
-            //            }
-            //            else
-            //            {
-            //                MessageBox.Show("ShopLink " + slink._label.Content.ToString() + " doesnt have enough resources at " + i.ToString() + " day");
-            //                this.delete_orders(ShopList);
-            //                return false;
-            //            }
-            //        }
-            //    }
-
+            
             //    foreach (LineC line in LineC.LineList) //TODOcheck if shop want to make an order 0> if yes event -> gets shop and shop
             //    {
             //        if (line.link1 as ShopLink != null && line.link2 as ShopLink != null)
@@ -397,7 +390,7 @@ namespace LogisticsNetworkSimulator
             //return true;
         }
 
-        private void PreSet(int size)
+        private void PreSet(int size, DateTime startTime)
         {
             foreach (Shop shop in Model.Shops)
             {
@@ -406,6 +399,7 @@ namespace LogisticsNetworkSimulator
             foreach (Buyer buyer in Model.Buyers)
             {
                 buyer.SetDataSize(size);
+                buyer.SetNextOrderIfNeeded(startTime);
             }
             foreach (Supplier supplier in Model.Suppliers)
             {
