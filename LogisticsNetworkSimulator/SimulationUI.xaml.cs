@@ -237,7 +237,7 @@ namespace LogisticsNetworkSimulator
             DateTime endTime = new DateTime(2016, 12, 12, 12, 0, 0);
             DateTime currentTime = startTime;
 
-            int size = (endTime - startTime).Minutes + (endTime - startTime).Hours * 60 + (endTime - startTime).Days * 24 * 60;
+            int size = (endTime - startTime).Minutes + (endTime - startTime).Hours * 60 + (endTime - startTime).Days * 24 * 60 + 2;
             //MessageBox.Show(size.ToString());
 
             PreSet(size, startTime);
@@ -264,7 +264,7 @@ namespace LogisticsNetworkSimulator
                 {
                     if(shop.OrderArrived(currentTime))
                     {
-                        SupplyArrivedToShopEventArgs args = new SupplyArrivedToShopEventArgs();
+                        SupplyArrivedToShopEventArgs args = new SupplyArrivedToShopEventArgs(shop);
                         if(SupplyArrivedToShop != null)
                         {
                             //delete orders there so they are not in memory anmore
@@ -285,7 +285,7 @@ namespace LogisticsNetworkSimulator
                         {
                             if (this.NewOrderShopToBuyer != null)
                             {
-                                NewOrderShopToBuyerEventArgs args = new NewOrderShopToBuyerEventArgs();
+                                NewOrderShopToBuyerEventArgs args = new NewOrderShopToBuyerEventArgs(shop, buyer);
                                 try
                                 {
                                     this.NewOrderShopToBuyer(this, args);
@@ -299,8 +299,59 @@ namespace LogisticsNetworkSimulator
                     }
                 }
 
+                //Take care of percentage
+                foreach (Connection connection in Model.Connections)
+                {
+                    if (connection.ConnectionType == EnumTypes.ConnectionTypes.ShopToShop)
+                    {
+                        Shop shopA = connection.ActorA as Shop;
+                        Shop shopB = connection.ActorB as Shop;
 
-                currentTime.AddMinutes(1);
+                        if (shopB.MakeOrder(currentTime))
+                        {
+                            if (this.NewOrderShopToShop != null)
+                            {
+                                NewOrderShopToShopEventArgs args = new NewOrderShopToShopEventArgs(shopA, shopB, connection);
+                                try
+                                {
+                                    this.NewOrderShopToShop(this, args);
+                                }
+                                catch (Exception ex)
+                                {
+
+                                }
+                            }
+                        }
+                    }
+                }
+
+                //Take care of percentage
+                foreach (Connection connection in Model.Connections)
+                {
+                    if (connection.ConnectionType == EnumTypes.ConnectionTypes.SupplierToShop)
+                    {
+                        Supplier supplier = connection.ActorA as Supplier;
+                        Shop shop = connection.ActorB as Shop;
+
+                        if (shop.MakeOrder(currentTime))
+                        {
+                            if (this.NewOrderSupplierToShop != null)
+                            {
+                                NewOrderSupplierToShopEventArgs args = new NewOrderSupplierToShopEventArgs(supplier, shop, connection);
+                                try
+                                {
+                                    this.NewOrderSupplierToShop(this, args);
+                                }
+                                catch (Exception ex)
+                                {
+
+                                }
+                            }
+                        }
+                    }
+                }
+
+                currentTime = currentTime.AddMinutes(1);
 
                 foreach(Buyer buyer in Model.Buyers)
                 {
@@ -319,75 +370,6 @@ namespace LogisticsNetworkSimulator
             //        }
             //    }
             //??
-
-            
-            //    foreach (LineC line in LineC.LineList) //TODOcheck if shop want to make an order 0> if yes event -> gets shop and shop
-            //    {
-            //        if (line.link1 as ShopLink != null && line.link2 as ShopLink != null)
-            //        {
-            //            ShopLink slink1 = line.link1 as ShopLink;
-            //            ShopLink slink2 = line.link2 as ShopLink;
-            //            double amount = 0;
-            //            foreach (Order order in slink2.OrderList)
-            //            {
-            //                amount += order.amount;
-            //            }
-            //            amount = slink2.need - amount - slink2.results[i];
-            //            amount = (double)((double)(line.prc * amount) / 100);
-            //            if (amount > 0 && slink1.send(amount, i))
-            //            {
-            //                Order order = new Order(amount, line.delay);
-            //                slink2.OrderList.Add(order);
-            //                slink2.S += slink2.orderCost;
-            //            }
-            //            else if (amount > 0)
-            //            {
-            //                MessageBox.Show("ShopLink " + slink1._label.Content.ToString() + "doesnt have enough resources at " + i.ToString() + " day");
-            //                this.delete_orders(ShopList);
-            //                return false;
-            //            }
-            //            //porownuje stan obecny sklepu z jego needem i tworze zamownie dla niego korzystając tez z procentów na linii, od drugiego sklepu natychmiast odejmuje te wartosc
-            //        }
-            //    }
-
-            //    foreach (LineC line in LineC.LineList) TODO jak wyzej
-            //    {
-            //        if (line.link1 as SourceLink != null && line.link2 as ShopLink != null)
-            //        {
-            //            SourceLink slink1 = line.link1 as SourceLink;
-            //            ShopLink slink2 = line.link2 as ShopLink;
-            //            double amount = 0;
-            //            foreach (Order order in slink2.OrderList)
-            //            {
-            //                amount += order.amount;
-            //            }
-            //            amount = slink2.need - amount - slink2.results[i];
-            //            amount = (double)((double)(line.prc * amount) / 100);
-            //            if (amount > 0)
-            //            {
-            //                //MessageBox.Show(line.delay.ToString());
-            //                Order order = new Order(amount, line.delay);
-            //                slink1.results[i] += amount;
-            //                if (i == 1)
-            //                {
-            //                    slink1.results[0] += amount;
-            //                }
-            //                slink2.OrderList.Add(order);
-            //                slink2.S += slink2.orderCost;
-            //                //MessageBox.Show(slink2.S.ToString());
-            //            }
-            //            else if (amount > 0)
-            //            {
-            //                MessageBox.Show("SourceLink " + slink1._label.Content.ToString() + " doesnt have enough resources at " + i.ToString() + " day");
-            //                this.delete_orders(ShopList);
-            //                return false;
-            //            }
-            //            //to samo co wyzej
-            //        }
-            //    }
-            //}
-            //this.delete_orders(ShopList);
-            //return true;
         }
 
         private void PreSet(int size, DateTime startTime)
