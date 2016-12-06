@@ -10,10 +10,12 @@ namespace LogisticsNetworkSimulator.SimulationEventsHelper
     public class SupplyArrivedToShopEventArgs : EventArgs
     {
         public Shop Shop { get; set; }
+        public int I { get; set; }
 
-        public SupplyArrivedToShopEventArgs(Shop shop)
+        public SupplyArrivedToShopEventArgs(Shop shop, int i)
         {
             this.Shop = shop;
+            this.I = i;
         }
     }
 }

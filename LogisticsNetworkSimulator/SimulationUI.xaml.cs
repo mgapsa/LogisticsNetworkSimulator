@@ -264,7 +264,7 @@ namespace LogisticsNetworkSimulator
                 {
                     if(shop.OrderArrived(currentTime))
                     {
-                        SupplyArrivedToShopEventArgs args = new SupplyArrivedToShopEventArgs(shop);
+                        SupplyArrivedToShopEventArgs args = new SupplyArrivedToShopEventArgs(shop, i);
                         if(SupplyArrivedToShop != null)
                         {
                             //delete orders there so they are not in memory anmore
@@ -285,14 +285,14 @@ namespace LogisticsNetworkSimulator
                         {
                             if (this.NewOrderShopToBuyer != null)
                             {
-                                NewOrderShopToBuyerEventArgs args = new NewOrderShopToBuyerEventArgs(shop, buyer);
+                                NewOrderShopToBuyerEventArgs args = new NewOrderShopToBuyerEventArgs(shop, buyer, i);
                                 try
                                 {
                                     this.NewOrderShopToBuyer(this, args);
                                 }
                                 catch (Exception ex)
                                 {
-
+                                    MessageBox.Show(shop.Id.ToString() + "   " + ex.Message);
                                 }
                             }
                         }
@@ -307,11 +307,11 @@ namespace LogisticsNetworkSimulator
                         Shop shopA = connection.ActorA as Shop;
                         Shop shopB = connection.ActorB as Shop;
 
-                        if (shopB.MakeOrder(currentTime))
+                        if (shopB.MakeOrder(currentTime, i))
                         {
                             if (this.NewOrderShopToShop != null)
                             {
-                                NewOrderShopToShopEventArgs args = new NewOrderShopToShopEventArgs(shopA, shopB, connection);
+                                NewOrderShopToShopEventArgs args = new NewOrderShopToShopEventArgs(shopA, shopB, Model.Connections, i);
                                 try
                                 {
                                     this.NewOrderShopToShop(this, args);
@@ -333,11 +333,11 @@ namespace LogisticsNetworkSimulator
                         Supplier supplier = connection.ActorA as Supplier;
                         Shop shop = connection.ActorB as Shop;
 
-                        if (shop.MakeOrder(currentTime))
+                        if (shop.MakeOrder(currentTime, i))
                         {
                             if (this.NewOrderSupplierToShop != null)
                             {
-                                NewOrderSupplierToShopEventArgs args = new NewOrderSupplierToShopEventArgs(supplier, shop, connection);
+                                NewOrderSupplierToShopEventArgs args = new NewOrderSupplierToShopEventArgs(supplier, shop, Model.Connections, i);
                                 try
                                 {
                                     this.NewOrderSupplierToShop(this, args);

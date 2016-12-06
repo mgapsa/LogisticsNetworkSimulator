@@ -13,6 +13,7 @@ namespace DataModel
         public List<Order> OrdersList { get; set; }
 
         public double InitialAmount { get; set; }
+        public double CurrentAmount { get; set; }
 
         public double Policy_sq_s { get; set; }
         public double Policy_sq_q { get; set; }
@@ -23,6 +24,10 @@ namespace DataModel
         public double Policy_rsS_r { get; set; }
         public double Policy_rsS_s { get; set; }
         public double Policy_rsS_Sbig { get; set; }
+
+        public int MyProperty { get; set; }
+
+        public DateTime LastOrderTime { get; set; }
 
         public Shop()
         {
@@ -64,9 +69,44 @@ namespace DataModel
             OrdersList = new List<Order>();
         }
 
-        public bool MakeOrder(DateTime currentTime)
+        public bool MakeOrder(DateTime currentTime, int i)
         {
+            //if first time, it is first loop, it is 0 minute - if I change logic of simulation to add one minute imm
+            if(LastOrderTime == null)
+            {
+                LastOrderTime = currentTime;
+            }
+            switch(Option)
+            {
+                case EnumTypes.ShopOptions.rS:
+                    if((currentTime - LastOrderTime).Minutes >= this.Policy_rS_r)
+                    {
+                        if(ProductShortage(i, this.Policy_rS_S, false))
+                            return true;
+                    }
+                    break;
+                case EnumTypes.ShopOptions.rsS:
+                    break;
+                case EnumTypes.ShopOptions.sq:
+                    break;
+            }
             return true;
+        }
+
+        private bool ProductShortage(int i, double s, bool equal)
+        {
+            //TODO sum orders
+            if(equal)
+            {
+                if (GraphData[i] <= s)
+                    return true;
+            }
+            else
+            {
+                if (GraphData[i] < s)
+                    return true;
+            }
+            return false;
         }
 
         public bool OrderArrived(DateTime currentTime)

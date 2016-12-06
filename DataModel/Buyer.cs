@@ -61,12 +61,15 @@ namespace DataModel
 
         public bool MakeOrder(DateTime currentTime)
         {
-            return true;
+            return (NextOrderTime == currentTime);
         }
 
         public void SetNextOrderIfNeeded(DateTime currentTime)
         {
+            if(NextOrderTime == null || NextOrderTime <= currentTime)
+            {
 
+            }
         }
     }
 }
