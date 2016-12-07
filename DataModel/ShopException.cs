@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataModel
 {
-    class ShopException : Exception
+    public class ShopException : Exception
     {
         public static string LACKOFSUUPLY = "Shop lacks supplies!";
 

@@ -20,8 +20,8 @@ namespace Database.Brokers
         public int Insert(IDbConnection connection, Shop item, IDbTransaction transaction = null)
         {
             const string query =
-              "INSERT INTO shop (shop_project_id, shop_x, shop_y, shop_initial_value, shop_policy_sq_s, shop_policy_sq_q, shop_policy_rs_r, shop_policy_rs_s, shop_policy_rss_r, shop_policy_rss_s, shop_policy_rss_bigs ) " +
-              "VALUES (@ProjectId, @X, @Y, @InitialAmount, @Policy_sq_s, @Policy_sq_q, @Policy_rS_r, @Policy_rS_S, @Policy_rsS_r, @Policy_rsS_s, @Policy_rsS_Sbig)";
+              "INSERT INTO shop (shop_project_id, shop_x, shop_y, shop_initial_value, shop_policy, shop_policy_sq_s, shop_policy_sq_q, shop_policy_rs_r, shop_policy_rs_s, shop_policy_rss_r, shop_policy_rss_s, shop_policy_rss_bigs ) " +
+              "VALUES (@ProjectId, @X, @Y, @InitialAmount, @Option, @Policy_sq_s, @Policy_sq_q, @Policy_rS_r, @Policy_rS_S, @Policy_rsS_r, @Policy_rsS_s, @Policy_rsS_Sbig)";
 
             int rowsAffected;
             if (transaction != null)
@@ -46,6 +46,7 @@ namespace Database.Brokers
                      "SET shop_x = @X, " +
                      "shop_y = @Y, " +
                      "shop_initial_value = @InitialAmount, " +
+                     "shop_policy = @Option, " +
                      "shop_policy_sq_s = @Policy_sq_s, " +
                      "shop_policy_sq_q = @Policy_sq_q, " +
                      "shop_policy_rs_r = @Policy_rS_r, " +

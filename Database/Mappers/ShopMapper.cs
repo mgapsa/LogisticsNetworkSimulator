@@ -17,6 +17,7 @@ namespace Database.Mappers
             Map(x => x.X).ToColumn("shop_x");
             Map(x => x.Y).ToColumn("shop_y");
             Map(x => x.InitialAmount).ToColumn("shop_initial_value");
+            Map(x => x.Option).ToColumn("shop_policy");
 
             Map(x => x.Policy_sq_s).ToColumn("shop_policy_sq_s");
             Map(x => x.Policy_sq_q).ToColumn("shop_policy_sq_q");

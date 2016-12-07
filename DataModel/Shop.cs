@@ -90,20 +90,25 @@ namespace DataModel
                 case EnumTypes.ShopOptions.sq:
                     break;
             }
-            return true;
+            return false;
         }
 
         private bool ProductShortage(int i, double s, bool equal)
         {
             //TODO sum orders
+            double sumOfIncomingOrders = 0;
+            foreach (Order order in OrdersList)
+            {
+                sumOfIncomingOrders += order.Amount;
+            }
             if(equal)
             {
-                if (GraphData[i] <= s)
+                if (GraphData[i] + sumOfIncomingOrders <= s)
                     return true;
             }
             else
             {
-                if (GraphData[i] < s)
+                if (GraphData[i] + sumOfIncomingOrders < s)
                     return true;
             }
             return false;

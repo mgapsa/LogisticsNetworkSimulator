@@ -234,7 +234,7 @@ namespace LogisticsNetworkSimulator
         private void StartSimulation_Click(object sender, RoutedEventArgs e)
         {
             DateTime startTime = new DateTime(2016, 12, 1, 12, 0, 0);
-            DateTime endTime = new DateTime(2016, 12, 12, 12, 0, 0);
+            DateTime endTime = new DateTime(2016, 12, 1, 12, 10, 0);
             DateTime currentTime = startTime;
 
             int size = (endTime - startTime).Minutes + (endTime - startTime).Hours * 60 + (endTime - startTime).Days * 24 * 60 + 2;
@@ -351,12 +351,12 @@ namespace LogisticsNetworkSimulator
                     }
                 }
 
-                currentTime = currentTime.AddMinutes(1);
-
                 foreach(Buyer buyer in Model.Buyers)
                 {
                     buyer.SetNextOrderIfNeeded(currentTime);
                 }
+
+                currentTime = currentTime.AddMinutes(1);
             }
 
             //??    //generwoanie needa u buyerow

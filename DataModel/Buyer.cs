@@ -68,7 +68,31 @@ namespace DataModel
         {
             if(NextOrderTime == null || NextOrderTime <= currentTime)
             {
+                switch(OptionB)
+                {
+                    case EnumTypes.BuyerBOptions.Static:
+                        NextOrderTime = currentTime.AddMinutes(this.Minutes);
+                        SetNextOrderAmount();
+                        break;
+                    case EnumTypes.BuyerBOptions.Gauss:
+                        break;
+                }
+            }
+        }
 
+        private void SetNextOrderAmount()
+        {
+            switch(OptionA)
+            {
+                case EnumTypes.BuyerAOptions.Static:
+                    NextOrderAmount = this.Amount;
+                    break;
+                case EnumTypes.BuyerAOptions.Random:
+                    break;
+                case EnumTypes.BuyerAOptions.Poisson:
+                    break;
+                case EnumTypes.BuyerAOptions.Gauss:
+                    break;
             }
         }
     }
