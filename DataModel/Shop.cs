@@ -28,11 +28,14 @@ namespace DataModel
         public int MyProperty { get; set; }
 
         public DateTime LastOrderTime { get; set; }
+        public double LastOrderAmount { get; set; }
 
         public Shop()
         {
             //TODO form preferences?
             this.Option = EnumTypes.ShopOptions.sq;
+
+            this.LastOrderAmount = -1;
 
             this.InitialAmount = 100;
 
@@ -71,23 +74,40 @@ namespace DataModel
 
         public bool MakeOrder(DateTime currentTime, int i)
         {
+            //specia if to fasten it
+            if (currentTime == LastOrderTime)
+            {
+                return true;
+            }
+
             //if first time, it is first loop, it is 0 minute - if I change logic of simulation to add one minute imm
-            if(LastOrderTime == null)
+            if(LastOrderTime == new DateTime())
             {
                 LastOrderTime = currentTime;
             }
             switch(Option)
             {
                 case EnumTypes.ShopOptions.rS:
-                    if((currentTime - LastOrderTime).Minutes >= this.Policy_rS_r)
+                    if(currentTime == LastOrderTime ||  (currentTime - LastOrderTime).Minutes >= this.Policy_rS_r)
                     {
                         if(ProductShortage(i, this.Policy_rS_S, false))
                             return true;
                     }
                     break;
                 case EnumTypes.ShopOptions.rsS:
+                    if(currentTime == LastOrderTime || (currentTime - LastOrderTime).Minutes >= this.Policy_rsS_r)
+                    {
+                        if(ProductShortage(i, this.Policy_rsS_s, true))
+                        {
+                            return true;
+                        }
+                    }
                     break;
                 case EnumTypes.ShopOptions.sq:
+                    if(ProductShortage(i,this.Policy_sq_s, true))
+                    {
+                        return true;
+                    }
                     break;
             }
             return false;
@@ -112,6 +132,30 @@ namespace DataModel
                     return true;
             }
             return false;
+        }
+
+        public void GenerateOrder(DateTime currentTime, int i)
+        {
+            double sumOfIncomingOrders = 0;
+            foreach (Order order in OrdersList)
+            {
+                sumOfIncomingOrders += order.Amount;
+            }
+
+            LastOrderTime = currentTime;
+
+            switch(this.Option)
+            {
+                case EnumTypes.ShopOptions.rS:
+                    this.LastOrderAmount = this.Policy_rS_S - this.GraphData[i] - sumOfIncomingOrders;
+                    break;
+                case EnumTypes.ShopOptions.rsS:
+                    this.LastOrderAmount = this.Policy_rsS_Sbig - this.GraphData[i] - sumOfIncomingOrders;
+                    break;
+                case EnumTypes.ShopOptions.sq:
+                    this.LastOrderAmount = this.Policy_sq_q;
+                    break;
+            }
         }
 
         public bool OrderArrived(DateTime currentTime)

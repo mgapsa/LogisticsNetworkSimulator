@@ -61,12 +61,12 @@ namespace DataModel
 
         public bool MakeOrder(DateTime currentTime)
         {
-            return (NextOrderTime == currentTime);
+            return (NextOrderTime <= currentTime);
         }
 
         public void SetNextOrderIfNeeded(DateTime currentTime)
         {
-            if(NextOrderTime == null || NextOrderTime <= currentTime)
+            if(NextOrderTime == new DateTime() || NextOrderTime <= currentTime)
             {
                 switch(OptionB)
                 {
@@ -75,6 +75,7 @@ namespace DataModel
                         SetNextOrderAmount();
                         break;
                     case EnumTypes.BuyerBOptions.Gauss:
+
                         break;
                 }
             }

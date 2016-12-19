@@ -26,8 +26,7 @@ namespace Database.Mappers
             Map(x => x.DeviationOptionA).ToColumn("buyer_deviation_option_a");
             Map(x => x.Minutes).ToColumn("buyer_minutes");
             Map(x => x.MeanOptionB).ToColumn("buyer_mean_option_b");
-            Map(x => x.DeviationOptionB).ToColumn("buyer_deviation_option_b");
-            
+            Map(x => x.DeviationOptionB).ToColumn("buyer_deviation_option_b");            
         }
     }
 }

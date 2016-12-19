@@ -264,7 +264,7 @@ namespace LogisticsNetworkSimulator
                 {
                     if(shop.OrderArrived(currentTime))
                     {
-                        SupplyArrivedToShopEventArgs args = new SupplyArrivedToShopEventArgs(shop, i);
+                        SupplyArrivedToShopEventArgs args = new SupplyArrivedToShopEventArgs(shop, i, currentTime);
                         if(SupplyArrivedToShop != null)
                         {
                             //delete orders there so they are not in memory anmore
@@ -285,7 +285,7 @@ namespace LogisticsNetworkSimulator
                         {
                             if (this.NewOrderShopToBuyer != null)
                             {
-                                NewOrderShopToBuyerEventArgs args = new NewOrderShopToBuyerEventArgs(shop, buyer, i);
+                                NewOrderShopToBuyerEventArgs args = new NewOrderShopToBuyerEventArgs(shop, buyer, i, currentTime);
                                 try
                                 {
                                     this.NewOrderShopToBuyer(this, args);
@@ -311,14 +311,15 @@ namespace LogisticsNetworkSimulator
                         {
                             if (this.NewOrderShopToShop != null)
                             {
-                                NewOrderShopToShopEventArgs args = new NewOrderShopToShopEventArgs(shopA, shopB, Model.Connections, i);
+                                NewOrderShopToShopEventArgs args = new NewOrderShopToShopEventArgs(shopA, shopB, connection, i, currentTime);
                                 try
                                 {
                                     this.NewOrderShopToShop(this, args);
                                 }
                                 catch (Exception ex)
                                 {
-
+                                    MessageBox.Show(shopA.Id.ToString() + "   " + ex.Message);
+                                    return;
                                 }
                             }
                         }
@@ -337,14 +338,15 @@ namespace LogisticsNetworkSimulator
                         {
                             if (this.NewOrderSupplierToShop != null)
                             {
-                                NewOrderSupplierToShopEventArgs args = new NewOrderSupplierToShopEventArgs(supplier, shop, Model.Connections, i);
+                                NewOrderSupplierToShopEventArgs args = new NewOrderSupplierToShopEventArgs(supplier, shop, connection, i, currentTime);
                                 try
                                 {
                                     this.NewOrderSupplierToShop(this, args);
                                 }
                                 catch (Exception ex)
                                 {
-
+                                    MessageBox.Show(ex.Message);
+                                    return;
                                 }
                             }
                         }
@@ -386,6 +388,17 @@ namespace LogisticsNetworkSimulator
             foreach (Supplier supplier in Model.Suppliers)
             {
                 supplier.SetDataSize(size);
+            }
+        }
+
+        void Cleanup()
+        {
+            foreach(Shop shop in Model.Shops)
+            {
+                //buyerow jeszcze przeczyscic
+                shop.LastOrderTime = new DateTime();
+                shop.LastOrderAmount = -1;
+                shop.OrdersList = new List<Order>();
             }
         }
     }

@@ -11,15 +11,17 @@ namespace LogisticsNetworkSimulator.SimulationEventsHelper
     {
         public Supplier Supplier { get; set; }
         public Shop Shop { get; set; }
-        public List<Connection> Connections { get; set; }
+        public Connection Connection { get; set; }
         public int I { get; set; }
+        public DateTime Time { get; set; }
 
-        public NewOrderSupplierToShopEventArgs(Supplier supplier, Shop shop, List<Connection> connections, int i)
+        public NewOrderSupplierToShopEventArgs(Supplier supplier, Shop shop, Connection connection, int i, DateTime time)
         {
             this.Supplier = supplier;
             this.Shop = shop;
-            this.Connections = connections;
+            this.Connection = connection;
             this.I = i;
+            this.Time = time;
         }
 
     }

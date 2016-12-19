@@ -33,12 +33,12 @@ namespace LogisticsNetworkSimulator.Actors
 
         public void PrintOnTarget()
         {
-            Line.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-            Line.X1 = Connection.ActorA.X + 30;
-            Line.Y1 = Connection.ActorA.Y + 30;
+            Line.Stroke = System.Windows.Media.Brushes.Black;
+            Line.X1 = Connection.ActorA.X + 45;
+            Line.Y1 = Connection.ActorA.Y + 45;
 
-            Line.X2 = Connection.ActorB.X + 30;
-            Line.Y2 = Connection.ActorB.Y + 30;
+            Line.X2 = Connection.ActorB.X + 45;
+            Line.Y2 = Connection.ActorB.Y + 45;
             Line.HorizontalAlignment = HorizontalAlignment.Left;
             Line.VerticalAlignment = VerticalAlignment.Center;
             Line.StrokeThickness = 4;

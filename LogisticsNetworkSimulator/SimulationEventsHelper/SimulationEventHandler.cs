@@ -20,11 +20,12 @@ namespace LogisticsNetworkSimulator.SimulationEventsHelper
 
         void simulation_NewOrderShopToBuyer(object sender, NewOrderShopToBuyerEventArgs args)
         {
-            Console.WriteLine("Shop To buyer");
             if(args.Shop.GraphData[args.I] >= args.Buyer.NextOrderAmount)
             {
                 args.Shop.GraphData[args.I] -= args.Buyer.NextOrderAmount;
                 args.Buyer.GraphData[args.I] = args.Buyer.NextOrderAmount;
+
+                Console.WriteLine(args.Time.ToString() + "Shop To buyer" + args.Buyer.NextOrderAmount.ToString());
             }
             else
             {
@@ -34,32 +35,75 @@ namespace LogisticsNetworkSimulator.SimulationEventsHelper
 
         void simulation_NewOrderShopToShop(object sender, NewOrderShopToShopEventArgs args)
         {
-            Console.WriteLine("Shop To Shop");
+            if(args.ShopB.LastOrderAmount == -1 || args.ShopB.LastOrderTime != args.Time)
+            {
+                //generate order like that so that others can use it
+                args.ShopB.GenerateOrder(args.Time, args.I);
+            }
+
+            Random rnd = new Random();
+            int rand = rnd.Next(Convert.ToInt32(args.Connection.MinDelay), Convert.ToInt32(args.Connection.MaxDelay));
+            DateTime orderTime = args.Time.AddHours(rand);
+            Double orderAmount = (args.Connection.Usage * args.ShopB.LastOrderAmount) / 100;
+
+            if(args.ShopA.GraphData[args.I] > orderAmount)
+            {
+                args.ShopA.GraphData[args.I] -= orderAmount;
+
+                Order order = new Order(orderAmount, orderTime);
+                args.ShopB.OrdersList.Add(order);
+
+                Console.WriteLine(args.Time.ToString() + "Shop To Shop" + order.Amount.ToString() + "   " + order.ArrivalTime.ToString());
+            }
+            else
+            {
+                throw new ShopException(ShopException.LACKOFSUUPLY);
+            }
+
+
         }
 
         void simulation_NewOrderSupplierToShop(object sender, NewOrderSupplierToShopEventArgs args)
         {
-            //ustawic lastordertime
-            Console.WriteLine("Supplier To buyer");
-            double orderAmount = 100;
-            DateTime orderDate = new DateTime(2016, 12, 12, 12, 9, 0);
-            switch(args.Shop.Option)
+            if (args.Shop.LastOrderAmount == -1 || args.Shop.LastOrderTime != args.Time)
             {
-                case EnumTypes.ShopOptions.rS:                    
-                    args.Shop.OrdersList.Add(new Order(orderAmount, orderDate));
-
-                    args.Supplier.GraphData[args.I] += orderAmount;
-                    break;
-                case EnumTypes.ShopOptions.rsS:
-                    break;
-                case EnumTypes.ShopOptions.sq:
-                    break;
+                //generate order like that so that others can use it
+                args.Shop.GenerateOrder(args.Time, args.I);
             }
+
+            Random rnd = new Random();
+            int rand = rnd.Next(Convert.ToInt32(args.Connection.MinDelay), Convert.ToInt32(args.Connection.MaxDelay) + 1);
+            DateTime orderTime = args.Time.AddHours(rand);
+            Double orderAmount = (args.Connection.Usage * args.Shop.LastOrderAmount) / 100;
+
+            args.Supplier.GraphData[args.I] += orderAmount;
+            Order order = new Order(orderAmount, orderTime);
+            args.Shop.OrdersList.Add(order);
+
+            Console.WriteLine(args.Time.ToString() + "Supplier To Shop" + order.Amount.ToString() + "   " + order.ArrivalTime.ToString());
+
         }
 
         void simulation_SupplyArrivedToShop(object sender, SupplyArrivedToShopEventArgs args)
         {
-            Console.WriteLine("ORDER");
+            Shop shop = args.Shop;
+            bool flag = true;
+            while(flag)
+            {
+                flag = false;
+                foreach (Order order in shop.OrdersList)
+                {
+                    if(order.ArrivalTime <= args.Time)
+                    {
+                        Console.WriteLine(args.Time.ToString() + "Order arrived" + order.Amount.ToString() + "   " + order.ArrivalTime.ToString());
+                        shop.GraphData[args.I] += order.Amount;
+                        shop.OrdersList.Remove(order);
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+
 
         }
 
