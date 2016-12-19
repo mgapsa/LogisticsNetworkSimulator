@@ -88,14 +88,14 @@ namespace DataModel
             switch(Option)
             {
                 case EnumTypes.ShopOptions.rS:
-                    if(currentTime == LastOrderTime ||  (currentTime - LastOrderTime).Minutes >= this.Policy_rS_r)
+                    if(currentTime == LastOrderTime ||  (currentTime - LastOrderTime).TotalMinutes >= this.Policy_rS_r)
                     {
                         if(ProductShortage(i, this.Policy_rS_S, false))
                             return true;
                     }
                     break;
                 case EnumTypes.ShopOptions.rsS:
-                    if(currentTime == LastOrderTime || (currentTime - LastOrderTime).Minutes >= this.Policy_rsS_r)
+                    if(currentTime == LastOrderTime || (currentTime - LastOrderTime).TotalMinutes >= this.Policy_rsS_r)
                     {
                         if(ProductShortage(i, this.Policy_rsS_s, true))
                         {

@@ -6,25 +6,26 @@
              xmlns:local="clr-namespace:LogisticsNetworkSimulator"
              xmlns:actors="clr-namespace:LogisticsNetworkSimulator.Actors"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="1920" d:DesignWidth="1800">
     <ScrollViewer>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Name="ToolPanel" Background="Beige">
                 <actors:SupplierUserControl Margin="2" />
                 <actors:ShopUserControl Margin="2" />
                 <actors:BuyerUserControl Margin="2" />
                 <Button Name="StartSimulation" Click="StartSimulation_Click">START</Button>
+                <Calendar Name="StartDate"/>
+                <Calendar Name="EndDate"/>
             </StackPanel>
             <Canvas MouseRightButtonDown="target_MouseRightButtonDown" x:Name="target" Grid.Column="1"
             Background="Bisque"
             AllowDrop="True"
             DragOver="panel_DragOver"
-            Drop="panel_Drop">
-            </Canvas>
+            Drop="panel_Drop"/>
         </Grid>
     </ScrollViewer>
 </UserControl>

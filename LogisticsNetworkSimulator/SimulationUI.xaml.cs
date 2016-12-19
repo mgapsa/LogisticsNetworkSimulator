@@ -40,6 +40,10 @@ namespace LogisticsNetworkSimulator
             this.Model = model;
             this.SimulationEventHandler = new SimulationEventHandler(this);
             this.ConnectionCreator = new ConnectionCreator(this.Model, this.target);
+
+            this.StartDate.SelectedDate = DateTime.Now;
+            this.StartDate.SelectedDate = DateTime.Now.AddMonths(1);
+
             if(!isNewProject)
             {
                 PrintProject();
@@ -230,11 +234,10 @@ namespace LogisticsNetworkSimulator
             this.ConnectionCreator.CancelConnection();
         }
 
-        //jak wywoluje to eventy to tworze argysy i jak moje eventy sie sa snullam ito lece
         private void StartSimulation_Click(object sender, RoutedEventArgs e)
         {
-            DateTime startTime = new DateTime(2016, 12, 1, 12, 0, 0);
-            DateTime endTime = new DateTime(2016, 12, 1, 12, 10, 0);
+            DateTime startTime = this.StartDate.SelectedDate.Value.AddHours(8);
+            DateTime endTime = this.EndDate.SelectedDate.Value.AddHours(22);
             DateTime currentTime = startTime;
 
             int size = (endTime - startTime).Minutes + (endTime - startTime).Hours * 60 + (endTime - startTime).Days * 24 * 60 + 2;
@@ -352,6 +355,18 @@ namespace LogisticsNetworkSimulator
                         }
                     }
                 }
+                if(currentTime.Hour >= 22)
+                {
+                    currentTime = currentTime.AddHours(10);
+                    //to equalize further +1
+                    currentTime = currentTime.AddMinutes(-1);
+                    //Its new day so lets start with setting stuff
+                    i++;
+                    foreach (Shop shop in Model.Shops)
+                    {
+                        shop.GraphData[i] = shop.GraphData[i - 1];
+                    }
+                }
 
                 foreach(Buyer buyer in Model.Buyers)
                 {
@@ -399,6 +414,11 @@ namespace LogisticsNetworkSimulator
                 shop.LastOrderTime = new DateTime();
                 shop.LastOrderAmount = -1;
                 shop.OrdersList = new List<Order>();
+            }
+            foreach(Buyer buyer in Model.Buyers)
+            {
+                buyer.NextOrderTime = new DateTime();
+                buyer.NextOrderAmount = 0;
             }
         }
     }
