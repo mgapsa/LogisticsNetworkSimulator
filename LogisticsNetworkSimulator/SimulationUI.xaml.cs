@@ -34,6 +34,17 @@ namespace LogisticsNetworkSimulator
         public event Delegates.NewOrderSupplierToShopEventHandler NewOrderSupplierToShop;
         public event Delegates.SupplyArrivedToShopEventHandler SupplyArrivedToShop;
 
+        public bool SimulateB { get; set; }
+
+        //Data for simulation - needed for puase/start
+        private DateTime startTime;
+        private DateTime endTime;
+        private DateTime currentTime;
+        private int i;
+        private int previousI;
+        bool wasPaused = false;
+        bool wasStopped = false;
+
         public SimulationUI(SimulationModel model, bool isNewProject)
         {
             InitializeComponent();
@@ -236,39 +247,75 @@ namespace LogisticsNetworkSimulator
 
         private void StartSimulation_Click(object sender, RoutedEventArgs e)
         {
-            DateTime startTime = this.StartDate.SelectedDate.Value.AddHours(8);
-            DateTime endTime = this.EndDate.SelectedDate.Value.AddHours(22);
-            DateTime currentTime = startTime;
+            SimulateB = true;
+            this.PauseSimulation.IsEnabled = true;
+            this.StopSimulation.IsEnabled = true;
+            this.StartSimulation.IsEnabled = false;
+            if(!wasPaused)
+            {
+                startTime = this.StartDate.SelectedDate.Value.AddHours(8);
+                endTime = this.EndDate.SelectedDate.Value.AddHours(22);
+            }
+            Task task = Task.Run((Action)Simulate);
+        }
 
-            int size = (endTime - startTime).Minutes + (endTime - startTime).Hours * 60 + (endTime - startTime).Days * 24 * 60 + 2;
-            //MessageBox.Show(size.ToString());
+        private void PauseSimulation_Click(object sender, RoutedEventArgs e)
+        {
+            SimulateB = false;
+            wasPaused = true;
+            this.StartSimulation.IsEnabled = true;
+            this.PauseSimulation.IsEnabled = false;
+            this.StopSimulation.IsEnabled = true;
+        }
 
-            PreSet(size, startTime);
-            //do PRESET - go through everything ans set size of arrays for graphdata  - set starting DATE! (or global and pass it? as it can be specified by user?)
-            //and set when buyers will buy for the first time->next time it will be set when they will be buy -> unless it will be some special option
+        private void StopSimulation_Click(object sender, RoutedEventArgs e)
+        {
+            SimulateB = false;
+            wasStopped = true;
+            Cleanup();
+        }
 
-            //varialbe i which will be used to determine where to add (each minute/each hour?)
-            int i = 0;
-            //determine whether to copy last values or not
-            int previousI = 0;
-            while(currentTime <= endTime)
+        private void Simulate()
+        {
+            if(!wasPaused)
+            {
+                currentTime = startTime;
+
+
+                int size = (endTime - startTime).Minutes + (endTime - startTime).Hours * 60 + (endTime - startTime).Days * 24 * 60 + 2;
+                //MessageBox.Show(size.ToString());
+
+                PreSet(size, startTime);
+                //do PRESET - go through everything ans set size of arrays for graphdata  - set starting DATE! (or global and pass it? as it can be specified by user?)
+                //and set when buyers will buy for the first time->next time it will be set when they will be buy -> unless it will be some special option
+
+                //varialbe i which will be used to determine where to add (each minute/each hour?)
+                i = 0;
+                //determine whether to copy last values or not
+                previousI = 0;
+            }
+
+            wasStopped = false;
+            wasPaused = false;
+
+            while (currentTime <= endTime && SimulateB)
             {
                 i++;//now every minute so like this
-                if(i != previousI)
+                if (i != previousI)
                 {
-                    foreach(Shop shop in Model.Shops)
+                    foreach (Shop shop in Model.Shops)
                     {
                         shop.GraphData[i] = shop.GraphData[i - 1];
                     }
                 }
                 previousI = i;
 
-                foreach(Shop shop in Model.Shops)
+                foreach (Shop shop in Model.Shops)
                 {
-                    if(shop.OrderArrived(currentTime))
+                    if (shop.OrderArrived(currentTime))
                     {
                         SupplyArrivedToShopEventArgs args = new SupplyArrivedToShopEventArgs(shop, i, currentTime);
-                        if(SupplyArrivedToShop != null)
+                        if (SupplyArrivedToShop != null)
                         {
                             //delete orders there so they are not in memory anmore
                             this.SupplyArrivedToShop(this, args);
@@ -296,6 +343,8 @@ namespace LogisticsNetworkSimulator
                                 catch (Exception ex)
                                 {
                                     MessageBox.Show(shop.Id.ToString() + "   " + ex.Message);
+                                    //Cleanup();
+                                    //return;
                                 }
                             }
                         }
@@ -322,6 +371,7 @@ namespace LogisticsNetworkSimulator
                                 catch (Exception ex)
                                 {
                                     MessageBox.Show(shopA.Id.ToString() + "   " + ex.Message);
+                                    Cleanup();
                                     return;
                                 }
                             }
@@ -349,13 +399,14 @@ namespace LogisticsNetworkSimulator
                                 catch (Exception ex)
                                 {
                                     MessageBox.Show(ex.Message);
+                                    Cleanup();
                                     return;
                                 }
                             }
                         }
                     }
                 }
-                if(currentTime.Hour >= 22)
+                if (currentTime.Hour >= 22 && currentTime < endTime)
                 {
                     currentTime = currentTime.AddHours(10);
                     //to equalize further +1
@@ -368,29 +419,35 @@ namespace LogisticsNetworkSimulator
                     }
                 }
 
-                foreach(Buyer buyer in Model.Buyers)
+                foreach (Buyer buyer in Model.Buyers)
                 {
                     buyer.SetNextOrderIfNeeded(currentTime);
                 }
 
                 currentTime = currentTime.AddMinutes(1);
+
+                UpdateProgressBar(i);
             }
 
-            //??    //generwoanie needa u buyerow
-            //    foreach (BuyerLink shop in BuyerList)
-            //    {
-            //        generateNeed(shop, i);
-            //        shop.results[i] = shop.need;
-            //        if (i == 1)
-            //        {
-            //            shop.results[0] = shop.results[1];
-            //        }
-            //    }
-            //??
+            Cleanup();
+        }
+
+        private void UpdateProgressBar(int i)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                this.ProgressBar.Value = i;
+            });
         }
 
         private void PreSet(int size, DateTime startTime)
         {
+            Dispatcher.Invoke(() =>
+            {
+                this.ProgressBar.Minimum = 0;
+                this.ProgressBar.Maximum = size;
+                this.ProgressBar.Value = 0;
+            });
             foreach (Shop shop in Model.Shops)
             {
                 shop.SetDataSize(size);
@@ -420,6 +477,14 @@ namespace LogisticsNetworkSimulator
                 buyer.NextOrderTime = new DateTime();
                 buyer.NextOrderAmount = 0;
             }
+            Dispatcher.Invoke(() =>
+            {
+                this.ProgressBar.Value = 0;
+                this.StartSimulation.IsEnabled = true;
+                this.PauseSimulation.IsEnabled = false;
+                this.StopSimulation.IsEnabled = false;
+            });
         }
+
     }
 }

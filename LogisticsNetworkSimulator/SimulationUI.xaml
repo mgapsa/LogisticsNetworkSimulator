@@ -17,7 +17,10 @@
                 <actors:SupplierUserControl Margin="2" />
                 <actors:ShopUserControl Margin="2" />
                 <actors:BuyerUserControl Margin="2" />
+                <ProgressBar Name="ProgressBar" Height="20"/>
                 <Button Name="StartSimulation" Click="StartSimulation_Click">START</Button>
+                <Button Name="PauseSimulation" Click="PauseSimulation_Click" IsEnabled="False">PAUSE</Button>
+                <Button Name="StopSimulation" Click="StopSimulation_Click" IsEnabled="False">STOP</Button>
                 <Calendar Name="StartDate"/>
                 <Calendar Name="EndDate"/>
             </StackPanel>
