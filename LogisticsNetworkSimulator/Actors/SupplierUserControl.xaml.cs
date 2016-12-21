@@ -1,5 +1,6 @@
 ﻿using DataModel;
 using LogisticsNetworkSimulator.ConnectionCreators;
+using LogisticsNetworkSimulator.Graphs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -165,11 +166,15 @@ namespace LogisticsNetworkSimulator.Actors
         {
             ContextMenu pMenu = new ContextMenu();
             MenuItem delete = new MenuItem();
-            MenuItem settings = new MenuItem();
+            MenuItem graph = new MenuItem();
 
             delete.Header = "Delete";
             delete.Click += new RoutedEventHandler(delete_Click);
             pMenu.Items.Add(delete);
+
+            graph.Header = "Delete";
+            graph.Click += new RoutedEventHandler(showGraph_Click);
+            pMenu.Items.Add(graph);
 
             this.ContextMenu = pMenu;
         }
@@ -188,6 +193,12 @@ namespace LogisticsNetworkSimulator.Actors
                 this.ConnectionCreator.ConnectionDictionary[conn].RemoveLineUI();
                 this.ConnectionCreator.ConnectionDictionary.Remove(conn);
             }
+        }
+
+        public void showGraph_Click(object sender, RoutedEventArgs e)
+        {
+            GraphWindow graph = new GraphWindow(this.SupplierModel);
+            graph.Show();
         }
         #endregion
 

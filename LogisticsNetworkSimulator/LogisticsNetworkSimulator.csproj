@@ -65,6 +65,9 @@
       <DependentUpon>SupplierUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ConnectionCreators\ConnectionCreator.cs" />
+    <Compile Include="Graphs\GraphWindow.xaml.cs">
+      <DependentUpon>GraphWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MenuWindows\OpenProjectWindow.xaml.cs">
       <DependentUpon>OpenProjectWindow.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Actors\SupplierUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Graphs\GraphWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
