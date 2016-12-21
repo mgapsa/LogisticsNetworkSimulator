@@ -282,7 +282,7 @@ namespace LogisticsNetworkSimulator
                 currentTime = startTime;
 
 
-                int size = (endTime - startTime).Minutes + (endTime - startTime).Hours * 60 + (endTime - startTime).Days * 24 * 60 + 2;
+                int size = Convert.ToInt32((endTime - startTime).TotalMinutes) - (endTime - startTime).Days * 10 * 60 + (endTime - startTime).Days + 2; 
                 //MessageBox.Show(size.ToString());
 
                 PreSet(size, startTime);
@@ -410,7 +410,7 @@ namespace LogisticsNetworkSimulator
                 {
                     currentTime = currentTime.AddHours(10);
                     //to equalize further +1
-                    currentTime = currentTime.AddMinutes(-1);
+                    //currentTime = currentTime.AddMinutes(-1);
                     //Its new day so lets start with setting stuff
                     i++;
                     foreach (Shop shop in Model.Shops)

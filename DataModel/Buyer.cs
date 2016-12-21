@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MathNet.Numerics;
 
 namespace DataModel
 {
@@ -11,6 +12,8 @@ namespace DataModel
     {
         //zmienic nazwy tutaj pol -> zmienic nazwy w mapperze/dapperze
         //zmienic pola w bazie
+        //Option A for time
+        //Option b for amount
         public EnumTypes.BuyerAOptions OptionA { get; set; }
         public double Amount { get; set; }
         public double MinAmount { get; set; }
@@ -72,12 +75,14 @@ namespace DataModel
                 {
                     case EnumTypes.BuyerBOptions.Static:
                         NextOrderTime = currentTime.AddMinutes(this.Minutes);
-                        SetNextOrderAmount();
                         break;
                     case EnumTypes.BuyerBOptions.Gauss:
-
+                        MathNet.Numerics.Distributions.Normal normal = new MathNet.Numerics.Distributions.Normal(this.MeanOptionB, this.DeviationOptionB);
+                        NextOrderTime = currentTime.AddMinutes(normal.Sample());
                         break;
                 }
+
+                SetNextOrderAmount();
             }
         }
 
@@ -89,10 +94,17 @@ namespace DataModel
                     NextOrderAmount = this.Amount;
                     break;
                 case EnumTypes.BuyerAOptions.Random:
+                    Random rnd = new Random();
+                    int rand = rnd.Next(Convert.ToInt32(this.MinAmount), Convert.ToInt32(this.MaxAmount) + 1);
+                    NextOrderAmount = rand;
                     break;
                 case EnumTypes.BuyerAOptions.Poisson:
+                    MathNet.Numerics.Distributions.Poisson poisson = new MathNet.Numerics.Distributions.Poisson(this.Lambda);
+                    NextOrderAmount = poisson.Sample();
                     break;
                 case EnumTypes.BuyerAOptions.Gauss:
+                    MathNet.Numerics.Distributions.Normal normal = new MathNet.Numerics.Distributions.Normal(this.MeanOptionA, this.DeviationOptionA);
+                    NextOrderAmount = normal.Sample();
                     break;
             }
         }
