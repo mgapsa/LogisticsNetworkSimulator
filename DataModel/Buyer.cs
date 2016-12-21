@@ -32,16 +32,16 @@ namespace DataModel
         public Buyer()
         {
             this.OptionA = EnumTypes.BuyerAOptions.Static;
-            this.Amount = 1;
-            this.MinAmount = 1;
-            this.MaxAmount = 1;
-            this.Lambda = 1;
-            this.MeanOptionA = 1;
-            this.DeviationOptionA = 1;
+            this.Amount = 50;
+            this.MinAmount = 25;
+            this.MaxAmount = 75;
+            this.Lambda = 50;
+            this.MeanOptionA = 50;
+            this.DeviationOptionA = 5;
             this.OptionB = EnumTypes.BuyerBOptions.Static;
-            this.Minutes = 2;
-            this.MeanOptionB = 1;
-            this.DeviationOptionB = 1;
+            this.Minutes = 20;
+            this.MeanOptionB = 50;
+            this.DeviationOptionB = 10;
         }
 
         //copy consttructor

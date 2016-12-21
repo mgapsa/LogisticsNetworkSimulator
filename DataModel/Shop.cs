@@ -37,16 +37,16 @@ namespace DataModel
 
             this.LastOrderAmount = -1;
 
-            this.InitialAmount = 100;
+            this.InitialAmount = 1000;
 
-            this.Policy_sq_s = 900;
+            this.Policy_sq_s = 700;
             this.Policy_sq_q = 100;
 
             this.Policy_rS_r = 60;
             this.Policy_rS_S = 1000;
 
             this.Policy_rsS_r = 60;
-            this.Policy_rsS_s = 900;
+            this.Policy_rsS_s = 700;
             this.Policy_rsS_Sbig = 1000;
 
             OrdersList = new List<Order>();
