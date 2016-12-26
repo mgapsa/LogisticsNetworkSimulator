@@ -28,13 +28,13 @@ namespace LogisticsNetworkSimulator.Graphs
             {
                 double yScale = 1;
                 double xScale = 1;
-                const double margin = 18;
+                const double margin = 30;
                 const double len = 3;
                 double xmin = margin;
                 double xmax = graphCanvas.Width - margin;
                 double ymin = margin;
                 double ymax = graphCanvas.Height - margin;
-                double step = 20;
+                double step = 30;
                 if (xmax - xmin > actor.GraphData.Length)
                 {
                     xScale = ((xmax - xmin) / actor.GraphData.Length);
@@ -45,7 +45,7 @@ namespace LogisticsNetworkSimulator.Graphs
                 GeometryGroup xaxis_geom = new GeometryGroup();
                 xaxis_geom.Children.Add(new LineGeometry(
                     new Point(xmin, ymax), new Point(graphCanvas.Width, ymax)));
-                for (double x = xmin + xScale; x <= graphCanvas.Width - xScale; x += xScale)
+                for (double x = xmin + xScale * 6; x <= graphCanvas.Width - xScale; x += xScale * 6)
                 {
                     xaxis_geom.Children.Add(new LineGeometry(
                         new Point(x, ymax - len),
@@ -63,7 +63,7 @@ namespace LogisticsNetworkSimulator.Graphs
                 GeometryGroup yaxis_geom = new GeometryGroup();
                 yaxis_geom.Children.Add(new LineGeometry(
                     new Point(xmin, ymin), new Point(xmin, graphCanvas.Height - margin)));
-                for (double y = step; y <= graphCanvas.Height - step; y += step)
+                for (double y = margin; y <= graphCanvas.Height - step; y += step)
                 {
                     d++;
                     yaxis_geom.Children.Add(new LineGeometry(
@@ -109,24 +109,24 @@ namespace LogisticsNetworkSimulator.Graphs
                 //    }
 
                 //}
-                DrawText(graphCanvas, "Days", new Point((graphCanvas.Width) / 2, graphCanvas.Height - 4), 10, System.Windows.HorizontalAlignment.Center, System.Windows.VerticalAlignment.Center);
-                DrawText(graphCanvas, "Value", new Point(1, 5), 10, System.Windows.HorizontalAlignment.Left, System.Windows.VerticalAlignment.Center);
+                //DrawText(graphCanvas, "Days", new Point((graphCanvas.Width) / 2, graphCanvas.Height - 4), 10, System.Windows.HorizontalAlignment.Center, System.Windows.VerticalAlignment.Center);
+                //DrawText(graphCanvas, "Value", new Point(1, 5), 10, System.Windows.HorizontalAlignment.Left, System.Windows.VerticalAlignment.Center);
                 int c = 0;
                 for (double x = xmin; x <= graphCanvas.Width - xScale; x += xScale)
                 {
-                    if (c % 5 == 0)
+                    if (c % 30 == 0)
                     {
-                        DrawText(graphCanvas, c.ToString(), new Point(x, graphCanvas.Height - 9), 10, System.Windows.HorizontalAlignment.Center, System.Windows.VerticalAlignment.Center);
+                        DrawText(graphCanvas, c.ToString(), new Point(x, graphCanvas.Height - (margin/2)), 16, System.Windows.HorizontalAlignment.Center, System.Windows.VerticalAlignment.Center);
                     }
                     c++;
                 }
                 double v;
                 for (double y = step; y <= graphCanvas.Height - step; y += step)
                 {
-                    if (d % 5 == 0)
+                    if ((int)((ymax - y) / yScale)%100 == 0)
                     {
                         v = (int)((ymax - y) / yScale);
-                        DrawText(graphCanvas, v.ToString(), new Point(2, y), 10, System.Windows.HorizontalAlignment.Center, System.Windows.VerticalAlignment.Center);
+                        DrawText(graphCanvas, v.ToString(), new Point(8, y), 16, System.Windows.HorizontalAlignment.Center, System.Windows.VerticalAlignment.Center);
                     }
                     d--;
                 }
