@@ -41,25 +41,25 @@
         </Grid.RowDefinitions>
         <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">Order amount</Label>
         <RadioButton Grid.Column="2" Grid.Row="2" Name="Static">Static</RadioButton>
-        <Label Grid.Column="2" Grid.Row="3">Amount</Label>
+        <Label Grid.Column="2" Grid.Row="3" HorizontalAlignment="Right">Amount</Label>
         <TextBox Grid.Column="3" Grid.Row="3" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=Static}"
                  Validation.ErrorTemplate="{StaticResource validationTemplate}" Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <RadioButton Grid.Column="2" Grid.Row="4" Name="Random">Random</RadioButton>
-        <Label Grid.Column="2" Grid.Row="5">Min amount</Label>
+        <Label Grid.Column="2" Grid.Row="5" HorizontalAlignment="Right">Min amount</Label>
         <TextBox Grid.Column="3" Grid.Row="5" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=Random}"
                  Validation.ErrorTemplate="{StaticResource validationTemplate}" Text="{Binding MinAmount, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <Label Grid.Column="4" Grid.Row="5">Max amount</Label>
+        <Label Grid.Column="4" Grid.Row="5" HorizontalAlignment="Right">Max amount</Label>
         <TextBox Grid.Column="5" Grid.Row="5" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=Random}"
                  Validation.ErrorTemplate="{StaticResource validationTemplate}" Text="{Binding MaxAmount, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <RadioButton Grid.Column="2" Grid.Row="6" Name="Poisson">Poisson</RadioButton>
-        <Label Grid.Column="2" Grid.Row="7">Lambda</Label>
+        <Label Grid.Column="2" Grid.Row="7" HorizontalAlignment="Right">Lambda</Label>
         <TextBox Grid.Column="3" Grid.Row="7" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=Poisson}"
                  Validation.ErrorTemplate="{StaticResource validationTemplate}" Text="{Binding Lambda, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <RadioButton Grid.Column="2" Grid.Row="8" Name="Gauss">Gauss</RadioButton>
-        <Label Grid.Column="2" Grid.Row="9">Mean</Label>
+        <Label Grid.Column="2" Grid.Row="9" HorizontalAlignment="Right">Mean</Label>
         <TextBox Grid.Column="3" Grid.Row="9" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=Gauss}"
                  Validation.ErrorTemplate="{StaticResource validationTemplate}" Text="{Binding MeanOptionA, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <Label Grid.Column="4" Grid.Row="9">Deviation</Label>
+        <Label Grid.Column="4" Grid.Row="9" HorizontalAlignment="Right">Deviation</Label>
         <TextBox Grid.Column="5" Grid.Row="9" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=Gauss}"
                  Validation.ErrorTemplate="{StaticResource validationTemplate}" Text="{Binding DeviationOptionA, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <Grid Grid.Column="0" Grid.ColumnSpan="7" Grid.Row="10" Grid.RowSpan="6">
@@ -82,15 +82,15 @@
             </Grid.RowDefinitions>
             <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2">Order frequency</Label>
             <RadioButton Grid.Column="2" Grid.Row="1" Name="StaticOptionB">Static</RadioButton>
-            <Label Grid.Column="2" Grid.Row="2">Every</Label>
+            <Label Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right">Every</Label>
             <TextBox Grid.Column="3" Grid.Row="2" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=StaticOptionB}"
                  Validation.ErrorTemplate="{StaticResource validationTemplate}" Text="{Binding Minutes, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label Grid.Column="4" Grid.Row="2">minutes</Label>
             <RadioButton Grid.Column="2" Grid.Row="3" Name="GaussOptionB">Gauss</RadioButton>
-            <Label Grid.Column="2" Grid.Row="4">Mean</Label>
+            <Label Grid.Column="2" Grid.Row="4" HorizontalAlignment="Right">Mean</Label>
             <TextBox Grid.Column="3" Grid.Row="4" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=GaussOptionB}"
                  Validation.ErrorTemplate="{StaticResource validationTemplate}" Text="{Binding MeanOptionB, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <Label Grid.Column="4" Grid.Row="4">Deviation</Label>
+            <Label Grid.Column="4" Grid.Row="4" HorizontalAlignment="Right">Deviation</Label>
             <TextBox Grid.Column="5" Grid.Row="4" Height="25" IsEnabled="{Binding Path=IsChecked, ElementName=GaussOptionB}"
                  Validation.ErrorTemplate="{StaticResource validationTemplate}" Text="{Binding DeviationOptionB, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         </Grid>
