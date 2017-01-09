@@ -16,14 +16,14 @@
             <StackPanel Grid.Column="0" Name="ToolPanel" Background="SlateGray">
                 <actors:SupplierUserControl Margin="2" />
                 <actors:ShopUserControl Margin="2" />
-                <actors:BuyerUserControl Margin="2" />
+                <actors:BuyerUserControl Margin="2" ToolTip="Buyer. Drag and Drop to add to custom network"/>
                 <Separator Background="Black" Height="5" Margin="0,5,0,0"></Separator>
                 <ProgressBar Name="ProgressBar" Height="20" Margin="0,15"/>
                 <Button Name="StartSimulation" Click="StartSimulation_Click" Margin="5,3">START</Button>
                 <Button Name="PauseSimulation" Click="PauseSimulation_Click" IsEnabled="False" Margin="5,3">PAUSE</Button>
                 <Button Name="StopSimulation" Click="StopSimulation_Click" IsEnabled="False" Margin="5,3">STOP</Button>
-                <Calendar Name="StartDate" Margin="0,20,0,0"/>
-                <Calendar Name="EndDate" Margin="0,10,0,0"/>
+                <Calendar Name="StartDate" ToolTip="Choose start date" Margin="0,20,0,0"/>
+                <Calendar Name="EndDate" ToolTip="Choose end date" Margin="0,10,0,0"/>
             </StackPanel>
             <Canvas MouseRightButtonDown="target_MouseRightButtonDown" x:Name="target" Grid.Column="1"
             Background="LightSlateGray"

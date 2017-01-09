@@ -112,9 +112,9 @@ namespace LogisticsNetworkSimulator.Graphs
                 //DrawText(graphCanvas, "Days", new Point((graphCanvas.Width) / 2, graphCanvas.Height - 4), 10, System.Windows.HorizontalAlignment.Center, System.Windows.VerticalAlignment.Center);
                 //DrawText(graphCanvas, "Value", new Point(1, 5), 10, System.Windows.HorizontalAlignment.Left, System.Windows.VerticalAlignment.Center);
                 int c = 0;
-                for (double x = xmin; x <= graphCanvas.Width - xScale; x += xScale)
+                for (double x = xmin; x <= graphCanvas.Width - xScale; x += xScale * 6)
                 {
-                    if (c % 30 == 0)
+                    if (c % 30 == 0 || actor.GraphData.Length < 30 || (actor.GraphData.Length < 210 && c%5 ==0))
                     {
                         DrawText(graphCanvas, c.ToString(), new Point(x, graphCanvas.Height - (margin/2)), 16, System.Windows.HorizontalAlignment.Center, System.Windows.VerticalAlignment.Center);
                     }

@@ -45,6 +45,12 @@ namespace LogisticsNetworkSimulator
         bool wasPaused = false;
         bool wasStopped = false;
 
+        int sizeType = 0;
+        private int MinutesLimit = 1;
+        private int HoursLimit = 10;
+        private int DaysLimit = 93;
+
+
         public SimulationUI(SimulationModel model, bool isNewProject)
         {
             InitializeComponent();
@@ -52,8 +58,8 @@ namespace LogisticsNetworkSimulator
             this.SimulationEventHandler = new SimulationEventHandler(this);
             this.ConnectionCreator = new ConnectionCreator(this.Model, this.target);
 
-            this.StartDate.SelectedDate = DateTime.Now;
-            this.StartDate.SelectedDate = DateTime.Now.AddMonths(1);
+            //this.StartDate.SelectedDate = DateTime.Now;
+            //this.StartDate.SelectedDate = DateTime.Now.AddMonths(1);
 
             if(!isNewProject)
             {
@@ -247,16 +253,29 @@ namespace LogisticsNetworkSimulator
 
         private void StartSimulation_Click(object sender, RoutedEventArgs e)
         {
-            SimulateB = true;
-            this.PauseSimulation.IsEnabled = true;
-            this.StopSimulation.IsEnabled = true;
-            this.StartSimulation.IsEnabled = false;
-            if(!wasPaused)
+            if (this.StartDate.SelectedDate == null || this.EndDate.SelectedDate == null)
             {
-                startTime = this.StartDate.SelectedDate.Value.AddHours(8);
-                endTime = this.EndDate.SelectedDate.Value.AddHours(22);
+                MessageBox.Show("Please set start and end date");
+                return;
             }
-            Task task = Task.Run((Action)Simulate);
+            else if (this.EndDate.SelectedDate < this.StartDate.SelectedDate)
+            {
+                MessageBox.Show("End date cannot be earlier than startdate");
+                return;
+            }
+            else
+            {
+                SimulateB = true;
+                this.PauseSimulation.IsEnabled = true;
+                this.StopSimulation.IsEnabled = true;
+                this.StartSimulation.IsEnabled = false;
+                if (!wasPaused)
+                {
+                    startTime = this.StartDate.SelectedDate.Value.AddHours(8);
+                    endTime = this.EndDate.SelectedDate.Value.AddHours(22);
+                }
+                Task task = Task.Run((Action)Simulate);
+            }
         }
 
         private void PauseSimulation_Click(object sender, RoutedEventArgs e)
@@ -280,9 +299,24 @@ namespace LogisticsNetworkSimulator
             if(!wasPaused)
             {
                 currentTime = startTime;
+                int size = 0;
+                //0 - min, 1 - hour, 2- day                
 
-
-                int size = Convert.ToInt32((endTime - startTime).TotalMinutes) - (endTime - startTime).Days * 10 * 60 + (endTime - startTime).Days + 2; 
+                if((endTime - startTime).Days <= MinutesLimit)
+                {
+                    size = Convert.ToInt32((endTime - startTime).TotalMinutes) - (endTime - startTime).Days * 10 * 60 + (endTime - startTime).Days + 2; 
+                }
+                else if ((endTime - startTime).Days <= HoursLimit)
+                {
+                    size = Convert.ToInt32((endTime - startTime).TotalHours) - (endTime - startTime).Days * 10 + (endTime - startTime).Days + 2;
+                    sizeType = 1;
+                }
+                else if ((endTime - startTime).Days <= DaysLimit)
+                {
+                    size = Convert.ToInt32((endTime - startTime).TotalDays) + 1;
+                    sizeType = 2;
+                }
+                
                 //MessageBox.Show(size.ToString());
 
                 PreSet(size, startTime);
@@ -300,7 +334,20 @@ namespace LogisticsNetworkSimulator
 
             while (currentTime <= endTime && SimulateB)
             {
-                i++;//now every minute so like this
+                if (sizeType == 0)
+                {
+                    i++;
+                }
+                else if (sizeType == 1 && currentTime.Minute == 0)
+                {
+                    i++;
+                }
+                else if (sizeType == 2 && currentTime.Hour == 8 && currentTime.Minute == 0)
+                {
+                    i++;
+                }
+
+
                 if (i != previousI)
                 {
                     foreach (Shop shop in Model.Shops)

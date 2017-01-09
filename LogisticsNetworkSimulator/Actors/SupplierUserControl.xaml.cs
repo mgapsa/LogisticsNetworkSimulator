@@ -26,6 +26,7 @@ namespace LogisticsNetworkSimulator.Actors
         public Supplier SupplierModel { get; set; }
         public SimulationModel SimulationModel { get; set; }
         public ConnectionCreator ConnectionCreator { get; set; }
+        private Label Label = new Label();
 
         private DateTime clickTime;
         private object clickSender;
@@ -101,6 +102,7 @@ namespace LogisticsNetworkSimulator.Actors
             this.CreateMenu();
 
             target.Children.Add(this);
+            printLabel(target);
         }
 
         public void printOnTarget(Canvas target, Point position)
@@ -114,6 +116,7 @@ namespace LogisticsNetworkSimulator.Actors
             this.CreateMenu();
 
             target.Children.Add(this);
+            printLabel(target);
             //delete.Header = "Delete";
             //delete.Click += new RoutedEventHandler(delete_Click);
             //pMenu.Items.Add(delete);
@@ -132,6 +135,18 @@ namespace LogisticsNetworkSimulator.Actors
             //    printlabel(target);
         }
 
+        private void printLabel(Canvas target)
+        {
+            Canvas.SetTop(Label, this.SupplierModel.Y + 70);
+            Canvas.SetLeft(Label, this.SupplierModel.X + 25);
+            Label.Content = this.SupplierModel.Id.ToString();
+            //_label.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            if (!target.Children.Contains(Label))
+            {
+                target.Children.Add(Label);
+            }
+        }
+
         public void Reprint(Canvas target)
         {
             Image img = this.supplierUI;
@@ -144,6 +159,7 @@ namespace LogisticsNetworkSimulator.Actors
             this.CreateMenu();
 
             target.Children.Add(this);
+            printLabel(target);
         }
 
         public void Reprint(Object targetPanel)
@@ -159,6 +175,7 @@ namespace LogisticsNetworkSimulator.Actors
             this.CreateMenu();
 
             target.Children.Add(this);
+            printLabel(target);
         }
 
         #region Menu
@@ -185,6 +202,8 @@ namespace LogisticsNetworkSimulator.Actors
             Image img = this.supplierUI;
             Panel _parent = (Panel)VisualTreeHelper.GetParent(img);
             _parent.Children.Remove(img);
+            Panel _parent2 = (Panel)VisualTreeHelper.GetParent(Label);
+            _parent2.Children.Remove(Label);
 
             List<Connection> connections = this.SimulationModel.Connections.Where(c => c.ActorA == this.SupplierModel || c.ActorB == this.SupplierModel).ToList();
             foreach (Connection conn in connections)

@@ -30,6 +30,7 @@ namespace LogisticsNetworkSimulator.Actors
         private object clickSender;
         public SimulationModel SimulationModel { get; set; }
         public ConnectionCreator ConnectionCreator { get; set; }
+        private Label Label = new Label();
 
         public BuyerUserControl()
         {
@@ -100,8 +101,9 @@ namespace LogisticsNetworkSimulator.Actors
             this.Width = 75;
 
             this.CreateMenu();
-
+            
             target.Children.Add(this);
+            printLabel(target);
         }
 
         public void printOnTarget(Canvas target, Point position)
@@ -115,6 +117,7 @@ namespace LogisticsNetworkSimulator.Actors
             this.CreateMenu();
 
             target.Children.Add(this);
+            printLabel(target);
             //delete.Header = "Delete";
             //delete.Click += new RoutedEventHandler(delete_Click);
             //pMenu.Items.Add(delete);
@@ -133,6 +136,19 @@ namespace LogisticsNetworkSimulator.Actors
             //    printlabel(target);
         }
 
+        private void printLabel(Canvas target)
+        {
+            Canvas.SetTop(Label, this.BuyerModel.Y + 60);
+            Canvas.SetLeft(Label, this.BuyerModel.X + 25);
+            Label.Content = this.BuyerModel.Id.ToString();
+            //_label.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            if(!target.Children.Contains(Label))
+            {
+                target.Children.Add(Label);
+            }
+        }
+
+
         public void Reprint(Canvas target)
         {
             Image img = this.buyerUI;
@@ -145,6 +161,7 @@ namespace LogisticsNetworkSimulator.Actors
             this.CreateMenu();
 
             target.Children.Add(this);
+            printLabel(target);
         }
 
         public void Reprint(Object targetPanel)
@@ -160,6 +177,7 @@ namespace LogisticsNetworkSimulator.Actors
             this.CreateMenu();
 
             target.Children.Add(this);
+            printLabel(target);
         }
 
         #region Menu
@@ -191,6 +209,8 @@ namespace LogisticsNetworkSimulator.Actors
             Image img = this.buyerUI;
             Panel _parent = (Panel)VisualTreeHelper.GetParent(img);
             _parent.Children.Remove(img);
+            Panel _parent2 = (Panel)VisualTreeHelper.GetParent(Label);
+            _parent2.Children.Remove(Label);
 
             List<Connection> connections = this.SimulationModel.Connections.Where(c => c.ActorA == this.BuyerModel || c.ActorB == this.BuyerModel).ToList();
             foreach (Connection conn in connections)

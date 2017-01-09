@@ -30,6 +30,7 @@ namespace LogisticsNetworkSimulator.Actors
         private object clickSender;
         public SimulationModel SimulationModel { get; set; }
         public ConnectionCreator ConnectionCreator { get; set; }
+        private Label Label = new Label();
 
         public ShopUserControl()
         {
@@ -102,6 +103,7 @@ namespace LogisticsNetworkSimulator.Actors
             this.CreateMenu();
 
             target.Children.Add(this);
+            printLabel(target);
         }
 
         public void printOnTarget(Canvas target, Point position)
@@ -115,6 +117,7 @@ namespace LogisticsNetworkSimulator.Actors
             this.CreateMenu();
 
             target.Children.Add(this);
+            printLabel(target);
 
             //graph.Header = "Show graph";
             //graph.Click += new RoutedEventHandler(print_graph);
@@ -124,6 +127,18 @@ namespace LogisticsNetworkSimulator.Actors
             //target.Children.Add(_link);
             //if (_label == null)
             //    printlabel(target);
+        }
+
+        private void printLabel(Canvas target)
+        {
+            Canvas.SetTop(Label, this.ShopModel.Y + 65);
+            Canvas.SetLeft(Label, this.ShopModel.X + 25);
+            Label.Content = this.ShopModel.Id.ToString();
+            //_label.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            if (!target.Children.Contains(Label))
+            {
+                target.Children.Add(Label);
+            }
         }
 
         public void Reprint(Canvas target)
@@ -138,6 +153,7 @@ namespace LogisticsNetworkSimulator.Actors
             this.CreateMenu();
 
             target.Children.Add(this);
+            printLabel(target);
         }
         public void Reprint(Object targetPanel)
         {
@@ -152,6 +168,7 @@ namespace LogisticsNetworkSimulator.Actors
             this.CreateMenu();
 
             target.Children.Add(this);
+            printLabel(target);
         }
 
 
@@ -184,6 +201,8 @@ namespace LogisticsNetworkSimulator.Actors
             Image img = this.shopUI;
             Panel _parent = (Panel)VisualTreeHelper.GetParent(img);
             _parent.Children.Remove(img);
+            Panel _parent2 = (Panel)VisualTreeHelper.GetParent(Label);
+            _parent2.Children.Remove(Label);
 
             //remove connections
             List<Connection> connections = this.SimulationModel.Connections.Where(c => c.ActorA == this.ShopModel || c.ActorB == this.ShopModel).ToList();
